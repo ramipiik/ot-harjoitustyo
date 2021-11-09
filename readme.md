@@ -11,7 +11,7 @@ git clone https://github.com/ramipiik/ot-harjoitustyo.git
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python3 -
 ```
 
-Lisää poetry pathiin komennolla, missä 'xxx' on oma käyttäjätunnuksesi.
+* Lisää poetry pathiin komennolla, missä 'xxx' on oma käyttäjätunnuksesi.
 ```
 export PATH=/home/xxx/.local/bin:$PATH
 ```
