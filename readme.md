@@ -1,4 +1,4 @@
-# Ohjelmistotekniikan harjoitustyö
+# Ohjelmistotekniikan harjoitustyö syksy 2021
 
 ## Sovelluksen käynnistäminen
 * Kopioi repositorio komennolla:
