@@ -1,8 +1,17 @@
 # Ohjelmistotekniikan harjoitustyö
 
 ## Sovelluksen käynnistäminen
-* Kopioi repositorio
-* Asenna [poetry](https://python-poetry.org/docs/#installation)
+* Kopioi repositorio komennolla:
+```
+git clone https://github.com/ramipiik/ot-harjoitustyo.git
+```
+
+* Asenna Poetry komennolla: 
+```
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python3 -
+```
+Tai vaihtoehtoisesti katso ohjeet täältä: https://python-poetry.org/docs/#installation 
+
 * Asenna riippuvuudet komennolla:
 ```
 poetry install
