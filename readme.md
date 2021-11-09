@@ -6,11 +6,10 @@
 git clone https://github.com/ramipiik/ot-harjoitustyo.git
 ```
 
-* Asenna Poetry komennolla: 
+* Asenna Poetry ao. komennolla tai katso ohjeet [täältä](https://python-poetry.org/docs/#installation): 
 ```
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python3 -
 ```
-Tai vaihtoehtoisesti katso ohjeet täältä: https://python-poetry.org/docs/#installation 
 
 * Asenna riippuvuudet komennolla:
 ```
