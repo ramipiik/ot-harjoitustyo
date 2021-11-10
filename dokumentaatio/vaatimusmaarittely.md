@@ -1,8 +1,8 @@
 # Vaatimusmäärittely
 ## Sovelluksen tarkoitus
- * Sovelluksen avulla pystyy harjoittelemaan ja simuloimaan eri sijoituskohteisiin  sijoittamista historiallista dataa vasten.
- * Mukana olevat hyödykkeet tarkentuvat projektin aikana. En tiedä tässä vaiheessa kuinka helposti riittävän pitkä aikasarja kustakin sijoituskohteesta on löydettävissä ilmaiseksi. Datan saatavuudesta riippuen ajatus on ottaa mukaan esim. seuraavia sijoituskohteita: OMXH25, Bitcoin, kulta, S&P500, öljyfutuurit, sähköfutuurit, EU päästöoikeudet, Euribor, yksittäiset osakkeet jne.
-
+ * Sovelluksen avulla pystyy harjoittelemaan ja simuloimaan eri kryptovaluuttoihin sijoittamista historiallista dataa vasten.
+ * Mukana olevat kryptovaluutat tarkentuvat projektin aikana. En tiedä tässä vaiheessa kuinka helposti riittävän pitkä aikasarja kustakin sijoituskohteesta on löydettävissä ilmaiseksi.
+ 
 ## Käyttäjät
 * Ensi vaiheessa ei ole muita rooleja kuin normikäyttäjä
 * (Uudet sijoituskohteet ja strategiat tallennetaan suoraan tietokantaan tai luodaan koodissa.)
