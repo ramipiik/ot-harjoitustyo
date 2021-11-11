@@ -38,5 +38,5 @@ poetry run invoke start
 
 ## Tehtävät viikko 3
 [luokkakaavio.jpg](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko3/Luokkakaavio.jpg)  
-[sekvenssikaavio3.png](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko3/Sekvenssikaavio%203.png)  
+[sekvenssikaavio3.png](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko3/Sekvenssikaavio3.png)  
 [sekvenssikaavio4.png](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko3/Sekvenssikaavio4.png)
