@@ -1,5 +1,6 @@
+from sqlite3.dbapi2 import SQLITE_DROP_VIEW
 from ui.text_ui import start
-from services.flow import move_forward
+from services.flow import flow
 
-start()
-move_forward()
+portfolio=start()
+flow(portfolio)
