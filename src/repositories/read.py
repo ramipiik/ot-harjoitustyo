@@ -4,7 +4,7 @@ from sqlite3.dbapi2 import Error
 def get_prices(i):
     connection = sqlite3.connect('../data/database/data.db')
     cursor = connection.cursor()
-    sql = f"SELECT name, close, open, high, low FROM  prices WHERE date='{i}'"
+    sql = f"SELECT c.name, p.close, p.open, p.high, p.low FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{i}'"
     # print(sql)
     rows=None
     try:
@@ -22,7 +22,9 @@ def get_prices(i):
         values["low"]=row[4]
         rates[row[0]]=values
 
-    # for key, value in rates.items():
-    #     print(f"{key} {value}")
+    for key, value in rates.items():
+        print(f"{key} {value}")
     
     return rates
+
+get_prices('2021-10-10')
