@@ -1,13 +1,14 @@
 from repositories.read_prices import get_prices
 
 
-class Portfolio:
-    def __init__(self, user_id, name, frequency, periods=None):
-        self.frequency=frequency
-        self.user_id=user_id
-        self.name=name
-        self.periods=periods
-        self.id=None #created in the database
+class Content:
+    def __init__(self, portfolio_id, portfolio_day, cash, change_id):
+        #initial_content=[portfolio.id, first_day, initial_capital, 1]
+        self.portfolio_id=portfolio_id
+        self.portfolio_day=portfolio_day
+        self.cash=cash
+        self.change_id=change_id
+        self.cryptos={}
     
     def get_cash(self):
         return self.cash
@@ -21,14 +22,21 @@ class Portfolio:
             self.portfolio[key]=[self.portfolio[key][0], self.portfolio[key][0]*price_of_the_day]
         return self.portfolio
     
-    def buy(self, currency, price, investment):
-        self.cash-=investment
-        if currency in self.portfolio.keys():
-            before=self.portfolio[currency][0] 
-            after=before+investment/price 
-            self.portfolio[currency]=[after, after*price] #[määrä, arvo]
+    def buy(self, crypto_id, amount):
+        self.cash-=amount #Lisää tsekki onko tarpeeksi rahaa
+        date=self.portfolio_day
+        self.change_id+=1
+        change_id=self.change_id
+        prices=get_prices(date)
+        price=prices[crypto_id]['close']
+        if crypto_id in self.cryptos.keys():
+            before=self.cryptos[crypto_id] 
+            after=before+amount/price 
+            self.cryptos[crypto_id]=after
         else:
-            self.portfolio[currency]=[investment/price, price]
+            self.cryptos[crypto_id]=amount/price
+        
+        
     
     def sell(self, currency, price, amount):
         if currency in self.portfolio.keys():

@@ -1,8 +1,9 @@
 import datetime
-from repositories.read import get_prices
+from repositories.read_prices import get_prices
 
 
 def flow (portfolio):
+    print("flow")
     first_year=2021
     first_month=10
     first_day=1
