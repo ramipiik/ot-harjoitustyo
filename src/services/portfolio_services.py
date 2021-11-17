@@ -34,27 +34,29 @@ def get_portfolio_id(user_id, portfolio_name):
 def first_day(portfolio:Portfolio, user_id):
     # portfolio_id=fetch_portfolio_id(user_id, portfolio.name)
     # print("portfolio_id", portfolio_id)
-    content_object=Content(store_first_time(portfolio, FIRST_DAY, INITIAL_CAPITAL))
+    aux=store_first_time(portfolio, FIRST_DAY, INITIAL_CAPITAL)
+    content_object=Content(aux[0], aux[1], aux[2], aux[3])
     return content_object
 
-def buy(content_object:Content, crypto_id, amount):
-    content_object.buy(crypto_id, amount)
+
+def buy(content_object:Content, crypto_id, investment):
+    content_object.buy(crypto_id, investment)
     store_contents(content_object)
-    # self.cash-=investment
-    # if currency in self.portfolio.keys():
-    #     before=self.portfolio[currency][0] 
-    #     after=before+investment/price 
-    #     self.portfolio[currency]=[after, after*price] #[määrä, arvo]
-    # else:
-    #     self.portfolio[currency]=[investment/price, price]
-    
+
+
+def sell(content_object:Content, crypto_id, investment):
+    content_object.sell(crypto_id, investment)
+    store_contents(content_object)
+
 
 def fetch_user_portfolios_service(user_id):
     return read_user_porftfolios_repository(user_id)
 
+
 def fetch_portfolio_content(portfolio_id):
     print("checkpoint A")
     content=read_portfolio_content(portfolio_id)  
+
     date=content[0][0]
     cash=content[0][1]
     change_id=content[0][4]
@@ -63,25 +65,29 @@ def fetch_portfolio_content(portfolio_id):
     print("---------")
 
     print("Date:", date)
-    print("Cash:", cash)
+    print("Your portfolio")
+    print("Cash:", cash, "EUR")
     rates=get_prices(date)
     for row in content:
         if row[2]:
-            print(row[2], rates[row[2]]["name"], row[3], "pieces")
-            content_object.cryptos[row[2]]=row[3]
+            print(f"{row[2]} ({rates[row[2]]['name']}): {row[5]} EUR")
+            content_object.cryptos[row[2]]={}
+            content_object.cryptos[row[2]]["amount"]=row[3]
+            content_object.cryptos[row[2]]["value"]=row[5]
+    print(f"Total value: {content[0][6]:.0f}")
     print("---------")
     fetch_rates(date)
     return content_object
     
 
 def fetch_rates(date):    
-    print("Today's Rates")
+    print("Today's rates")
     if date:
         rates=get_prices(date)
         aux=[]
         for key, value in rates.items():
             aux.append(key)
-            print(f"{key}: {value['name']} {value['close']:.4f} EUR")
+            print(f"{key} ({value['name']}): {value['close']:.4f} EUR")
     print("-------------")
     # if date:
     #     rates=get_prices(date)

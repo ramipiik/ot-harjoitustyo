@@ -39,5 +39,17 @@ CREATE TABLE contents (
     crypto_id INTEGER REFERENCES cryptos,
     amount NUMERIC,
     cash NUMERIC,
-    created TEXT
+    created TEXT,
+    change_id INTEGER,
+    value NUMERIC
 );
+
+CREATE TABLE contents_support (
+     id INTEGER PRIMARY KEY,
+     change_id INTEGER REFERENCES contents,
+     cash NUMERIC,
+     portfolio_id INTEGER REFERENCES portfolio,
+     portfolio_day TEXT,
+     created TEXT,
+     total_value NUMERIC
+)

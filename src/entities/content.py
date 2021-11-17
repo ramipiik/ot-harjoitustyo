@@ -21,28 +21,41 @@ class Content:
             price_of_the_day=rates[key]["close"]
             self.portfolio[key]=[self.portfolio[key][0], self.portfolio[key][0]*price_of_the_day]
         return self.portfolio
-    
-    def buy(self, crypto_id, amount):
-        self.cash-=amount #Lisää tsekki onko tarpeeksi rahaa
+
+
+    def buy(self, crypto_id, investment):
+        if investment>self.cash:
+            print("Not enough cash")
+            return
+        self.cash-=investment
         date=self.portfolio_day
         self.change_id+=1
-        change_id=self.change_id
         prices=get_prices(date)
         price=prices[crypto_id]['close']
         if crypto_id in self.cryptos.keys():
-            before=self.cryptos[crypto_id] 
-            after=before+amount/price 
-            self.cryptos[crypto_id]=after
+            before=self.cryptos[crypto_id]["amount"] 
+            after=before+investment/price 
+            self.cryptos[crypto_id]["amount"]=after
+            self.cryptos[crypto_id]["value"]=after*price
         else:
-            self.cryptos[crypto_id]=amount/price
+            self.cryptos[crypto_id]={}
+            self.cryptos[crypto_id]["amount"]=investment/price
+            self.cryptos[crypto_id]["value"]=investment
         
         
-    
-    def sell(self, currency, price, amount):
-        if currency in self.portfolio.keys():
-            self.cash+=amount
-            before=self.portfolio[currency][0] 
-            after=before-amount/price 
-            self.portfolio[currency]=[after, after*price] #[määrä, arvo]
+    #Allows short selling. I.e. investment can become negative.
+    def sell(self, crypto_id, investment):
+        self.cash+=investment
+        date=self.portfolio_day
+        self.change_id+=1
+        prices=get_prices(date)
+        price=prices[crypto_id]['close']
+        if crypto_id in self.cryptos.keys():
+            before=self.cryptos[crypto_id]["amount"] 
+            after=before-investment/price 
+            self.cryptos[crypto_id]["amount"]=after
+            self.cryptos[crypto_id]["value"]=after*price
         else:
-            print("you cannot sell something you don't have")
+            self.cryptos[crypto_id]={}
+            self.cryptos[crypto_id]["amount"]=-investment/price
+            self.cryptos[crypto_id]["value"]=-investment

@@ -6,7 +6,6 @@ def login_service(username, password):
     response=login(username, password)
     if response:
         print(username, "logged in")
-        print("user_id", response)
         return username
     else:
         print("User not found or incorrect password")
@@ -21,7 +20,7 @@ def signup_service(username, password):
     response=signup(username, password)
     if response:
         print(username, "created")
-        login_service (username, password)
+        return login_service (username, password)
     else:
         print ("signup failed")
 

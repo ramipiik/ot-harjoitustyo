@@ -7,6 +7,7 @@ from services.portfolio_services import create_portfolio_service
 from services.portfolio_services import fetch_user_portfolios_service
 from services.portfolio_services import fetch_portfolio_content
 from services.portfolio_services import buy
+from services.portfolio_services import sell
 
 def login():
     while True:
@@ -19,7 +20,7 @@ def login():
 def signup():
     username=input("Username: ")
     password=input("Password: ")
-    signup_service(username, password)
+    return signup_service(username, password)
 
 def list_portfolios(user_id):
     print("Your portfolios:")
@@ -57,32 +58,33 @@ def start():
             response=input()
             if response=='O' or response=='o':
                 portfolio_id=int(input("Which portfolio do you want to open? "))
+                ####Katso mitä tämä palauttaa!!!
                 content_object=open_portfolio(portfolio_id)
                 print("checkpoint 1")
                 break
             if response=='C' or response=='c':
-                content_object=create_portfolio(user_id)
+                create_portfolio(user_id)
             if response=='Q' or response=='q':
                 exit()
-    if portfolio_id:
+    if content_object:
         while(True):
-            print("Awesome!")
             print("What do you want to do next?")
             print("Press B to buy, S to sell, N for next day, Q for save and quit")
             choice=input()
             if choice=='B' or choice=='b':
-                print("What currency do you want to buy?")
+                print("Which crypto do you want to buy?")
                 crypto_id=int(input())
                 print("How much do you want to invest?")
-                amount=int(input())
-                buy(content_object, crypto_id, amount)
+                investment=int(input())
+                buy(content_object, crypto_id, investment)
                 fetch_portfolio_content(portfolio_id)
-            if choice==2:
-                print("Which currency do you want to sell?")
-                currency=input()
+            if choice=='S' or choice=='s':
+                print("Which crypto do you want to sell?")
+                crypto_id=int(input())
                 print("How much do you want to sell in EUR?")
-                amount=int(input())
-                portfolio.sell(currency, rates[currency]["close"], amount)
+                investment=int(input())
+                sell(content_object, crypto_id, investment)
+                fetch_portfolio_content(portfolio_id)
 
 
     

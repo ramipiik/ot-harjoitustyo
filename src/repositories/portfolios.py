@@ -63,18 +63,32 @@ def store_first_time(portfolio:Portfolio, first_day, initial_capital):
 def store_contents(contents:Content):
     connection = sqlite3.connect('../data/database/data.db')
     cursor = connection.cursor()
+    total_value=contents.cash
     if len(contents.cryptos.keys())>0:
-        for crypto_id, amount in contents.cryptos.items():
-
+        for crypto_id, status in contents.cryptos.items():
+            print("crypto_id", crypto_id)
+            print("status", status)
+            amount=status["amount"]
+            value=status["value"]
+            total_value+=value
             try:
-                sql = "INSERT INTO contents (portfolio_id, portfolio_day, cash, created, change_id, crypto_id, amount) VALUES (:portfolio_id, :first_day, :cash, CURRENT_TIMESTAMP, :change_id, :crypto_id, :amount)"
+                sql = "INSERT INTO contents (portfolio_id, change_id, crypto_id, amount, value) VALUES (:portfolio_id, :change_id, :crypto_id, :amount, :value)"
                 # print(sql)
-                cursor.execute(sql, {"portfolio_id": contents.portfolio_id, "first_day": contents.portfolio_day, "cash": contents.cash, "change_id":contents.change_id, "crypto_id":crypto_id, "amount":amount})
+                cursor.execute(sql, {"portfolio_id": contents.portfolio_id, "change_id":contents.change_id, "crypto_id":crypto_id, "amount":amount, "value":value})
             except Error as e:
                 print(e)
-                return False
+                return False            
+        try:
+            sql = "INSERT INTO contents_support (portfolio_id, portfolio_day, cash, created, change_id, total_value) VALUES (:portfolio_id, :first_day, :cash, CURRENT_TIMESTAMP, :change_id, :total_value)"
+            # print(sql)
+            cursor.execute(sql, {"portfolio_id": contents.portfolio_id, "first_day": contents.portfolio_day, "cash": contents.cash, "change_id":contents.change_id, "total_value": total_value})
+        except Error as e:
+            print(e)
+            return False
+
         connection.commit()
         connection.close()
+
     return True
 
 def read_user_porftfolios_repository(user_id):
@@ -95,7 +109,8 @@ def read_portfolio_content(portfolio_id):
     connection = sqlite3.connect('../data/database/data.db')
     cursor = connection.cursor()
     # fetches all events of the portfolio from the latest day.
-    sql = "SELECT c.portfolio_day, c.cash, c.crypto_id, c.amount, c.change_id FROM contents c LEFT JOIN cryptos cr ON cr.id=c.crypto_id WHERE c.portfolio_id=:portfolio_id AND c.change_id=(select max(change_id) from contents where portfolio_id=:portfolio_id) ORDER BY created"
+    #sql = "SELECT c.portfolio_day, c.cash, c.crypto_id, c.amount, c.change_id, c.value FROM contents c LEFT JOIN cryptos cr ON cr.id=c.crypto_id WHERE c.portfolio_id=:portfolio_id AND c.change_id=(select max(change_id) from contents where portfolio_id=:portfolio_id) ORDER BY crypto_id"
+    sql = "SELECT cs.portfolio_day, cs.cash, c.crypto_id, c.amount, c.change_id, c.value, cs.total_value FROM contents c LEFT JOIN contents_support cs ON c.change_id=cs.change_id LEFT JOIN cryptos cr ON cr.id=c.crypto_id WHERE c.portfolio_id=:portfolio_id AND c.change_id=(select max(change_id) from contents where portfolio_id=:portfolio_id) ORDER BY crypto_id"
     # print(sql)
     rows=None
     try:
