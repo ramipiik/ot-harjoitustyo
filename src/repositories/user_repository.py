@@ -1,11 +1,13 @@
 import sqlite3
-# from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlite3.dbapi2 import Error
 
 
-def login(username, password):
-    connection = sqlite3.connect('../data/database/data.db')
+DATABASE_PATH='../data/database/data.db'
+
+'''Method for verifying username and password'''
+def verify_user(username, password):
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "SELECT id, username, is_admin, password FROM users WHERE username=:username"
     try:
@@ -19,9 +21,6 @@ def login(username, password):
         return None
     else:
         if check_password_hash(user[3], password):
-            # session["user_id"] = user.id
-            # session["username"] = user.username
-            # session["admin"] = user.is_admin
             return user[0]
         else:
             print ("passwords don't match")
@@ -33,13 +32,13 @@ def logout():
     pass
 
 
-def signup(username, password):
-    connection = sqlite3.connect('../data/database/data.db')
+'''Method for storing a new user to database'''
+def store_user(username, password):
+    connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     hash_value = generate_password_hash(password)
     try:
         sql = "INSERT INTO users (username, password, created, is_admin) VALUES (:username,:password, CURRENT_TIMESTAMP, False)"
-        # print(sql)
         cursor.execute(sql, {"username": username, "password": hash_value})
         connection.commit()
         connection.close()

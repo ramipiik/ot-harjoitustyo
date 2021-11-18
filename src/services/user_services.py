@@ -1,26 +1,35 @@
-from repositories.users import login
-from repositories.users import signup
+from repositories.user_repository import verify_user
+from repositories.user_repository import store_user
 
 
-def login_service(username, password):
-    response=login(username, password)
+'''Service for logging in a user'''
+def login(username, password):
+    response=verify_user(username, password)
+    #To do: Move prints to text_ui?
     if response:
         print(username, "logged in")
+        print("-----------")
         return username
     else:
+        print("----------")
         print("User not found or incorrect password")
+        print("----------")
         return None
 
+
 def logout():
-    #to be done
+    #To be done
     pass
 
 
-def signup_service(username, password):
-    response=signup(username, password)
+'''Service for signing up a new user '''
+def signup(username, password):
+    response=store_user(username, password)
+    #To do: Move prints to text_ui?
     if response:
+        print("----------")
         print(username, "created")
-        return login_service (username, password)
+        return verify_user (username, password)
     else:
-        print ("signup failed")
+        return False
 
