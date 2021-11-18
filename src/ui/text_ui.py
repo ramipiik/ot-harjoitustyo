@@ -8,6 +8,7 @@ from services.portfolio_services import fetch_user_portfolios_service
 from services.portfolio_services import fetch_portfolio_content
 from services.portfolio_services import buy
 from services.portfolio_services import sell
+from services.portfolio_services import next_day
 
 def login():
     while True:
@@ -68,8 +69,9 @@ def start():
                 exit()
     if content_object:
         while(True):
+            print("Day", content_object.portfolio_day)
             print("What do you want to do next?")
-            print("Press B to buy, S to sell, N for next day, Q for save and quit")
+            print("Press B to buy, S to sell, N for next day, Q for quit")
             choice=input()
             if choice=='B' or choice=='b':
                 print("Which crypto do you want to buy?")
@@ -85,6 +87,11 @@ def start():
                 investment=int(input())
                 sell(content_object, crypto_id, investment)
                 fetch_portfolio_content(portfolio_id)
+            if choice=='N' or choice=='n':
+                next_day(content_object)
+                fetch_portfolio_content(portfolio_id)
+            if choice=='Q' or choice=='q':
+                exit()
 
 
     

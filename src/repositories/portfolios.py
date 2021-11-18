@@ -49,18 +49,28 @@ def store_first_time(portfolio:Portfolio, first_day, initial_capital):
     connection = sqlite3.connect('../data/database/data.db')
     cursor = connection.cursor()
     try:
-        sql = "INSERT INTO contents (portfolio_id, portfolio_day, cash, created, change_id) VALUES (:portfolio_id, :first_day, :cash, CURRENT_TIMESTAMP, 1)"
+        sql = "INSERT INTO contents (portfolio_id, created, change_id) VALUES (:portfolio_id, CURRENT_TIMESTAMP, 1)"
         # print(sql)
-        cursor.execute(sql, {"portfolio_id": portfolio.id, "first_day": first_day, "cash": initial_capital})
-        connection.commit()
-        connection.close()
-        initial_content=[portfolio.id, first_day, initial_capital, 1]
+        cursor.execute(sql, {"portfolio_id": portfolio.id})
     except Error as e:
         print(e)
         return False
+    
+    try:
+        sql = "INSERT INTO contents_support (portfolio_id, portfolio_day, cash, created, change_id) VALUES (:portfolio_id, :first_day, :cash, CURRENT_TIMESTAMP, 1)"
+        # print(sql)
+        cursor.execute(sql, {"portfolio_id": portfolio.id, "first_day": first_day, "cash": initial_capital})
+
+    except Error as e:
+        print(e)
+        return False
+    
+    connection.commit()
+    connection.close()
+    initial_content=[portfolio.id, first_day, initial_capital, 1]
     return initial_content
 
-def store_contents(contents:Content):
+def store_contents(contents:Content, rates):
     connection = sqlite3.connect('../data/database/data.db')
     cursor = connection.cursor()
     total_value=contents.cash
@@ -69,7 +79,7 @@ def store_contents(contents:Content):
             print("crypto_id", crypto_id)
             print("status", status)
             amount=status["amount"]
-            value=status["value"]
+            value=amount*rates[crypto_id]["close"]
             total_value+=value
             try:
                 sql = "INSERT INTO contents (portfolio_id, change_id, crypto_id, amount, value) VALUES (:portfolio_id, :change_id, :crypto_id, :amount, :value)"
@@ -79,9 +89,9 @@ def store_contents(contents:Content):
                 print(e)
                 return False            
         try:
-            sql = "INSERT INTO contents_support (portfolio_id, portfolio_day, cash, created, change_id, total_value) VALUES (:portfolio_id, :first_day, :cash, CURRENT_TIMESTAMP, :change_id, :total_value)"
+            sql = "INSERT INTO contents_support (portfolio_id, portfolio_day, cash, created, change_id, total_value) VALUES (:portfolio_id, :portfolio_day, :cash, CURRENT_TIMESTAMP, :change_id, :total_value)"
             # print(sql)
-            cursor.execute(sql, {"portfolio_id": contents.portfolio_id, "first_day": contents.portfolio_day, "cash": contents.cash, "change_id":contents.change_id, "total_value": total_value})
+            cursor.execute(sql, {"portfolio_id": contents.portfolio_id, "portfolio_day": contents.portfolio_day, "cash": contents.cash, "change_id":contents.change_id, "total_value": total_value})
         except Error as e:
             print(e)
             return False
@@ -105,19 +115,35 @@ def read_user_porftfolios_repository(user_id):
     connection.close()
     return rows
 
+def read_portfolio_frequency(portfolio_id):
+    connection = sqlite3.connect('../data/database/data.db')
+    cursor = connection.cursor()
+    sql = "SELECT frequency FROM portfolios WHERE id=:portfolio_id"
+    # print(sql)
+    row=None
+    try:
+        cursor.execute(sql, {"portfolio_id": portfolio_id})
+        row = cursor.fetchone()
+    except Error as e:
+        print(e)
+    connection.close()
+    return row
+
+
+
 def read_portfolio_content(portfolio_id):
     connection = sqlite3.connect('../data/database/data.db')
     cursor = connection.cursor()
     # fetches all events of the portfolio from the latest day.
     #sql = "SELECT c.portfolio_day, c.cash, c.crypto_id, c.amount, c.change_id, c.value FROM contents c LEFT JOIN cryptos cr ON cr.id=c.crypto_id WHERE c.portfolio_id=:portfolio_id AND c.change_id=(select max(change_id) from contents where portfolio_id=:portfolio_id) ORDER BY crypto_id"
-    sql = "SELECT cs.portfolio_day, cs.cash, c.crypto_id, c.amount, c.change_id, c.value, cs.total_value FROM contents c LEFT JOIN contents_support cs ON c.change_id=cs.change_id LEFT JOIN cryptos cr ON cr.id=c.crypto_id WHERE c.portfolio_id=:portfolio_id AND c.change_id=(select max(change_id) from contents where portfolio_id=:portfolio_id) ORDER BY crypto_id"
-    # print(sql)
+    sql = "SELECT cs.portfolio_day, cs.cash, c.crypto_id, c.amount, c.change_id, c.value, cs.total_value FROM contents_support cs LEFT JOIN contents c ON c.change_id=cs.change_id LEFT JOIN cryptos cr ON cr.id=c.crypto_id WHERE cs.portfolio_id=:portfolio_id AND c.portfolio_id=:portfolio_id AND cs.change_id=(select max(change_id) from contents where portfolio_id=:portfolio_id) ORDER BY crypto_id"
+    print(sql)
     rows=None
     try:
-        cursor.execute(sql, {"portfolio_id":portfolio_id, "portfolio_id":portfolio_id})
+        cursor.execute(sql, {"portfolio_id":portfolio_id})
         rows = cursor.fetchall()
     except Error as e:
         print(e)
     connection.close()
-    # print("rows", rows)
+    print("rows", rows)
     return rows

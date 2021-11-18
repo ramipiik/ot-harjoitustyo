@@ -5,10 +5,13 @@ from repositories.portfolios import read_portfolio_content
 from repositories.portfolios import store_first_time
 from repositories.portfolios import fetch_portfolio_id
 from repositories.portfolios import store_contents
+from repositories.portfolios import read_portfolio_frequency
 
 from repositories.read_prices import get_prices
 from entities.portfolio import Portfolio
 from entities.content import Content
+
+import datetime
 
 FIRST_DAY='2020-01-01' #Later: Choose the start day randomly
 INITIAL_CAPITAL=1000000
@@ -36,17 +39,21 @@ def first_day(portfolio:Portfolio, user_id):
     # print("portfolio_id", portfolio_id)
     aux=store_first_time(portfolio, FIRST_DAY, INITIAL_CAPITAL)
     content_object=Content(aux[0], aux[1], aux[2], aux[3])
+    print (content_object)
+    print("'''''''''''''")
     return content_object
 
 
 def buy(content_object:Content, crypto_id, investment):
     content_object.buy(crypto_id, investment)
-    store_contents(content_object)
+    rates=get_prices(content_object.portfolio_day)
+    store_contents(content_object, rates)
 
 
 def sell(content_object:Content, crypto_id, investment):
     content_object.sell(crypto_id, investment)
-    store_contents(content_object)
+    rates=get_prices(content_object.portfolio_day)
+    store_contents(content_object, rates)
 
 
 def fetch_user_portfolios_service(user_id):
@@ -74,11 +81,32 @@ def fetch_portfolio_content(portfolio_id):
             content_object.cryptos[row[2]]={}
             content_object.cryptos[row[2]]["amount"]=row[3]
             content_object.cryptos[row[2]]["value"]=row[5]
-    print(f"Total value: {content[0][6]:.0f}")
+    if content[0][6]:
+        # print(content)
+        print(f"Total value: {content[0][6]:.0f}")
     print("---------")
     fetch_rates(date)
     return content_object
-    
+
+
+def next_day(content_object:Content):
+    date=content_object.portfolio_day
+    frequency=(read_portfolio_frequency(content_object.portfolio_id)[0])
+    print("frequency", frequency)
+    if frequency=='daily':
+        n=1
+    elif frequency=='weekly':
+        n=7
+    elif frequency=='monthly':
+        n=30
+    date_object = datetime.datetime(int(date[0:4]), int(date[5:7]), int(date[8:10])).date()
+    # print("date_objet",date_object)
+    date_object += datetime.timedelta(days=n)
+    # print("date",date_object)
+    content_object.portfolio_day=str(date_object)
+    content_object.change_id+=1
+    rates=get_prices(str(date_object))
+    store_contents(content_object, rates)
 
 def fetch_rates(date):    
     print("Today's rates")

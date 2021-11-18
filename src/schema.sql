@@ -46,7 +46,7 @@ CREATE TABLE contents (
 
 CREATE TABLE contents_support (
      id INTEGER PRIMARY KEY,
-     change_id INTEGER REFERENCES contents,
+     change_id INTEGER,
      cash NUMERIC,
      portfolio_id INTEGER REFERENCES portfolio,
      portfolio_day TEXT,
