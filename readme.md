@@ -3,8 +3,8 @@ Sovelluksen avulla voi harjoitella kryptovaluuttihin sijoittamista.
 
 ## Kysymys ohjaajalle
 * Onnistun ajamaan sovellusta ottamalla ssh-yhteyden yliopiston serverille (esim. melkki.cs.helsinki.fi)
-* Virtuaalityöaseman https://vdi.helsinki.fi/ kautta käyttö ei kuitenkaan onnistu. Jostain syystä SQLite ei osaa kirjoittaa tietokantaan virtuaalityöaseman kautta. Itselläni ei ole oikeuksia päivittä SQliteä uusimpaan versioon, enkä oikein keksi mikä muu siinä voisi olla ongelmana.
-* Itselleni erittäinriittää hyvin, että sovellus toimii ssh-yhteyden kautta. Jos on kuitenkin pakollinen vaatimus, että sovellus toimii myös vdi:n kautta, niin tarvitsisin tähän neuvoja. Kiitos.
+* Virtuaalityöaseman https://vdi.helsinki.fi/ kautta käyttö ei kuitenkaan onnistu. Jostain syystä SQLite ei osaa kirjoittaa tietokantaan virtuaalityöaseman kautta. Itselläni ei ole oikeuksia päivittä SQliteä uudempaan versioon (sudo apt install sqlite3), enkä oikein keksi mikä muu siinä voisi olla ongelmana.
+* Itselleni riittää erittäin hyvin, että sovellus toimii ssh-yhteyden kautta. Jos on kuitenkin pakollinen vaatimus, että sovellus toimii myös vdi:n kautta, niin tarvitsisin tähän neuvoja. Kiitos.
 
 ## Sovelluksen käynnistäminen
 1. Kopioi repositorio komennolla:
