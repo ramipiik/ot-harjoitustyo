@@ -1,9 +1,9 @@
 # Sijoitussimulaattori
-Sovelluksen avulla voi harjoitella kryptovaluuttihin sijoittamista.
+Sovelluksen avulla voi harjoitella kryptovaluuttoihin sijoittamista.
 
 ## Kysymys ohjaajalle
-* Onnistun ajamaan sovellusta ottamalla ssh-yhteyden yliopiston serverille (esim. melkki.cs.helsinki.fi)
-* Virtuaalityöaseman https://vdi.helsinki.fi/ kautta käyttö ei kuitenkaan onnistu. Jostain syystä SQLite ei osaa kirjoittaa tietokantaan virtuaalityöaseman kautta. Itselläni ei ole oikeuksia päivittä SQliteä uudempaan versioon (sudo apt install sqlite3), enkä oikein keksi mikä muu siinä voisi olla ongelmana.
+* Onnistun ajamaan sovellusta sekä omalla koneellani että yliopiston koneella ssh-yhteyden kautta.
+* Virtuaalityöaseman https://vdi.helsinki.fi/ kautta käyttö ei kuitenkaan onnistu. Jostain syystä SQLite ei osaakaan kirjoittaa tietokantaan virtuaalityöaseman kautta. Itselläni ei ole oikeuksia päivittä SQliteä uudempaan versioon (sudo apt install sqlite3), enkä oikein keksi mikä muu siinä voisi olla ongelmana.
 * Itselleni riittää erittäin hyvin, että sovellus toimii ssh-yhteyden kautta. Jos on kuitenkin pakollinen vaatimus, että sovellus toimii myös vdi:n kautta, niin tarvitsisin tähän neuvoja. Kiitos.
 
 ## Sovelluksen käynnistäminen
