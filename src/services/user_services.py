@@ -1,5 +1,7 @@
 from repositories.user_repository import verify_user, store_user
+from services.portfolio_services import get_portfolios
 from ui.styles import bcolors
+from entities.user import User
 
 
 def login(username, password):
@@ -7,9 +9,12 @@ def login(username, password):
     response = verify_user(username, password)
     # To do: Move prints to text_ui?
     if response:
-        print(f"{bcolors.OKCYAN}{username} logged in")
+        user = User(response[0], response[1], response[2])
+        portfolios = get_portfolios(user)
+        user.portfolios = portfolios
+        print(f"{bcolors.OKCYAN}{user.username} logged in")
         print(f"--------------------{bcolors.ENDC}")
-        return username
+        return user
     else:
         print(f"{bcolors.FAIL}--------------------")
         print(f"User not found or incorrect password")
@@ -30,6 +35,6 @@ def signup(username, password):
         print(f"{bcolors.OKCYAN}--------------------")
         print(f"{username} created")
         print(f"--------------------{bcolors.ENDC}")
-        return verify_user(username, password)
+        return login(username, password)
     else:
         return False

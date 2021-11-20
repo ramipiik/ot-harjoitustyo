@@ -16,7 +16,9 @@ class Content:
     def buy(self, crypto_id, investment):
         """Method for buying a crypto"""
         if investment > self.cash:
-            print(f"{bcolors.FAIL}Not enough cash{bcolors.ENDC}")
+            print(f"{bcolors.FAIL}--------------------")
+            print(f"Not enough cash")
+            print(f"--------------------{bcolors.ENDC}")
             return False
         crypto_ids = get_crypto_ids()
         if crypto_id not in crypto_ids:

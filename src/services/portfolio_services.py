@@ -6,6 +6,7 @@ from repositories.portfolio_repository import (
 from repositories.content_repository import store_content_first_time
 from entities.portfolio import Portfolio
 from entities.content import Content
+from entities.user import User
 
 
 # To do: Choose the start day randomly
@@ -13,7 +14,7 @@ FIRST_DAY = "2020-01-01"
 INITIAL_CAPITAL = 1000000
 
 
-def create_portfolio(user_id, portfolio_name, frequency):
+def create_portfolio(user: User, portfolio_name, frequency):
     """Service for creating a new portfolio"""
     if frequency == 1:
         frequency = "daily"
@@ -21,14 +22,16 @@ def create_portfolio(user_id, portfolio_name, frequency):
         frequency = "weekly"
     if frequency == 3:
         frequency = "monthly"
-    new_portfolio = Portfolio(user_id, portfolio_name, frequency)
-    store_portfolio(user_id, new_portfolio)
-    new_portfolio.id = read_portfolio_id(user_id, portfolio_name)
+    new_portfolio = Portfolio(user.username, portfolio_name, frequency)
+    store_portfolio(user.username, new_portfolio)
+    new_portfolio.id = read_portfolio_id(user.username, portfolio_name)
     aux = store_content_first_time(new_portfolio, FIRST_DAY, INITIAL_CAPITAL)
     content_object = Content(aux[0], aux[1], aux[2], aux[3])
+    user.add_portfolio(new_portfolio.id)
     return content_object
 
 
-def get_portfolios(user_id):
+def get_portfolios(user):
     """Service for fetching user's portfolios"""
-    return read_portfolios(user_id)
+    portfolios = read_portfolios(user.username)
+    return portfolios

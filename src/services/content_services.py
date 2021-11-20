@@ -4,8 +4,9 @@ from repositories.content_repository import read_portfolio_content, store_conten
 from repositories.portfolio_repository import read_portfolio_frequency
 from repositories.price_repository import read_prices
 from services.price_services import get_rates
+from services.portfolio_services import get_portfolios
 from entities.content import Content
-from ui.styles import bcolors
+from ui.styles import ERROR_MESSAGE, bcolors
 
 
 def buy(content_object: Content, crypto_id, investment):
@@ -22,10 +23,15 @@ def sell(content_object: Content, crypto_id, investment):
         store_content(content_object, rates)
 
 
-def get_content(portfolio_id):
+def get_content(user, portfolio_id):
     """Service for fetching and printing portfolio content. Returns a content object."""
-    # To-do: Add a check for checking the logged-in user. Currently the method opens any portfolio regardless of the user if one guesses the number.
-    # -> Need to keep the logged-in user in memory (currently missing)..
+    portfolios = []
+    aux = get_portfolios(user)
+    for item in aux:
+        portfolios.append(item[0])
+    if portfolio_id not in portfolios:
+        print(ERROR_MESSAGE)
+        return False
     content = read_portfolio_content(portfolio_id)
     date = content[0][0]
     cash = content[0][1]

@@ -19,7 +19,7 @@ def verify_user(username, password):
         return None
     else:
         if check_password_hash(user[3], password):
-            return user[0]
+            return [user[0], user[1], user[2]]
         else:
             return None
 

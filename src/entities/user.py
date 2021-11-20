@@ -8,10 +8,14 @@ from .portfolio import Portfolio
 class User:
     """Class for managing users"""
 
-    def __init__(self, username, password):
+    def __init__(self, id, username, is_admin):
+        self.id = id
         self.username = username
-        self.password = password
-        self.portfolios = {}
+        self.is_admin = is_admin
+        self.portfolios = []
 
-    def add_portfolio(self, portfolio_name, frequency, periods):
-        self.portfolios[portfolio_name] = Portfolio(frequency, periods)
+    def add_portfolio(self, portfolio_id):
+        self.portfolios.append(portfolio_id)
+
+    def get_porffolios(self):
+        return self.portfolios
