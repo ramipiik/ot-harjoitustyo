@@ -7,6 +7,7 @@ authors = ["Rami Piik <rami.piik@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 Werkzeug = "^2.0.2"
+invoke = "^1.6.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.11b1"
