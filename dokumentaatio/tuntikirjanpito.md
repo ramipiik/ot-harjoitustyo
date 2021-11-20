@@ -13,5 +13,5 @@
 | 17.11. | 6    | salkun arvon laskeminen. Tietomallin refaktorointi. |
 | 18.11. | 3.5  | koodin siistiminen ja refaktorointi |
 | 19.11. | 1    | koodin siistiminen |
-| 20.11. | xxx  | käyttäjänhallinta, yksikkötestaus, linttaus, välipalautus| 
-| yht    | 40.5 +xxx
+| 20.11. | 8.5  | käyttäjienhallinta, konfiguraatiot, yksikkötestaus, linttaus, välipalautuksen vaatimukset| 
+| yht    | 49   |
