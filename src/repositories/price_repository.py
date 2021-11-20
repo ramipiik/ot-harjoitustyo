@@ -2,19 +2,21 @@ import sqlite3
 import csv
 from sqlite3.dbapi2 import IntegrityError, Error
 from config import DATABASE_PATH
+from repositories.crypto_repository import CRYPTO_NAMES
 
 
-def read_prices(i):
+def read_prices(date):
     """Method for reading prices from data base"""
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
-    sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{i}'"
+    sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
+        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date}'"
     rows = None
     try:
         cursor.execute(sql)
         rows = cursor.fetchall()
-    except Error as e:
-        print(e)
+    except Error as error:
+        print(error)
     connection.close()
     rates = {}
     if rows:
@@ -33,48 +35,28 @@ def store_prices():
     """Method for reading prices from CSV file and storing them to data base"""
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
-    filenames = [
-        "ADA",
-        "BCH",
-        "BTC",
-        "Dash",
-        "DOGE",
-        "EOS",
-        "ETC",
-        "ETH",
-        "LTC",
-        "MIOTA",
-        "NEO",
-        "TRX",
-        "USDT",
-        "VEN",
-        "XEM",
-        "XLM",
-        "XMR",
-        "XRP",
-        "XTC",
-    ]
-    for filename in filenames:
+    for filename in CRYPTO_NAMES:
         sql = f"SELECT id FROM cryptos WHERE name='{filename}'"
         try:
             cursor.execute(sql)
             result = cursor.fetchone()
             crypto_id = result[0]
-        except Error as e:
-            print(e)
-        file = open("../../data/CSV/" + filename + ".csv")
-        content = csv.reader(file)
-        # modify date format to yyyy-mm-dd"
-        new_content = []
-        for row in content:
-            original_date = row[0]
-            month = original_date[0:2]
-            day = original_date[3:5]
-            year = original_date[6:10]
-            new_date = year + "-" + month + "-" + day
-            row[0] = new_date
-            new_content.append(row)
-        sql = f"INSERT INTO prices (crypto_id, date, close, volume, open, high, low) VALUES('{crypto_id}', ?, ?, ?, ?, ?, ?)"
+        except Error as error:
+            print(error)
+        with open("data/CSV/" + filename + ".csv", "r", encoding="utf8") as file:
+            content = csv.reader(file)
+            # modify date format to yyyy-mm-dd"
+            new_content = []
+            for row in content:
+                original_date = row[0]
+                month = original_date[0:2]
+                day = original_date[3:5]
+                year = original_date[6:10]
+                new_date = year + "-" + month + "-" + day
+                row[0] = new_date
+                new_content.append(row)
+        sql = f"INSERT INTO prices (crypto_id, date, close, volume, open, high, low) \
+            VALUES('{crypto_id}', ?, ?, ?, ?, ?, ?)"
         try:
             cursor.executemany(sql, new_content)
         except IntegrityError:

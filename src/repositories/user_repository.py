@@ -1,6 +1,6 @@
 import sqlite3
-from werkzeug.security import check_password_hash, generate_password_hash
 from sqlite3.dbapi2 import Error
+from werkzeug.security import check_password_hash, generate_password_hash
 from config import DATABASE_PATH
 
 
@@ -12,16 +12,14 @@ def verify_user(username, password):
     try:
         cursor.execute(sql, {"username": username})
         user = cursor.fetchone()
-    except Error as e:
-        print(e)
+    except Error as error:
+        print(error)
     connection.close()
     if not user:
         return None
-    else:
-        if check_password_hash(user[3], password):
-            return [user[0], user[1], user[2]]
-        else:
-            return None
+    if check_password_hash(user[3], password):
+        return [user[0], user[1], user[2]]
+    return None
 
 
 def logout():
@@ -35,11 +33,12 @@ def store_user(username, password):
     cursor = connection.cursor()
     hash_value = generate_password_hash(password)
     try:
-        sql = "INSERT INTO users (username, password, created, is_admin) VALUES (:username,:password, CURRENT_TIMESTAMP, False)"
+        sql = "INSERT INTO users (username, password, created, is_admin) \
+            VALUES (:username,:password, CURRENT_TIMESTAMP, False)"
         cursor.execute(sql, {"username": username, "password": hash_value})
         connection.commit()
         connection.close()
-    except Error as e:
-        print(e)
+    except Error as error:
+        print(error)
         return False
     return True

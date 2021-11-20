@@ -41,7 +41,8 @@ def list_portfolios(user):
 
 def create_portfolio_UI(user):
     """Text UI for creating a new portfolio"""
-    portfolio_name = input(f"{bcolors.OKCYAN}Name of the new portfolio: {bcolors.ENDC}")
+    portfolio_name = input(
+        f"{bcolors.OKCYAN}Name of the new portfolio: {bcolors.ENDC}")
     while True:
         print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
         print(
@@ -122,7 +123,8 @@ def start():
                         )
                     )
                     investment = int(
-                        input(f"{bcolors.OKCYAN}Amount to invest (EUR): {bcolors.ENDC}")
+                        input(
+                            f"{bcolors.OKCYAN}Amount to invest (EUR): {bcolors.ENDC}")
                     )
                 except:
                     print(ERROR_MESSAGE)

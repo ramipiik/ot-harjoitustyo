@@ -15,11 +15,10 @@ def login(username, password):
         print(f"{bcolors.OKCYAN}{user.username} logged in")
         print(f"--------------------{bcolors.ENDC}")
         return user
-    else:
-        print(f"{bcolors.FAIL}--------------------")
-        print(f"User not found or incorrect password")
-        print(f"--------------------{bcolors.ENDC}")
-        return None
+    print(f"{bcolors.FAIL}--------------------")
+    print(f"User not found or incorrect password")
+    print(f"--------------------{bcolors.ENDC}")
+    return None
 
 
 def logout():
@@ -36,5 +35,4 @@ def signup(username, password):
         print(f"{username} created")
         print(f"--------------------{bcolors.ENDC}")
         return login(username, password)
-    else:
-        return False
+    return False

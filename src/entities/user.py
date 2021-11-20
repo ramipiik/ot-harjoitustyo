@@ -1,15 +1,8 @@
-from .portfolio import Portfolio
-
-# This class is currently not used.
-# User data is directly stored to and read from the database.
-# To do: keep the logged in user object in memory
-
-
 class User:
     """Class for managing users"""
 
-    def __init__(self, id, username, is_admin):
-        self.id = id
+    def __init__(self, user_id, username, is_admin):
+        self.id = user_id
         self.username = username
         self.is_admin = is_admin
         self.portfolios = []

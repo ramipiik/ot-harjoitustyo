@@ -17,7 +17,7 @@ class Content:
         """Method for buying a crypto"""
         if investment > self.cash:
             print(f"{bcolors.FAIL}--------------------")
-            print(f"Not enough cash")
+            print("Not enough cash")
             print(f"--------------------{bcolors.ENDC}")
             return False
         crypto_ids = get_crypto_ids()
@@ -29,7 +29,7 @@ class Content:
         self.change_id += 1
         prices = read_prices(date)
         price = prices[crypto_id]["close"]
-        if crypto_id in self.cryptos.keys():
+        if crypto_id in self.cryptos:
             before = self.cryptos[crypto_id]["amount"]
             after = before + investment / price
             self.cryptos[crypto_id]["amount"] = after
@@ -51,7 +51,7 @@ class Content:
         self.change_id += 1
         prices = read_prices(date)
         price = prices[crypto_id]["close"]
-        if crypto_id in self.cryptos.keys():
+        if crypto_id in self.cryptos:
             before = self.cryptos[crypto_id]["amount"]
             after = before - investment / price
             self.cryptos[crypto_id]["amount"] = after

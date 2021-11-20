@@ -62,15 +62,15 @@ def next_period(content_object: Content):
     date = content_object.portfolio_day
     frequency = read_portfolio_frequency(content_object.portfolio_id)[0]
     if frequency == "daily":
-        n = 1
+        days = 1
     elif frequency == "weekly":
-        n = 7
+        days = 7
     elif frequency == "monthly":
-        n = 30
+        days = 30
     date_object = datetime.datetime(
         int(date[0:4]), int(date[5:7]), int(date[8:10])
     ).date()
-    date_object += datetime.timedelta(days=n)
+    date_object += datetime.timedelta(days)
     content_object.portfolio_day = str(date_object)
     content_object.change_id += 1
     rates = read_prices(str(date_object))
