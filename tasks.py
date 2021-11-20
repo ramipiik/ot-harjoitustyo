@@ -27,5 +27,5 @@ def lint(ctx):
 
 @task
 def initiate_db(ctx):
-    ctx.run("sqlite3 data/database/data.db<src/schema.sql")
+    ctx.run("sqlite3 data/data.db<src/schema.sql")
     ctx.run("python3 src/initiate_db.py")
