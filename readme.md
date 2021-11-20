@@ -22,7 +22,12 @@ export PATH=/home/xxx/.local/bin:$PATH
 poetry install
 ```
 
-5. Käynnistä sovellus ajamalla allaoleva komento:
+5. Ensimmäisellä kerralla: Luo ja alusta SQlite-tietokanta ajamalla komento:
+```
+poetry run invoke initiate-db
+```
+
+6. Käynnistä sovellus ajamalla allaoleva komento:
 ```
 poetry run invoke start
 ```
