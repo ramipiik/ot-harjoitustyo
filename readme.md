@@ -1,39 +1,46 @@
-# Ohjelmistotekniikan harjoitustyö syksy 2021
+# Sijoitussimulaattori
+Sovelluksen avulla voi harjoitella kryptovaluuttihin sijoittamista.
 
 ## Sovelluksen käynnistäminen
-* Kopioi repositorio komennolla:
+1. Kopioi repositorio komennolla:
 ```
 git clone https://github.com/ramipiik/ot-harjoitustyo.git
 ```
 
-* Asenna Poetry ao. komennolla tai katso tarkemmat ohjeet [täältä](https://python-poetry.org/docs/#installation): 
+2. Asenna Poetry ao. komennolla tai katso tarkemmat ohjeet [täältä](https://python-poetry.org/docs/#installation): 
 ```
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python3 -
 ```
 
-* Halutessasi lisää poetry pathiin komennolla, missä 'xxx' on oma käyttäjätunnuksesi.
+3. Halutessasi lisää poetry pathiin komennolla, missä 'xxx' on oma käyttäjätunnuksesi.
 ```
 export PATH=/home/xxx/.local/bin:$PATH
 ```
 
-* Asenna riippuvuudet komennolla:
+4. Asenna riippuvuudet komennolla:
 ```
 poetry install
 ```
 
-* Käynnistä sovellus ajamalla allaoleva komento **src** -kansiossa:
+5. Käynnistä sovellus ajamalla allaoleva komento:
 ```
 poetry run invoke start
 ```
+## Muut komennot
 
-## Tehtävät viikko 1
-[gitlog.txt](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko1/gitlog.txt)    
-[komentorivi.txt](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko1/komentorivi.txt)  
+### Testit
+Testit voi ajaa komennolla:
+```
+poetry run invoke test
+```
+### Testikattavuus
+Testikattavuusraportin saa komennolla:
+```
+poetry run invoke coverage-report
+```
+### Linttaus
+Linttauksen voi ajaa komennolla:
+```
+poetry run invoke lint
+```
 
-## Tehtävät viikko 2
-[coverage report.png](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko2/Coverage%20report.png)
-
-## Tehtävät viikko 3
-[luokkakaavio.jpg](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko3/Luokkakaavio.jpg)  
-[sekvenssikaavio3.png](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko3/Sekvenssikaavio3.png)  
-[sekvenssikaavio4.png](https://github.com/ramipiik/ot-harjoitustyo/blob/main/laskarit/viikko3/Sekvenssikaavio4.png)
