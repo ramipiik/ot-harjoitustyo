@@ -1,4 +1,4 @@
-# Tuntirjanpito
+# Tuntikirjanpito
 
 | päivä  | aika | mitä tein  |
 | :-----:|:-----| :-----|
