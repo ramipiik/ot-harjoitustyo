@@ -1,4 +1,8 @@
-from repositories.portfolio_repository import store_portfolio, read_portfolios, read_portfolio_id
+from repositories.portfolio_repository import (
+    store_portfolio,
+    read_portfolios,
+    read_portfolio_id,
+)
 from repositories.content_repository import store_content_first_time
 from entities.portfolio import Portfolio
 from entities.content import Content

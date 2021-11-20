@@ -23,7 +23,7 @@ def sell(content_object: Content, crypto_id, investment):
 
 
 def get_content(portfolio_id):
-    """Service for fetching and printing portfolio content. Returns a content object."""    
+    """Service for fetching and printing portfolio content. Returns a content object."""
     # To-do: Add a check for checking the logged-in user. Currently the method opens any portfolio regardless of the user if one guesses the number.
     # -> Need to keep the logged-in user in memory (currently missing)..
     content = read_portfolio_content(portfolio_id)

@@ -37,6 +37,7 @@ def store_cryptos():
     connection.commit()
     connection.close()
 
+
 def read_crypto_ids():
     """Method for reading crypto id's from database"""
     connection = sqlite3.connect(DATABASE_PATH)
@@ -49,7 +50,7 @@ def read_crypto_ids():
     except Error as e:
         print(e)
     connection.close()
-    ids=[]
+    ids = []
     for row in rows:
         ids.append(row[0])
     return ids

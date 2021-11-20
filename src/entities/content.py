@@ -2,8 +2,10 @@ from repositories.price_repository import read_prices
 from services.crypto_services import get_crypto_ids
 from ui.styles import bcolors, ERROR_MESSAGE
 
+
 class Content:
     """Class for managing portfolio content"""
+
     def __init__(self, portfolio_id, portfolio_day, cash, change_id):
         self.portfolio_id = portfolio_id
         self.portfolio_day = portfolio_day
@@ -11,13 +13,12 @@ class Content:
         self.change_id = change_id
         self.cryptos = {}
 
-
     def buy(self, crypto_id, investment):
         """Method for buying a crypto"""
         if investment > self.cash:
             print(f"{bcolors.FAIL}Not enough cash{bcolors.ENDC}")
             return False
-        crypto_ids=get_crypto_ids()
+        crypto_ids = get_crypto_ids()
         if crypto_id not in crypto_ids:
             print(ERROR_MESSAGE)
             return False
@@ -37,10 +38,9 @@ class Content:
             self.cryptos[crypto_id]["value"] = investment
         return True
 
-
     def sell(self, crypto_id, investment):
         """Method for buying a crypto. Allows short selling."""
-        crypto_ids=get_crypto_ids()
+        crypto_ids = get_crypto_ids()
         if crypto_id not in crypto_ids:
             print(ERROR_MESSAGE)
             return False

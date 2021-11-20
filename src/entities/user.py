@@ -7,6 +7,7 @@ from .portfolio import Portfolio
 
 class User:
     """Class for managing users"""
+
     def __init__(self, username, password):
         self.username = username
         self.password = password

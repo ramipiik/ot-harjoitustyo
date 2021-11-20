@@ -16,13 +16,14 @@ def login(username, password):
         print(f"--------------------{bcolors.ENDC}")
         return None
 
+
 def logout():
     # To be done
     pass
 
 
 def signup(username, password):
-    """Service for signing up a new user """
+    """Service for signing up a new user"""
     response = store_user(username, password)
     # To do: Move prints to text_ui?
     if response:
