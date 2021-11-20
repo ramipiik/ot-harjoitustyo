@@ -146,7 +146,7 @@ def start():
                 get_content(user, portfolio_id)
             elif choice == "N" or choice == "n":
                 next_period(content_object)
-                get_content(portfolio_id)
+                get_content(user, portfolio_id)
             elif choice == "Q" or choice == "q":
                 exit()
             else:
