@@ -1,102 +1,125 @@
-from services.user_services import login
-from services.user_services import signup
-from services.portfolio_services import create_portfolio
-from services.portfolio_services import get_portfolios
-from services.content_services import get_content
-from services.content_services import buy
-from services.content_services import sell
-from services.content_services import next_period
+from services.user_services import login, signup
+from services.portfolio_services import create_portfolio, get_portfolios
+from services.content_services import get_content, buy, sell, next_period
+from ui.styles import bcolors, ERROR_MESSAGE
 
-'''Text UI for logging in'''
+"""Text UI for logging in"""
 def login_UI():
     while True:
-        username=input("Username: ")
-        password=input("Password: ")
-        print("-----------------")
-        response=login(username, password)
+        username = input(f"{bcolors.OKCYAN}Username: {bcolors.ENDC}")
+        password = input(f"{bcolors.OKCYAN}Password: {bcolors.ENDC}")
+        print(f"{bcolors.OKCYAN}--------------------{bcolors.ENDC}")
+        response = login(username, password)
         if response:
             return response
 
 
-'''Text UI for signing up'''
+"""Text UI for signing up"""
 def signup_UI():
     while True:
-        username=input("Username: ")
-        password=input("Password: ")
-        response= signup(username, password)
+        username = input(f"{bcolors.OKCYAN}Username: {bcolors.ENDC}")
+        password = input(f"{bcolors.OKCYAN}Password: {bcolors.ENDC}")
+        response = signup(username, password)
         if response:
             return response
-        else:
-            print("Please try again.")
-            print("---------------")
+        else:          
+            print(f"{bcolors.FAIL}Please try again.{bcolors.ENDC}")
+            print(f"{bcolors.FAIL}--------------------{bcolors.ENDC}")
+            {bcolors.ENDC}
+            
 
-
-'''Text UI for listing the portfolios'''
+"""Text UI for listing the portfolios"""
 def list_portfolios(user_id):
-    print("Your portfolios:")
-    portfolios=get_portfolios(user_id)
+    print(f"{bcolors.OKBLUE}Your portfolios:")
+    portfolios = get_portfolios(user_id)
     for portfolio in portfolios:
-        print (f"{portfolio[0]}: {portfolio[1]}")
-    print("-----------------")
+        print(f"{portfolio[0]}: {portfolio[1]}")
+    print(f"--------------------{bcolors.ENDC}")
 
 
-'''Text UI for creating a new portfolio'''
 def create_portfolio_UI(user_id):
-    portfolio_name=input("Name of the new portfolio: ")
-    print("------------------")
-    print("How often do you want to make investment decisions in this portfolio?")
-    frequency = int (input("1: Daily, 2: Weekly or 3: Monthly. "))
-    print("------------------")
+    """Text UI for creating a new portfolio"""
+    portfolio_name = input(f"{bcolors.OKCYAN}Name of the new portfolio: {bcolors.ENDC}")
+    while True:
+        print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
+        print(f"{bcolors.OKCYAN}How often do you want to make investment decisions in this portfolio?{bcolors.ENDC}")
+        try:
+            frequency = int(input(f"{bcolors.OKCYAN}1: Daily, 2: Weekly or 3: Monthly. {bcolors.ENDC}"))
+        except:
+            print(ERROR_MESSAGE)
+            continue
+        if frequency not in [1,2,3,]:
+            print(ERROR_MESSAGE)
+            continue
+        break
+
+    print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
     create_portfolio(user_id, portfolio_name, frequency)
 
 
-'''Text UI for starting the application and controlling the flow'''
+
 def start():
-    #To do: add functionality for going backwards in the flow like this: contents -> portfolios -> users
+    """Text UI for starting the application and controlling the flow"""
+    # To do: add functionality for going backwards in the flow like this: contents -> portfolios -> users
     while True:
-        response=input("press L to login, N to create a new user, Q to quit: ")
-        print("--------------")
-        if response=='L' or response=='l':
-            user_id=login_UI()
+        response = input(f"{bcolors.OKCYAN}press L to login, N to create a new user, Q to quit: {bcolors.ENDC}")
+        print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
+        if response == "L" or response == "l":
+            user_id = login_UI()
             break
-        if response=='N' or response=='n':
-            user_id=signup_UI()
+        if response == "N" or response == "n":
+            user_id = signup_UI()
             break
-        if response=='Q' or response=='q':
+        if response == "Q" or response == "q":
             exit()
+        print(ERROR_MESSAGE)
     if user_id:
         while True:
             list_portfolios(user_id)
-            response=input(("Press O to open a portfolios, C to create a new portfolio, Q to quit: "))
-            if response=='O' or response=='o':
-                portfolio_id=int(input("Number of portfolio to open: "))
-                content_object=get_content(portfolio_id)
-                break
-            if response=='C' or response=='c':
+            response = input(
+                (
+                    f"{bcolors.OKCYAN}Press O to open a portfolios, C to create a new portfolio, Q to quit: {bcolors.ENDC}"
+                )
+            )
+            if response == "O" or response == "o":
+                try: 
+                    portfolio_id = int(input(f"{bcolors.OKCYAN}Number of portfolio to open: {bcolors.ENDC}"))
+                    content_object = get_content(portfolio_id)
+                    break
+                except:
+                    print(ERROR_MESSAGE)
+            elif response == "C" or response == "c":
                 create_portfolio_UI(user_id)
-            if response=='Q' or response=='q':
-                print("------------------")
+            elif response == "Q" or response == "q":
+                print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
                 exit()
+            else:
+                print(ERROR_MESSAGE)
     if content_object:
-        while(True):
-            print("What do you want to do next?")
-            choice=input("Press B to buy, S to sell, N for next period, Q for quit: ")
-            print("---------")
-            if choice=='B' or choice=='b':
-                crypto_id=int(input("Number of crypto to buy: "))
-                investment=int(input("Amount to invest (EUR): "))
+        while True:
+            print(f"{bcolors.OKCYAN}What do you want to do next?{bcolors.ENDC}")
+            choice = input(f"{bcolors.OKCYAN}Press B to buy, S to sell, N for next period, Q for quit: {bcolors.ENDC}")
+            print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
+            if choice == "B" or choice == "b":
+                try:
+                    crypto_id = int(input(f"{bcolors.OKCYAN}Number of crypto to buy: {bcolors.ENDC}"))
+                    investment = int(input(f"{bcolors.OKCYAN}Amount to invest (EUR): {bcolors.ENDC}"))
+                except:
+                    print(ERROR_MESSAGE)
                 buy(content_object, crypto_id, investment)
                 get_content(portfolio_id)
-            if choice=='S' or choice=='s':
-                crypto_id=int(input("Which crypto do you want to sell? "))
-                investment=int(input("How much do you want to sell in EUR? " ))
+            elif choice == "S" or choice == "s":
+                try:
+                    crypto_id = int(input(f"{bcolors.OKCYAN}Which crypto do you want to sell? {bcolors.ENDC}"))
+                    investment = int(input(f"{bcolors.OKCYAN}How much do you want to sell in EUR? {bcolors.ENDC}"))
+                except:
+                    print(ERROR_MESSAGE)
                 sell(content_object, crypto_id, investment)
                 get_content(portfolio_id)
-            if choice=='N' or choice=='n':
+            elif choice == "N" or choice == "n":
                 next_period(content_object)
                 get_content(portfolio_id)
-            if choice=='Q' or choice=='q':
+            elif choice == "Q" or choice == "q":
                 exit()
-
-
-    
+            else: 
+                print(ERROR_MESSAGE)

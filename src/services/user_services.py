@@ -1,35 +1,34 @@
-from repositories.user_repository import verify_user
-from repositories.user_repository import store_user
+from repositories.user_repository import verify_user, store_user
+from ui.styles import bcolors
 
 
-'''Service for logging in a user'''
 def login(username, password):
-    response=verify_user(username, password)
-    #To do: Move prints to text_ui?
+    """Service for logging in a user"""
+    response = verify_user(username, password)
+    # To do: Move prints to text_ui?
     if response:
-        print(username, "logged in")
-        print("-----------")
+        print(f"{bcolors.OKCYAN}{username} logged in")
+        print(f"--------------------{bcolors.ENDC}")
         return username
     else:
-        print("----------")
-        print("User not found or incorrect password")
-        print("----------")
+        print(f"{bcolors.FAIL}--------------------")
+        print(f"User not found or incorrect password")
+        print(f"--------------------{bcolors.ENDC}")
         return None
 
-
 def logout():
-    #To be done
+    # To be done
     pass
 
 
-'''Service for signing up a new user '''
 def signup(username, password):
-    response=store_user(username, password)
-    #To do: Move prints to text_ui?
+    """Service for signing up a new user """
+    response = store_user(username, password)
+    # To do: Move prints to text_ui?
     if response:
-        print("----------")
-        print(username, "created")
-        return verify_user (username, password)
+        print(f"{bcolors.OKCYAN}--------------------")
+        print(f"{username} created")
+        print(f"--------------------{bcolors.ENDC}")
+        return verify_user(username, password)
     else:
         return False
-
