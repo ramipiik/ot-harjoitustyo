@@ -10,7 +10,7 @@ from entities.user import User
 
 
 # To do: Choose the start day randomly
-FIRST_DAY = "2020-01-01"
+FIRST_DAY = "2020-06-01"
 INITIAL_CAPITAL = 1000000
 
 

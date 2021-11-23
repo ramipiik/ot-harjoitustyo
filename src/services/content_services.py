@@ -2,7 +2,7 @@ import datetime
 
 from repositories.content_repository import read_portfolio_content, store_content
 from repositories.portfolio_repository import read_portfolio_frequency
-from repositories.price_repository import read_prices
+from repositories.price_repository import read_prices, read_max_day
 from services.price_services import get_rates
 from services.portfolio_services import get_portfolios
 from entities.content import Content
@@ -59,6 +59,7 @@ def get_content(user, portfolio_id):
 
 def next_period(content_object: Content):
     """Service for starting the next period"""
+    max_day=read_max_day()[0]
     date = content_object.portfolio_day
     frequency = read_portfolio_frequency(content_object.portfolio_id)[0]
     if frequency == "daily":
@@ -70,7 +71,15 @@ def next_period(content_object: Content):
     date_object = datetime.datetime(
         int(date[0:4]), int(date[5:7]), int(date[8:10])
     ).date()
+    
+    max_day_object = datetime.datetime(
+        int(max_day[0:4]), int(max_day[5:7]), int(max_day[8:10])
+    ).date()
+
     date_object += datetime.timedelta(days)
+    if date_object>max_day_object:
+        print(f"{bcolors.FAIL}No more price data available.")
+        date_object -= datetime.timedelta(days)
     content_object.portfolio_day = str(date_object)
     content_object.change_id += 1
     rates = read_prices(str(date_object))
