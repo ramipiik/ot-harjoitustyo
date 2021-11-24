@@ -4,11 +4,50 @@ import datetime
 from sqlite3.dbapi2 import IntegrityError, Error
 from config import DATABASE_PATH
 from repositories.crypto_repository import CRYPTO_NAMES
-# from services.portfolio_services import FIRST_DAY
 
 
 def read_prices(date):
     """Method for reading prices from data base"""
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+
+    
+    sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
+        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date}'"
+    rows = None
+    try:
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+    except Error as error:
+        print(error)
+    
+    rates = {}
+    if rows:
+        for n, row in enumerate(rows):
+            # print("n", n)
+            values = {}
+            values["name"] = rows[n][1]
+            try:
+                values["close"] = rows[n][2]
+            except:
+                values["close"] = '--'
+            try:
+                values["open"] = rows[n][3]
+            except:
+                values["open"] = '--'
+            try:
+                values["high"] = rows[n][4]
+            except:
+                values["high"] = '--'
+            try:
+                values["low"] = rows[n][4]
+            except:
+                values["low"] = '--'
+            rates[row[0]] = values
+    return rates
+
+def read_prices_for_statistics(date):
+    """Method for reading prices including statistics from data base"""
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     
@@ -36,6 +75,7 @@ def read_prices(date):
         cursor.execute(sql)
         rows_today = cursor.fetchall()
     except Error as error:
+        rows_today = [None, None, None, None, None, None]
         print(error)
     
     # print("rows_today", rows_today)
@@ -47,6 +87,7 @@ def read_prices(date):
         cursor.execute(sql)
         rows_1d = cursor.fetchall()
     except Error as error:
+        rows_1d = [None, None, None, None, None, None]
         print(error)
     
     # print("rows_1d", rows_1d)
@@ -58,6 +99,7 @@ def read_prices(date):
         cursor.execute(sql)
         rows_7d = cursor.fetchall()
     except Error as error:
+        rows_7d = [None, None, None, None, None, None]
         print(error)
     
     # print("rows_7d", rows_7d)
@@ -69,6 +111,7 @@ def read_prices(date):
         cursor.execute(sql)
         rows_30d = cursor.fetchall()
     except Error as error:
+        rows_30d = [None, None, None, None, None, None]
         print(error)
     
     # print("rows_30d", rows_30d)
@@ -80,89 +123,22 @@ def read_prices(date):
         cursor.execute(sql)
         rows_365d = cursor.fetchall()
     except Error as error:
-        rows_365 = [None, None, None, None, None, None]
+        rows_365d = [None, None, None, None, None, None]
         print(error)
 
     # print("rows_365d", rows_365d)
 
     connection.close()
 
-    volatilities=calculate_volatility(date)
-    # for key, value in volatilities.items():
-    #     print(f"Crypto_id {key}, vol: {value['vol']}%, price days: {len(value['prices'])}")
-
-    rates = {}
-    if rows_today:
-        for n, row in enumerate(rows_today):
-            # print("n", n)
-            values = {}
-            values["name"] = rows_today[n][1]
-            try:
-                values["close"] = rows_today[n][2]
-            except:
-                values["close"] = '--'
-            try:
-                values["open"] = rows_today[n][3]
-            except:
-                values["open"] = '--'
-            try:
-                values["high"] = rows_today[n][4]
-            except:
-                values["high"] = '--'
-            try:
-                values["low"] = rows_today[n][4]
-            except:
-                values["low"] = '--'
-            try:
-                values["1d"] = rows_1d[n][2]
-            except:
-                values["1d"] = '--'
-            try:
-                values["7d"] = rows_7d[n][2]
-            except:
-                values["7d"] = '--'
-            try:
-                values["30d"]=rows_30d[n][2]
-            except:
-                values["30d"]='--'
-            try:
-                values["365d"]=rows_365d[n][2]
-            except:
-                values["365d"]='--'
-            values["vol"]=volatilities[row[0]]['vol']
-            rates[row[0]] = values
-   
-
-    for value in rates.values():
-        if value["1d"] != '--': 
-            value["1d"]=round(100*(value["close"]-value["1d"])/value["1d"], 2)
-        if value["7d"] != '--': 
-            value["7d"]=round(100*(value["close"]-value["7d"])/value["7d"], 2)
-        if value["30d"] != '--': 
-            value["30d"]=round(100*(value["close"]-value["30d"])/value["30d"], 2)
-        if value["365d"] != '--':
-            value["365d"]=round(100*(value["close"]-value["365d"])/value["365d"], 2)
-        # print (f"{value}")
-        value["d/w"]='--'
-        value["w/m"]='--'
-        value["m/y"]='--'
-        if value ["1d"] != '--' and value ["7d"] != '--':
-            try: 
-                value["d/w"] = round(value["1d"]/value["7d"], 2)
-            except:
-                pass
-        if value ["7d"] != '--' and value ["30d"] != '--':
-            try:
-                value["w/m"] = round(value["7d"]/value["30d"], 2)
-            except:
-                pass
-        if value ["30d"] != '--' and value ["365d"] != '--':
-            try:
-                value["m/y"] = round(value["30d"]/value["365d"], 2)
-            except:
-                pass
-    return rates
+    data={}
+    data["today"]=rows_today
+    data["1d"]=rows_1d
+    data["7d"]=rows_7d
+    data["30d"]=rows_30d
+    data["365d"]=rows_365d
     
+    return data
+
 
 def store_prices():
     """Method for reading prices from CSV file and storing them to data base"""
@@ -197,11 +173,8 @@ def store_prices():
     connection.commit()
     connection.close()
 
-import numpy as np
-from statistics import mean
 
-
-def calculate_volatility(end_day):
+def read_volatility_data(end_day):
     date_object = datetime.datetime(
         int(end_day[0:4]), int(end_day[5:7]), int(end_day[8:10])
     ).date()
@@ -217,17 +190,7 @@ def calculate_volatility(end_day):
         rows = cursor.fetchall()
     except Error as error:
         print(error)
-    data={}
-    for row in rows:
-        if row[0] not in data:
-            data[row[0]]={} 
-            data[row[0]]['prices']=[]    
-        data[row[0]]["prices"].append(row[1])
-    
-    for key, value in data.items():
-        data[key]['vol'] = round(np.std(value['prices'])/np.mean(value['prices'])*100)
-        # print(f"Crypto_id {key}, vol: {value['vol']}%, price days: {len(value['prices'])}")
-    return data
+    return rows
 
 def read_max_day():
     """Method for reading the latest day with prices from data base"""
