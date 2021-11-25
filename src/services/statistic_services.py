@@ -1,7 +1,7 @@
 import numpy as np
 from repositories.price_repository import read_volatility_data
 from repositories.price_repository import read_prices_for_statistics
-from repositories.content_repository import read_portfolio_history
+from repositories.content_repository import read_portfolio_history, read_portfolio_content
 
 
 def calculate_price_volatility(end_day):
@@ -109,10 +109,17 @@ def get_price_statistics(date):
 def get_portfolio_statistics(portfolio_id):
     """Method for calculating portfolio statistics"""
     portfolio_history = read_portfolio_history(portfolio_id)[1:]
-    volatility = np.std(portfolio_history)/np.mean(portfolio_history)*100
-
     stats = {}
-    today = round(portfolio_history[-1])
+    volatility='--'
+    stats["vol"] = volatility
+    if len(portfolio_history)>0:
+        volatility = np.std(portfolio_history)/np.mean(portfolio_history)*100
+        stats["vol"] = round(volatility)
+    try:
+        today = round(portfolio_history[-1])
+    except:
+        content= read_portfolio_content(portfolio_id)
+        today = content[0][1]    
     stats["today"] = today
     try:
         stats["d"] = round(
@@ -134,9 +141,5 @@ def get_portfolio_statistics(portfolio_id):
             100*(today-portfolio_history[-1-365])/portfolio_history[-1-365], 2)
     except:
         stats["y"] = '--'
-    try:
-        stats["vol"] = round(volatility)
-    except:
-        stats["vol"] = '--'
-
+    
     return stats

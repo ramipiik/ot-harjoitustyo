@@ -38,7 +38,6 @@ def get_content(user, portfolio_id):
     cash = content[0][1]
     change_id = content[0][4]
     content_object = Content(portfolio_id, date, cash, change_id)
-
     # To do: Move prints to text UI?
     print(f"{bcolors.OKGREEN}--------------------")
     print(f"Portfolio content {date}")
