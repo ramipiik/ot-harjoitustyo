@@ -42,3 +42,17 @@ def store_user(username, password):
         print(error)
         return False
     return True
+
+def delete_user(username):
+    """Method for deleting a user from the database"""
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+    try:
+        sql = "DELETE FROM users WHERE username=:username"
+        cursor.execute(sql, {"username": username})
+        connection.commit()
+        connection.close()
+    except Error as error:
+        print(error)
+        return False
+    return True

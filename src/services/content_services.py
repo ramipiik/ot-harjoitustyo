@@ -51,10 +51,11 @@ def get_content(user, portfolio_id):
             content_object.cryptos[row[2]]["amount"] = row[3]
             content_object.cryptos[row[2]]["value"] = row[5]
     print("")
-    
-    stats=get_portfolio_statistics(portfolio_id)
+
+    stats = get_portfolio_statistics(portfolio_id)
     if stats["today"]:
-        print(f"Portfolio value: {stats['today']}€ | d {stats['d']}% | w {stats['w']}% | m {stats['m']}% | y {stats['y']}% | sd {stats['vol']}%")
+        print(
+            f"Portfolio value: {stats['today']}€ | d {stats['d']}% | w {stats['w']}% | m {stats['m']}% | y {stats['y']}% | sd {stats['vol']}%")
     print(f"--------------------{bcolors.ENDC}")
     get_rates(date)
     return content_object
@@ -62,7 +63,7 @@ def get_content(user, portfolio_id):
 
 def next_period(content_object: Content):
     """Service for starting the next period"""
-    max_day=read_max_day()[0]
+    max_day = read_max_day()[0]
     date = content_object.portfolio_day
     frequency = read_portfolio_frequency(content_object.portfolio_id)[0]
     if frequency == "daily":
@@ -71,19 +72,19 @@ def next_period(content_object: Content):
         days = 7
     elif frequency == "monthly":
         days = 30
-    
+
     date_object = datetime.datetime(
         int(date[0:4]), int(date[5:7]), int(date[8:10])
     ).date()
-    
+
     max_day_object = datetime.datetime(
         int(max_day[0:4]), int(max_day[5:7]), int(max_day[8:10])
     ).date()
 
-    for i in range (days):
+    for i in range(days):
         # print ("i", i)
         date_object += datetime.timedelta(1)
-        if date_object>max_day_object:
+        if date_object > max_day_object:
             print(f"{bcolors.FAIL}No more price data available.")
             date_object -= datetime.timedelta(days)
             break

@@ -139,13 +139,13 @@ def read_portfolio_content(portfolio_id):
     connection.close()
     return rows
 
+
 def read_portfolio_history(portfolio_id):
-    """Method for reading portfolio content of the latest period from the database"""
+    """Method for reading historical valuations of the portfolio from the database"""
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
-    #sql1="select max(portfolio_day) from contents_support where portfolio_id=:portfolio_id"
-    sql="select total_value from contents_support where portfolio_id=:portfolio_id"
+    sql = "select total_value from contents_support where portfolio_id=:portfolio_id"
 
     rows = None
     try:
@@ -153,7 +153,7 @@ def read_portfolio_history(portfolio_id):
         rows = cursor.fetchall()
     except Error as error:
         print(error)
-    values=[]
+    values = []
     for row in rows:
         values.append(row[0])
     connection.close()

@@ -13,5 +13,7 @@ def get_rates(date):
         aux = []
         for key, value in rates.items():
             aux.append(key)
-            print(f"{key} ({value['name']}): {value['close']} | d {value['1d']}% | w {value['7d']}% | m {value['30d']}% | y {value['365d']}% | sd {value['vol']}%")
+            print(
+                f"{key} ({value['name']}): {value['close']} | d {value['1d']}% | w {value['7d']}% | m {value['30d']}% | y {value['365d']}% | sd {value['vol']}%")
     print(f"--------------------{bcolors.ENDC}")
+    return rates

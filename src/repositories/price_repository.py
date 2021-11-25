@@ -11,7 +11,6 @@ def read_prices(date):
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
-    
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
         FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date}'"
     rows = None
@@ -20,7 +19,7 @@ def read_prices(date):
         rows = cursor.fetchall()
     except Error as error:
         print(error)
-    
+
     rates = {}
     if rows:
         for n, row in enumerate(rows):
@@ -46,27 +45,27 @@ def read_prices(date):
             rates[row[0]] = values
     return rates
 
+
 def read_prices_for_statistics(date):
     """Method for reading prices including statistics from data base"""
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
-    
+
     date_object = datetime.datetime(
         int(date[0:4]), int(date[5:7]), int(date[8:10])
     ).date()
-    
+
     date_object += datetime.timedelta(-1)
-    date_1=str(date_object)
-    
+    date_1 = str(date_object)
+
     date_object += datetime.timedelta(+1-7)
-    date_7=str(date_object)
+    date_7 = str(date_object)
 
     date_object += datetime.timedelta(+7-30)
-    date_30=str(date_object)
+    date_30 = str(date_object)
 
     date_object += datetime.timedelta(+30-365)
-    date_365=str(date_object)
-
+    date_365 = str(date_object)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
         FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date}'"
@@ -77,7 +76,7 @@ def read_prices_for_statistics(date):
     except Error as error:
         rows_today = [None, None, None, None, None, None]
         print(error)
-    
+
     # print("rows_today", rows_today)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
@@ -89,7 +88,7 @@ def read_prices_for_statistics(date):
     except Error as error:
         rows_1d = [None, None, None, None, None, None]
         print(error)
-    
+
     # print("rows_1d", rows_1d)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
@@ -101,7 +100,7 @@ def read_prices_for_statistics(date):
     except Error as error:
         rows_7d = [None, None, None, None, None, None]
         print(error)
-    
+
     # print("rows_7d", rows_7d)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
@@ -113,7 +112,7 @@ def read_prices_for_statistics(date):
     except Error as error:
         rows_30d = [None, None, None, None, None, None]
         print(error)
-    
+
     # print("rows_30d", rows_30d)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
@@ -130,13 +129,13 @@ def read_prices_for_statistics(date):
 
     connection.close()
 
-    data={}
-    data["today"]=rows_today
-    data["1d"]=rows_1d
-    data["7d"]=rows_7d
-    data["30d"]=rows_30d
-    data["365d"]=rows_365d
-    
+    data = {}
+    data["today"] = rows_today
+    data["1d"] = rows_1d
+    data["7d"] = rows_7d
+    data["30d"] = rows_30d
+    data["365d"] = rows_365d
+
     return data
 
 
@@ -175,12 +174,13 @@ def store_prices():
 
 
 def read_volatility_data(end_day):
+    """Method for reading price data for the last year"""
     date_object = datetime.datetime(
         int(end_day[0:4]), int(end_day[5:7]), int(end_day[8:10])
     ).date()
-    
+
     start_day_object = date_object - datetime.timedelta(365)
-    start_day=str(start_day_object)
+    start_day = str(start_day_object)
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = f"SELECT crypto_id, close from prices where date between :start and :end"
@@ -191,6 +191,7 @@ def read_volatility_data(end_day):
     except Error as error:
         print(error)
     return rows
+
 
 def read_max_day():
     """Method for reading the latest day with prices from data base"""
