@@ -1,0 +1,2 @@
+[User|id;username;is_admin|add_portfolio (portfolio_id);get_portfolios ()]1-*[Portfolio|frequency;username;name;periods;id]
+[Portfolio]1-*[Content|portfolio_id;portfolio_day;cash;change_id;cryptos]

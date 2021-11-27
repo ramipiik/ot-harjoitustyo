@@ -1,0 +1,15 @@
+title Sijoitussimulaattori signup
+
+text_UI->+user_services: signup ("username", "password")
+user_services->+user_repository: store_user("username", "password")
+user_repository-->-user_services: True
+user_services->user_services: login("username", "password")
+user_services->+user_repository: verify_user("username", "password")
+user_repository-->-user_services: username, id, is_admin
+user_services->user:User (username, id, is_admin)
+user_services->+portfolio_services:get_portfolios(user)
+portfolio_services->+portfolio_repositories:read_portfolios(user)
+portfolio_repositories-->-portfolio_services: portfolios:list
+portfolio_services-->-user_services: portfolios:list
+user_services->user:user.portfolios=portfolios
+user_services-->-text_UI: user

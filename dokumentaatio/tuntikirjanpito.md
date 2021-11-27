@@ -14,4 +14,8 @@
 | 18.11. | 3.5  | koodin siistiminen ja refaktorointi |
 | 19.11. | 1    | koodin siistiminen |
 | 20.11. | 8.5  | käyttäjienhallinta, konfiguraatiot, yksikkötestaus, linttaus, välipalautuksen vaatimukset| 
-| yht    | 49   |
+| 23.11. | 5    | hintastatistiikka |
+| 24.11. | 3    | portfoliostatistiikka |
+| 25.11. | 2.5  | yksikkötestit, bugikorjaus |
+| 26.11. | 1.5  | pakkaus- ja luokkakaaviot |
+| yht    | 61   |

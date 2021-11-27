@@ -2,7 +2,6 @@ from services.user_services import login, signup
 from services.portfolio_services import create_portfolio, get_portfolios
 from services.content_services import get_content, buy, sell, next_period
 from ui.styles import bcolors, ERROR_MESSAGE
-from entities.user import User
 
 
 def login_UI():
