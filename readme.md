@@ -1,6 +1,9 @@
 # Sijoitussimulaattori
 Sovelluksen avulla voi harjoitella kryptovaluuttoihin sijoittamista.
 
+## Releases
+- [Viikko 4](https://github.com/ramipiik/ot-harjoitustyo/releases/tag/viikko4)
+
 ## Dokumentaatio
 - [Vaatimusmäärittely](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
 - [Tuntikirjanpito](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
