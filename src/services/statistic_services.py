@@ -1,3 +1,4 @@
+from sqlite3.dbapi2 import Error
 import numpy as np
 from repositories.price_repository import read_volatility_data
 from repositories.price_repository import read_prices_for_statistics
@@ -13,8 +14,8 @@ def calculate_price_volatility(end_day):
             data[row[0]] = {}
             data[row[0]]['prices'] = []
         data[row[0]]["prices"].append(row[1])
-    for key, value in data.items():
-        data[key]['vol'] = round(
+    for value in data.values():
+        value['vol'] = round(
             np.std(value['prices'])/np.mean(value['prices'])*100)
         # print(f"Crypto_id {key}, vol: {value['vol']}%, price days: {len(value['prices'])}")
     return data
@@ -32,41 +33,41 @@ def get_price_statistics(date):
 
     rates = {}
     if rows_today:
-        for n, row in enumerate(rows_today):
+        for number, row in enumerate(rows_today):
             # print("n", n)
             values = {}
-            values["name"] = rows_today[n][1]
+            values["name"] = rows_today[number][1]
             try:
-                values["close"] = rows_today[n][2]
-            except:
+                values["close"] = rows_today[number][2]
+            except Error:
                 values["close"] = '--'
             try:
-                values["open"] = rows_today[n][3]
-            except:
+                values["open"] = rows_today[number][3]
+            except Error:
                 values["open"] = '--'
             try:
-                values["high"] = rows_today[n][4]
-            except:
+                values["high"] = rows_today[number][4]
+            except Error:
                 values["high"] = '--'
             try:
-                values["low"] = rows_today[n][4]
-            except:
+                values["low"] = rows_today[number][4]
+            except Error:
                 values["low"] = '--'
             try:
-                values["1d"] = rows_1d[n][2]
-            except:
+                values["1d"] = rows_1d[number][2]
+            except Error:
                 values["1d"] = '--'
             try:
-                values["7d"] = rows_7d[n][2]
-            except:
+                values["7d"] = rows_7d[number][2]
+            except Error:
                 values["7d"] = '--'
             try:
-                values["30d"] = rows_30d[n][2]
-            except:
+                values["30d"] = rows_30d[number][2]
+            except Error:
                 values["30d"] = '--'
             try:
-                values["365d"] = rows_365d[n][2]
-            except:
+                values["365d"] = rows_365d[number][2]
+            except Error:
                 values["365d"] = '--'
             values["vol"] = volatility_data[row[0]]['vol']
             rates[row[0]] = values
@@ -91,17 +92,17 @@ def get_price_statistics(date):
         if value["1d"] != '--' and value["7d"] != '--':
             try:
                 value["d/w"] = round(value["1d"]/value["7d"], 2)
-            except:
+            except Error as error:
                 pass
         if value["7d"] != '--' and value["30d"] != '--':
             try:
                 value["w/m"] = round(value["7d"]/value["30d"], 2)
-            except:
+            except Error as error:
                 pass
         if value["30d"] != '--' and value["365d"] != '--':
             try:
                 value["m/y"] = round(value["30d"]/value["365d"], 2)
-            except:
+            except Error as error:
                 pass
     return rates
 
@@ -117,29 +118,28 @@ def get_portfolio_statistics(portfolio_id):
         stats["vol"] = round(volatility)
     try:
         today = round(portfolio_history[-1])
-    except:
+    except Error:
         content= read_portfolio_content(portfolio_id)
-        today = content[0][1]    
+        today = content[0][1]
     stats["today"] = today
     try:
         stats["d"] = round(
             100*(today-portfolio_history[-1-1])/portfolio_history[-1-1], 2)
-    except:
+    except Error:
         stats["d"] = '--'
     try:
         stats["w"] = round(
             100*(today-portfolio_history[-1-7])/portfolio_history[-1-7], 2)
-    except:
+    except Error:
         stats["w"] = '--'
     try:
         stats["m"] = round(
             100*(today-portfolio_history[-1-30])/portfolio_history[-1-30], 2)
-    except:
+    except Error:
         stats["m"] = '--'
     try:
         stats["y"] = round(
             100*(today-portfolio_history[-1-365])/portfolio_history[-1-365], 2)
-    except:
+    except Error:
         stats["y"] = '--'
-    
     return stats

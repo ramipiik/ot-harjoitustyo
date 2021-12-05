@@ -22,25 +22,25 @@ def read_prices(date):
 
     rates = {}
     if rows:
-        for n, row in enumerate(rows):
+        for number, row in enumerate(rows):
             # print("n", n)
             values = {}
-            values["name"] = rows[n][1]
+            values["name"] = rows[number][1]
             try:
-                values["close"] = rows[n][2]
-            except:
+                values["close"] = rows[number][2]
+            except Error:
                 values["close"] = '--'
             try:
-                values["open"] = rows[n][3]
-            except:
+                values["open"] = rows[number][3]
+            except Error:
                 values["open"] = '--'
             try:
-                values["high"] = rows[n][4]
-            except:
+                values["high"] = rows[number][4]
+            except Error:
                 values["high"] = '--'
             try:
-                values["low"] = rows[n][4]
-            except:
+                values["low"] = rows[number][4]
+            except Error:
                 values["low"] = '--'
             rates[row[0]] = values
     return rates
@@ -97,9 +97,8 @@ def read_prices_for_statistics(date):
     try:
         cursor.execute(sql)
         rows_7d = cursor.fetchall()
-    except Error as error:
+    except Error:
         rows_7d = [None, None, None, None, None, None]
-        print(error)
 
     # print("rows_7d", rows_7d)
 
@@ -109,9 +108,8 @@ def read_prices_for_statistics(date):
     try:
         cursor.execute(sql)
         rows_30d = cursor.fetchall()
-    except Error as error:
+    except Error:
         rows_30d = [None, None, None, None, None, None]
-        print(error)
 
     # print("rows_30d", rows_30d)
 
@@ -121,9 +119,8 @@ def read_prices_for_statistics(date):
     try:
         cursor.execute(sql)
         rows_365d = cursor.fetchall()
-    except Error as error:
+    except Error:
         rows_365d = [None, None, None, None, None, None]
-        print(error)
 
     # print("rows_365d", rows_365d)
 

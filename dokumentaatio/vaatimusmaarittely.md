@@ -23,7 +23,7 @@
   * Even: Sijoita tasasumma per aikayksikkö valittujen kohteiden välillä.
   * Random: Satunnainen strategia (heitä noppaa ja tee sijoituspäätös sen mukaisesti)
   * Follow: Panosta edellisen jakson isoimpaan nousijaan
-  *  Contrarian: Panosta edellisen jakson isoimpaan laskijaan
+  * Contrarian: Panosta edellisen jakson isoimpaan laskijaan
 
 
 ## Käyttöliittymäluonnos

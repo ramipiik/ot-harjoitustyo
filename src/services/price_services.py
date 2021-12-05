@@ -1,4 +1,3 @@
-from repositories.price_repository import read_prices
 from services.statistic_services import get_price_statistics
 from ui.styles import bcolors
 

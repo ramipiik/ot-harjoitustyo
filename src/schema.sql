@@ -28,6 +28,18 @@ CREATE TABLE portfolios (
     periods INTEGER,
     UNIQUE(user_id, name)
 );
+CREATE TABLE reference_portfolios (
+    id INTEGER PRIMARY KEY,
+    strategy TEXT,
+    portfolio_id INTEGER REFERENCES portfolios,
+    frequency TEXT,
+    periods INTEGER
+);
+CREATE TABLE portfolio_support (
+    id INTEGER PRIMARY KEY,
+    portfolio_id INTEGER REFERENCES portfolios,
+    reference_portfolio_id INTEGER REFERENCES reference_portfolios
+);
 CREATE TABLE contents (
     id INTEGER PRIMARY KEY,
     portfolio_id INTEGER REFERENCES portfolios,
@@ -35,9 +47,29 @@ CREATE TABLE contents (
     crypto_id INTEGER REFERENCES cryptos,
     amount NUMERIC,
     cash NUMERIC,
-    created TEXT
-, change_id integer, value numeric);
+    created TEXT,
+    change_id integer, value numeric
+);
+CREATE TABLE reference_contents (
+    id INTEGER PRIMARY KEY,
+    reference_portfolio_id INTEGER REFERENCES reference_portfolios,
+    portfolio_day TEXT,
+    crypto_id INTEGER REFERENCES cryptos,
+    amount NUMERIC,
+    cash NUMERIC,
+    created TEXT,
+    change_id integer, value numeric
+);
 CREATE TABLE contents_support (
+     id INTEGER PRIMARY KEY,
+     change_id INTEGER REFERENCES contents,
+     cash NUMERIC,
+     portfolio_id INTEGER REFERENCES portfolio,
+     portfolio_day TEXT,
+     created TEXT
+, total_value numeric);
+
+CREATE TABLE reference_contents_support (
      id INTEGER PRIMARY KEY,
      change_id INTEGER REFERENCES contents,
      cash NUMERIC,
