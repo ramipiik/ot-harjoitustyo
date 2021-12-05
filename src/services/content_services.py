@@ -50,7 +50,6 @@ def get_content(user, portfolio_id):
             content_object.cryptos[row[2]]["amount"] = row[3]
             content_object.cryptos[row[2]]["value"] = row[5]
     print("")
-
     stats = get_portfolio_statistics(portfolio_id)
     if stats["today"]:
         print(

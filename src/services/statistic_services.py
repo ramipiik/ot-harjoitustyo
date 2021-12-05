@@ -116,30 +116,29 @@ def get_portfolio_statistics(portfolio_id):
     if len(portfolio_history)>0:
         volatility = np.std(portfolio_history)/np.mean(portfolio_history)*100
         stats["vol"] = round(volatility)
-    try:
         today = round(portfolio_history[-1])
-    except Error:
+    else:
         content= read_portfolio_content(portfolio_id)
-        today = content[0][1]
+        today = content[0][0]
     stats["today"] = today
     try:
         stats["d"] = round(
             100*(today-portfolio_history[-1-1])/portfolio_history[-1-1], 2)
-    except Error:
+    except:
         stats["d"] = '--'
     try:
         stats["w"] = round(
             100*(today-portfolio_history[-1-7])/portfolio_history[-1-7], 2)
-    except Error:
+    except:
         stats["w"] = '--'
     try:
         stats["m"] = round(
             100*(today-portfolio_history[-1-30])/portfolio_history[-1-30], 2)
-    except Error:
+    except:
         stats["m"] = '--'
     try:
         stats["y"] = round(
             100*(today-portfolio_history[-1-365])/portfolio_history[-1-365], 2)
-    except Error:
+    except:
         stats["y"] = '--'
     return stats

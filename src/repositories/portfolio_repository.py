@@ -31,25 +31,26 @@ def store_reference_portfolios(portfolio_id, strategies, frequency, periods):
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     for strategy in strategies:
+        user_id="ref-"+str(portfolio_id)
         try:
-            sql = "INSERT INTO reference_portfolios (strategy, portfolio_id, frequency, periods) VALUES (:strategy,:portfolio_id, :frequency, :periods)"
+            sql = "INSERT INTO portfolios (name, user_id, frequency, periods) VALUES (:name, :user_id, :frequency, :periods)"
             cursor.execute(
                 sql,
                 {
-                    "strategy": strategy,
-                    "portfolio_id": portfolio_id,
+                    "name": strategy,
+                    "user_id": user_id,
                     "frequency": frequency,
                     "periods": periods,
                 },
             )
-            connection.commit() #TESTAA VOIKO TÄMÄN LAITTAA MYÖHEMMÄKSI.
+            # connection.commit() #TESTAA VOIKO TÄMÄN LAITTAA MYÖHEMMÄKSI.
             
         except Error as error:
             print(error)
             return False
         
         #SQlite doesn't seem to support RETURNING ,so I need to fetch the id of the added reference portfolio manually
-        sql = "SELECT max(id) FROM reference_portfolios"
+        sql = "SELECT max(id) FROM portfolios"
         try:
             cursor.execute(sql)
             row = cursor.fetchone()
@@ -67,15 +68,13 @@ def store_reference_portfolios(portfolio_id, strategies, frequency, periods):
                     "reference_portfolio_id": reference_portfolio_id
                 },
             )
-            connection.commit() #TESTAA SIJOITUST
+            # connection.commit() #TESTAA SIJOITUST
             
         except Error as error:
             print(error)
             return False
-
-
     
-
+    connection.commit()
     connection.close()
     # print("id", row[0])
     return True
@@ -98,10 +97,10 @@ def read_portfolio_id(user_id, portfolio_name):
     return row[0]
 
 def read_reference_portfolios(portfolio_id):
-    """Method for reading reference portfolio ids from database"""
+    """Method for reading reference portfolio of a given user portfolio from database"""
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
-    sql = "SELECT ps.reference_portfolio_id, rp.strategy FROM portfolio_support ps LEFT JOIN reference_portfolios rp ON ps.reference_portfolio_id=rp.id WHERE ps.portfolio_id=:portfolio_id AND rp.portfolio_id=:portfolio_id"
+    sql = "SELECT id, name FROM portfolios WHERE id in (SELECT reference_portfolio_id FROM portfolio_support WHERE portfolio_id=:portfolio_id)"
     rows=None
     try:
         cursor.execute(

@@ -1,9 +1,7 @@
 import sqlite3
 from sqlite3.dbapi2 import Error
-from entities.portfolio import Portfolio
 from entities.content import Content
 from config import DATABASE_PATH
-from entities.reference_portfolio import Reference_Portfolio
 
 
 def store_content_first_time(portfolio, first_day, initial_capital):
@@ -14,36 +12,6 @@ def store_content_first_time(portfolio, first_day, initial_capital):
         sql = "INSERT INTO contents (portfolio_id, created, change_id) \
             VALUES (:portfolio_id, CURRENT_TIMESTAMP, 1)"
         cursor.execute(sql, {"portfolio_id": portfolio.id})
-    except Error as error:
-        print(error)
-        return False
-    try:
-        sql = "INSERT INTO contents_support (portfolio_id, portfolio_day, cash, created, change_id)\
-                VALUES (:portfolio_id, :first_day, :cash, CURRENT_TIMESTAMP, 1)"
-        cursor.execute(
-            sql,
-            {
-                "portfolio_id": portfolio.id,
-                "first_day": first_day,
-                "cash": initial_capital,
-            },
-        )
-    except Error as error:
-        print(error)
-        return False
-    connection.commit()
-    connection.close()
-    initial_content = [portfolio.id, first_day, initial_capital, 1]
-    return initial_content
-
-def store_reference_content_first_time(reference_portfolio, first_day, initial_capital):
-    """Method for storing reference_portfolio content to database the first time"""
-    connection = sqlite3.connect(DATABASE_PATH)
-    cursor = connection.cursor()
-    try:
-        sql = "INSERT INTO referece_contents (reference_portfolio_id, created, change_id) \
-            VALUES (:reference_portfolio_id, CURRENT_TIMESTAMP, 1)"
-        cursor.execute(sql, {"reference_portfolio_id": reference_portfolio.id})
     except Error as error:
         print(error)
         return False
