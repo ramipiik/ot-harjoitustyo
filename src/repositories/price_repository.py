@@ -23,25 +23,24 @@ def read_prices(date):
     rates = {}
     if rows:
         for number, row in enumerate(rows):
-            # print("n", n)
             values = {}
             values["name"] = rows[number][1]
             try:
                 values["close"] = rows[number][2]
             except Error:
-                values["close"] = '--'
+                values["close"] = "--"
             try:
                 values["open"] = rows[number][3]
             except Error:
-                values["open"] = '--'
+                values["open"] = "--"
             try:
                 values["high"] = rows[number][4]
             except Error:
-                values["high"] = '--'
+                values["high"] = "--"
             try:
                 values["low"] = rows[number][4]
             except Error:
-                values["low"] = '--'
+                values["low"] = "--"
             rates[row[0]] = values
     return rates
 
@@ -58,13 +57,13 @@ def read_prices_for_statistics(date):
     date_object += datetime.timedelta(-1)
     date_d = str(date_object)
 
-    date_object += datetime.timedelta(+1-7)
+    date_object += datetime.timedelta(+1 - 7)
     date_w = str(date_object)
 
-    date_object += datetime.timedelta(+7-30)
+    date_object += datetime.timedelta(+7 - 30)
     date_m = str(date_object)
 
-    date_object += datetime.timedelta(+30-365)
+    date_object += datetime.timedelta(+30 - 365)
     date_y = str(date_object)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
@@ -76,8 +75,6 @@ def read_prices_for_statistics(date):
     except:
         rows_today = [None, None, None, None, None, None]
 
-    # print("rows_today", rows_today)
-
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
         FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_d}'"
     rows_d = None
@@ -86,8 +83,6 @@ def read_prices_for_statistics(date):
         rows_d = cursor.fetchall()
     except:
         rows_d = [None, None, None, None, None, None]
-
-    # print("rows_d", rows_d)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
         FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_w}'"
@@ -98,8 +93,6 @@ def read_prices_for_statistics(date):
     except:
         rows_w = [None, None, None, None, None, None]
 
-    # print("rows_w", rows_w)
-
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
         FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_m}'"
     rows_m = None
@@ -109,8 +102,6 @@ def read_prices_for_statistics(date):
     except:
         rows_m = [None, None, None, None, None, None]
 
-    # print("rows_m", rows_m)
-
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
         FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_y}'"
     rows_y = None
@@ -119,8 +110,6 @@ def read_prices_for_statistics(date):
         rows_y = cursor.fetchall()
     except:
         rows_y = [None, None, None, None, None, None]
-
-    # print("rows_d", rows_y)
 
     connection.close()
 

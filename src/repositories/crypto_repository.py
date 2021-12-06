@@ -56,6 +56,7 @@ def read_crypto_ids():
         ids.append(row[0])
     return ids
 
+
 def read_crypto_names_and_ids():
     """Method for reading crypto id's from database"""
     connection = sqlite3.connect(DATABASE_PATH)
@@ -70,5 +71,5 @@ def read_crypto_names_and_ids():
     connection.close()
     result = {}
     for row in rows:
-        result[row[0]]=row[1]
+        result[row[0]] = row[1]
     return result

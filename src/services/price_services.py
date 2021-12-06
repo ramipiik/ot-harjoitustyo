@@ -1,5 +1,4 @@
 from services.statistic_services import get_price_statistics
-from ui.styles import bcolors
 
 
 def get_rates(date):
@@ -7,4 +6,3 @@ def get_rates(date):
     if date:
         rates = get_price_statistics(date)
     return rates
-

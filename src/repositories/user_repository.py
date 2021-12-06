@@ -43,6 +43,7 @@ def store_user(username, password):
         return False
     return True
 
+
 def delete_user(username):
     """Method for deleting a user from the database"""
     connection = sqlite3.connect(DATABASE_PATH)

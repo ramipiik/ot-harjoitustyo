@@ -7,4 +7,4 @@ class Portfolio:
         self.name = name
         self.periods = periods
         self.id = None  # Created by database
-        self.reference_portfolios={}
+        self.reference_portfolios = {}

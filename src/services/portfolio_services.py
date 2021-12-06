@@ -2,7 +2,7 @@ from repositories.portfolio_repository import (
     store_portfolio,
     read_portfolios,
     read_portfolio_id,
-    read_reference_portfolios
+    read_reference_portfolios,
 )
 from repositories.content_repository import store_content_first_time
 from repositories.portfolio_repository import store_reference_portfolios
@@ -17,13 +17,14 @@ FIRST_DAY = "2020-06-01"
 INITIAL_CAPITAL = 1000000
 
 REFERENCE_STRATEGIES = [
-    'Do nothing',
-    'All-in',
-    'Even',
-    'Random',
-    'Follow',
-    'Contrarian'
+    "Do nothing",
+    "All-in",
+    "Even",
+    "Random",
+    "Follow",
+    "Contrarian",
 ]
+
 
 def create_portfolio(user: User, portfolio_name, frequency):
     """Service for creating a new portfolio"""
@@ -33,23 +34,25 @@ def create_portfolio(user: User, portfolio_name, frequency):
         frequency = "weekly"
     if frequency == 3:
         frequency = "monthly"
-    
+
     new_portfolio = Portfolio(user.username, portfolio_name, frequency)
     store_portfolio(user.username, new_portfolio)
     new_portfolio.id = read_portfolio_id(user.username, portfolio_name)
     aux = store_content_first_time(new_portfolio, FIRST_DAY, INITIAL_CAPITAL)
     content_object = Content(aux[0], aux[1], aux[2], aux[3])
     user.add_portfolio(new_portfolio.id)
-    
+
     store_reference_portfolios(new_portfolio.id, REFERENCE_STRATEGIES, frequency, None)
-    reference_portfolios:dict=read_reference_portfolios(new_portfolio.id)    
+    reference_portfolios: dict = read_reference_portfolios(new_portfolio.id)
     for strategy, id in reference_portfolios.items():
-        new_portfolio.reference_portfolios[strategy]=Reference_Portfolio(new_portfolio.id, strategy, frequency, id)
-    
+        new_portfolio.reference_portfolios[strategy] = Reference_Portfolio(
+            new_portfolio.id, strategy, frequency, id
+        )
+
     for reference_portfolio in new_portfolio.reference_portfolios.values():
-        # print(x, y.strategy, y.id)    
+        # print(x, y.strategy, y.id)
         store_content_first_time(reference_portfolio, FIRST_DAY, INITIAL_CAPITAL)
-    
+
     return content_object
 
 
