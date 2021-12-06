@@ -39,35 +39,35 @@ def get_price_statistics(date):
             values["name"] = rows_today[number][1]
             try:
                 values["close"] = rows_today[number][2]
-            except Error:
+            except:
                 values["close"] = '--'
             try:
                 values["open"] = rows_today[number][3]
-            except Error:
+            except:
                 values["open"] = '--'
             try:
                 values["high"] = rows_today[number][4]
-            except Error:
+            except:
                 values["high"] = '--'
             try:
                 values["low"] = rows_today[number][4]
-            except Error:
+            except:
                 values["low"] = '--'
             try:
                 values["1d"] = rows_1d[number][2]
-            except Error:
+            except:
                 values["1d"] = '--'
             try:
                 values["7d"] = rows_7d[number][2]
-            except Error:
+            except:
                 values["7d"] = '--'
             try:
                 values["30d"] = rows_30d[number][2]
-            except Error:
+            except:
                 values["30d"] = '--'
             try:
                 values["365d"] = rows_365d[number][2]
-            except Error:
+            except:
                 values["365d"] = '--'
             values["vol"] = volatility_data[row[0]]['vol']
             rates[row[0]] = values
@@ -92,17 +92,17 @@ def get_price_statistics(date):
         if value["1d"] != '--' and value["7d"] != '--':
             try:
                 value["d/w"] = round(value["1d"]/value["7d"], 2)
-            except Error as error:
+            except:
                 pass
         if value["7d"] != '--' and value["30d"] != '--':
             try:
                 value["w/m"] = round(value["7d"]/value["30d"], 2)
-            except Error as error:
+            except:
                 pass
         if value["30d"] != '--' and value["365d"] != '--':
             try:
                 value["m/y"] = round(value["30d"]/value["365d"], 2)
-            except Error as error:
+            except:
                 pass
     return rates
 

@@ -15,11 +15,6 @@ from repositories.crypto_repository import read_crypto_ids
 
 def buy(content_object: Content, crypto_id, investment):
     """Service for buying"""
-    
-    # if content_object.buy(crypto_id, investment):
-    #     rates = read_prices(content_object.portfolio_day)
-    #     store_content(content_object, rates)
-    print("From buy service. Crypto_id", crypto_id)
     content_object.buy(crypto_id, investment)
     rates = read_prices(content_object.portfolio_day)
     store_content(content_object, rates)
@@ -60,7 +55,13 @@ def get_content(user, portfolio_id):
     content_object = Content(portfolio_id, date, cash, change_id)
     # To do: Move prints to text UI?
     print(f"{bcolors.OKGREEN}--------------------")
+    print ("Date", date)
+    stats = get_portfolio_statistics(portfolio_id)
+    if stats["today"]:
+        print(
+            f"Your portfolio: {stats['today']}€ | d {stats['d']}% | w {stats['w']}% | m {stats['m']}% | y {stats['y']}% | sd {stats['vol']}%")
     print(f"Your portfolio {date}")
+    
     print("Cash:", cash, "EUR")
     rates = read_prices(date)
     for row in content:
@@ -70,10 +71,7 @@ def get_content(user, portfolio_id):
             content_object.cryptos[row[2]]["amount"] = row[3]
             content_object.cryptos[row[2]]["value"] = row[5]
     print("")
-    stats = get_portfolio_statistics(portfolio_id)
-    if stats["today"]:
-        print(
-            f"Portfolio value: {stats['today']}€ | d {stats['d']}% | w {stats['w']}% | m {stats['m']}% | y {stats['y']}% | sd {stats['vol']}%")
+    
     print(f"--------------------{bcolors.ENDC}")
     get_reference_content(portfolio_id, date)
     get_rates(date)
@@ -124,10 +122,7 @@ def next_period(content_object: Content):
             ref_content_object=Content(ref_portfolio_id, content_object.portfolio_day, cash, change_id)
             ref_content_object.change_id += 1
             ref_content_object.cryptos= {}
-            # print("content")
-            # print(content)
             for row in content:
-                print(row)
                 crypto_id=row[2]
                 crypto_amount=row[3]
                 crypto_value=row[4]
@@ -145,18 +140,15 @@ def do_reference_actions(content_object:Content):
         content=read_portfolio_content(ref_portfolio_id)
         cash=content[0][1]
         change_id=content[0][4]
-        print("cash", cash)
         ref_content_object=Content(ref_portfolio_id, content_object.portfolio_day, cash, change_id)
-        print("ref_content_object.cash", ref_content_object.cash)
         if key=='do_nothing':
-            print("This one is easy")
+            pass
+            # print("This one is easy")
         if key=='all-in':
             if cash>1:
                 crypto_ids=read_crypto_ids()
                 nr_of_cryptos=len(crypto_ids)
                 investment_amount=cash/nr_of_cryptos
-                print("investment_amount", investment_amount)
                 for crypto_id in crypto_ids:
-                    print(crypto_id)
                     buy(ref_content_object, crypto_id, investment_amount)
         # print(key, value)

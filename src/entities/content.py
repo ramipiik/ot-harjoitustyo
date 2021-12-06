@@ -36,12 +36,11 @@ class Content:
             after = before + investment / price
             self.cryptos[crypto_id]["amount"] = after
             self.cryptos[crypto_id]["value"] = after * price
-            print("moi")
         else:
             self.cryptos[crypto_id] = {}
             self.cryptos[crypto_id]["amount"] = investment / price
             self.cryptos[crypto_id]["value"] = investment
-            print(self.cryptos)
+            # print(self.cryptos)
         return True
 
     def sell(self, crypto_id, investment):

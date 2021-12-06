@@ -39,9 +39,6 @@ def store_content(contents: Content, rates):
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     total_value = contents.cash
-    print("PORTFOLIO ID", contents.portfolio_id)
-    print("CRYPTO KEYS", contents.cryptos.keys())
-    print("CASH", contents.cash)
     if len(contents.cryptos.keys()) > 0:
         for crypto_id, status in contents.cryptos.items():
             if status:
