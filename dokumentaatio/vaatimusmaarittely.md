@@ -19,7 +19,7 @@
 * TEHTY: Pelin lopettaesa pelitilanne tallennetaan ja kirjautumisen jälkeen peliä voi seuraavalla kerralla jatkaa samasta kohdasta. 
 * Sovellus laskee muutama yksinkertaista referenssisijoitusstrategiaa, joita vastaan käyttäjä kilpailee. Alustavia ajatuksia alla. Kaikkia en varmaan ehdi toteuttaa tämän kurssin puitteissa.
   * Do nothing: Älä tee mitään. Sijoituksen arvo lopussa = sijoituksen arvo alussa
-  * All-in: Sijoita kaikki yhteen kohteeseen heti alussa. Älä tee mitään sen jälkeen.
+  * All-in: Sijoita kaikki heti alussa tasaisesti jaettuna eri kohteiden välille. Älä tee mitään sen jälkeen.
   * Even: Sijoita tasasumma per aikayksikkö valittujen kohteiden välillä.
   * Random: Satunnainen strategia (heitä noppaa ja tee sijoituspäätös sen mukaisesti)
   * Follow: Panosta edellisen jakson isoimpaan nousijaan

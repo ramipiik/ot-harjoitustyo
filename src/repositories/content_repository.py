@@ -39,27 +39,31 @@ def store_content(contents: Content, rates):
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     total_value = contents.cash
+    print("PORTFOLIO ID", contents.portfolio_id)
+    print("CRYPTO KEYS", contents.cryptos.keys())
+    print("CASH", contents.cash)
     if len(contents.cryptos.keys()) > 0:
         for crypto_id, status in contents.cryptos.items():
-            amount = status["amount"]
-            value = amount * rates[crypto_id]["close"]
-            total_value += value
-            try:
-                sql = "INSERT INTO contents (portfolio_id, change_id, crypto_id, amount, value) \
-                    VALUES (:portfolio_id, :change_id, :crypto_id, :amount, :value)"
-                cursor.execute(
-                    sql,
-                    {
-                        "portfolio_id": contents.portfolio_id,
-                        "change_id": contents.change_id,
-                        "crypto_id": crypto_id,
-                        "amount": amount,
-                        "value": value,
-                    },
-                )
-            except Error as error:
-                print(error)
-                return False
+            if status:
+                amount = status["amount"]
+                value = amount * rates[crypto_id]["close"]
+                total_value += value
+                try:
+                    sql = "INSERT INTO contents (portfolio_id, change_id, crypto_id, amount, value) \
+                        VALUES (:portfolio_id, :change_id, :crypto_id, :amount, :value)"
+                    cursor.execute(
+                        sql,
+                        {
+                            "portfolio_id": contents.portfolio_id,
+                            "change_id": contents.change_id,
+                            "crypto_id": crypto_id,
+                            "amount": amount,
+                            "value": value,
+                        },
+                    )
+                except Error as error:
+                    print(error)
+                    return False
         try:
             sql = "INSERT INTO contents_support \
                 (portfolio_id, portfolio_day, cash, created, change_id, total_value) \

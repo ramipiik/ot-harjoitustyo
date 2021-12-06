@@ -119,8 +119,9 @@ def get_portfolio_statistics(portfolio_id):
         today = round(portfolio_history[-1])
     else:
         content= read_portfolio_content(portfolio_id)
-        today = content[0][0]
+        today = content[0][1]
     stats["today"] = today
+    
     try:
         stats["d"] = round(
             100*(today-portfolio_history[-1-1])/portfolio_history[-1-1], 2)
