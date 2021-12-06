@@ -157,3 +157,33 @@ def read_portfolio_history(portfolio_id):
         values.append(row[0])
     connection.close()
     return values
+
+def read_portfolio_startdate(portfolio_id):
+    """Method for reading the start_date of the portfolio from the database"""
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+
+    sql = "select min(portfolio_day) from contents_support where portfolio_id=:portfolio_id"
+    row = None
+    try:
+        cursor.execute(sql, {"portfolio_id": portfolio_id})
+        row = cursor.fetchone()
+    except Error as error:
+        print(error)
+    connection.close()
+    return row[0]
+
+def read_portfolio_frequency(portfolio_id):
+    """Method for reading the start_date of the portfolio from the database"""
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+
+    sql = "select frequency from portfolios where id=:portfolio_id"
+    row = None
+    try:
+        cursor.execute(sql, {"portfolio_id": portfolio_id})
+        row = cursor.fetchone()
+    except Error as error:
+        print(error)
+    connection.close()
+    return row[0]

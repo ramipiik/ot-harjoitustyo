@@ -1,6 +1,6 @@
 import datetime
 
-from repositories.content_repository import read_portfolio_content, store_content
+from repositories.content_repository import read_portfolio_content, store_content, read_portfolio_startdate, read_portfolio_frequency
 from repositories.portfolio_repository import read_portfolio_frequency, read_reference_portfolios
 from repositories.price_repository import read_prices, read_max_day
 from services.price_services import get_rates
@@ -60,7 +60,7 @@ def get_content(user, portfolio_id):
     if stats["today"]:
         print(
             f"Your portfolio: {stats['today']}€ | d {stats['d']}% | w {stats['w']}% | m {stats['m']}% | y {stats['y']}% | sd {stats['vol']}%")
-    print(f"Your portfolio {date}")
+    # print(f"Your portfolio {date}")
     
     print("Cash:", cash, "EUR")
     rates = read_prices(date)
@@ -81,7 +81,7 @@ def get_content(user, portfolio_id):
 def next_period(content_object: Content):
     """Service for starting the next period"""
     
-    do_reference_actions(content_object)
+    coordinate_reference_actions(content_object)
     max_day = read_max_day()[0]
     date = content_object.portfolio_day
     frequency = read_portfolio_frequency(content_object.portfolio_id)[0]
@@ -133,7 +133,8 @@ def next_period(content_object: Content):
             store_content(ref_content_object, rates)
 
 
-def do_reference_actions(content_object:Content):
+def coordinate_reference_actions(content_object:Content):
+    """Coordinates actions for the reference portfolios"""
     portfolio_id=content_object.portfolio_id
     refs:dict=read_reference_portfolios(portfolio_id)
     for key,ref_portfolio_id in refs.items():
@@ -141,14 +142,73 @@ def do_reference_actions(content_object:Content):
         cash=content[0][1]
         change_id=content[0][4]
         ref_content_object=Content(ref_portfolio_id, content_object.portfolio_day, cash, change_id)
+        
         if key=='do_nothing':
-            pass
-            # print("This one is easy")
-        if key=='all-in':
-            if cash>1:
-                crypto_ids=read_crypto_ids()
-                nr_of_cryptos=len(crypto_ids)
-                investment_amount=cash/nr_of_cryptos
-                for crypto_id in crypto_ids:
-                    buy(ref_content_object, crypto_id, investment_amount)
+            do_nothing()
+            
+        elif key=='all-in':
+            do_all_in(ref_content_object)
+            
+        elif key=='even':
+            do_even(ref_content_object)
+
+        elif key=='random':
+            print('Random strategy')
+        
+        elif key=='follow':
+            print('Follow strategy')
+
+        elif key=='contrarian':
+            print('Contrarian strategy')
         # print(key, value)
+
+CRYPTO_IDS=read_crypto_ids()
+NR_OF_CRYPTOS=len(CRYPTO_IDS)
+
+def do_nothing():
+    """Keep whole portfolio in cash"""
+    print("Do nothing strategy")
+
+def do_all_in(ref_content_object:Content):
+    """Immediately invest everything between all the cryptos."""
+    print("All-in strategy")
+    cash=ref_content_object.cash
+    if cash>1:
+        investment_amount=cash/NR_OF_CRYPTOS
+        for crypto_id in CRYPTO_IDS:
+            buy(ref_content_object, crypto_id, investment_amount)
+
+def do_even(ref_content_object:Content):
+    """Invest everything between all the cryptos during a time period"""
+    print('Even strategy')
+    months=12
+    start_date=read_portfolio_startdate(ref_content_object.portfolio_id)
+    current_date=ref_content_object.portfolio_day
+    
+    start_date_object = datetime.datetime(
+        int(start_date[0:4]), int(start_date[5:7]), int(start_date[8:10])
+    ).date()
+
+    current_date_object = datetime.datetime(
+        int(current_date[0:4]), int(current_date[5:7]), int(current_date[8:10])
+    ).date()
+
+    days_passed=current_date_object-start_date_object
+    days_passed=days_passed.days
+    days_left=months*30-days_passed
+    frequency=read_portfolio_frequency(ref_content_object.portfolio_id)[0]
+
+    if frequency == "daily":
+        frequency = 1
+    elif frequency == "weekly":
+        frequency = 7
+    elif frequency == "monthly":
+        frequency = 30
+
+    cash=ref_content_object.cash
+    total_investment=cash/(days_left/frequency)
+    print("total investment", total_investment)
+    investment_amount=total_investment/NR_OF_CRYPTOS
+    for crypto_id in CRYPTO_IDS:
+        buy(ref_content_object, crypto_id, investment_amount)
+
