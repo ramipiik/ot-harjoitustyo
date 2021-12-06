@@ -17,12 +17,12 @@ FIRST_DAY = "2020-06-01"
 INITIAL_CAPITAL = 1000000
 
 REFERENCE_STRATEGIES = [
-    'do_nothing',
-    'all-in',
-    'even',
-    'random',
-    'follow',
-    'contrarian'
+    'Do nothing',
+    'All-in',
+    'Even',
+    'Random',
+    'Follow',
+    'Contrarian'
 ]
 
 def create_portfolio(user: User, portfolio_name, frequency):
@@ -46,13 +46,9 @@ def create_portfolio(user: User, portfolio_name, frequency):
     for strategy, id in reference_portfolios.items():
         new_portfolio.reference_portfolios[strategy]=Reference_Portfolio(new_portfolio.id, strategy, frequency, id)
     
-    for key, value in new_portfolio.reference_portfolios.items():
-        print (key, value.strategy, value.id )
-
     for reference_portfolio in new_portfolio.reference_portfolios.values():
         # print(x, y.strategy, y.id)    
         store_content_first_time(reference_portfolio, FIRST_DAY, INITIAL_CAPITAL)
-
     
     return content_object
 

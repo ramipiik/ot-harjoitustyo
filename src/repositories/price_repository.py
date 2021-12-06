@@ -56,16 +56,16 @@ def read_prices_for_statistics(date):
     ).date()
 
     date_object += datetime.timedelta(-1)
-    date_1 = str(date_object)
+    date_d = str(date_object)
 
     date_object += datetime.timedelta(+1-7)
-    date_7 = str(date_object)
+    date_w = str(date_object)
 
     date_object += datetime.timedelta(+7-30)
-    date_30 = str(date_object)
+    date_m = str(date_object)
 
     date_object += datetime.timedelta(+30-365)
-    date_365 = str(date_object)
+    date_y = str(date_object)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
         FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date}'"
@@ -73,66 +73,63 @@ def read_prices_for_statistics(date):
     try:
         cursor.execute(sql)
         rows_today = cursor.fetchall()
-    except Error as error:
+    except:
         rows_today = [None, None, None, None, None, None]
-        print(error)
 
     # print("rows_today", rows_today)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
-        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_1}'"
-    rows_1d = None
+        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_d}'"
+    rows_d = None
     try:
         cursor.execute(sql)
-        rows_1d = cursor.fetchall()
-    except Error as error:
-        rows_1d = [None, None, None, None, None, None]
-        print(error)
+        rows_d = cursor.fetchall()
+    except:
+        rows_d = [None, None, None, None, None, None]
 
-    # print("rows_1d", rows_1d)
+    # print("rows_d", rows_d)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
-        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_7}'"
-    rows_7d = None
+        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_w}'"
+    rows_w = None
     try:
         cursor.execute(sql)
-        rows_7d = cursor.fetchall()
-    except Error:
-        rows_7d = [None, None, None, None, None, None]
+        rows_w = cursor.fetchall()
+    except:
+        rows_w = [None, None, None, None, None, None]
 
-    # print("rows_7d", rows_7d)
+    # print("rows_w", rows_w)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
-        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_30}'"
-    rows_30d = None
+        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_m}'"
+    rows_m = None
     try:
         cursor.execute(sql)
-        rows_30d = cursor.fetchall()
-    except Error:
-        rows_30d = [None, None, None, None, None, None]
+        rows_m = cursor.fetchall()
+    except:
+        rows_m = [None, None, None, None, None, None]
 
-    # print("rows_30d", rows_30d)
+    # print("rows_m", rows_m)
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
-        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_365}'"
-    rows_365d = None
+        FROM cryptos c LEFT JOIN prices p ON c.id=p.crypto_id WHERE date='{date_y}'"
+    rows_y = None
     try:
         cursor.execute(sql)
-        rows_365d = cursor.fetchall()
-    except Error:
-        rows_365d = [None, None, None, None, None, None]
+        rows_y = cursor.fetchall()
+    except:
+        rows_y = [None, None, None, None, None, None]
 
-    # print("rows_365d", rows_365d)
+    # print("rows_d", rows_y)
 
     connection.close()
 
     data = {}
     data["today"] = rows_today
-    data["1d"] = rows_1d
-    data["7d"] = rows_7d
-    data["30d"] = rows_30d
-    data["365d"] = rows_365d
-
+    data["d"] = rows_d
+    data["w"] = rows_w
+    data["m"] = rows_m
+    data["y"] = rows_y
     return data
 
 

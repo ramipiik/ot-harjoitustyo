@@ -16,8 +16,8 @@ def store_content_first_time(portfolio, first_day, initial_capital):
         print(error)
         return False
     try:
-        sql = "INSERT INTO contents_support (portfolio_id, portfolio_day, cash, created, change_id)\
-                VALUES (:portfolio_id, :first_day, :cash, CURRENT_TIMESTAMP, 1)"
+        sql = "INSERT INTO contents_support (portfolio_id, portfolio_day, cash, created, change_id, total_value)\
+                VALUES (:portfolio_id, :first_day, :cash, CURRENT_TIMESTAMP, 1, :cash)"
         cursor.execute(
             sql,
             {
@@ -43,7 +43,7 @@ def store_content(contents: Content, rates):
         for crypto_id, status in contents.cryptos.items():
             if status:
                 amount = status["amount"]
-                value = amount * rates[crypto_id]["close"]
+                value = amount * rates[crypto_id]["close"]                
                 total_value += value
                 try:
                     sql = "INSERT INTO contents (portfolio_id, change_id, crypto_id, amount, value) \
@@ -68,6 +68,7 @@ def store_content(contents: Content, rates):
             cursor.execute(
                 sql,
                 {
+                    
                     "portfolio_id": contents.portfolio_id,
                     "portfolio_day": contents.portfolio_day,
                     "cash": contents.cash,
@@ -144,19 +145,32 @@ def read_portfolio_history(portfolio_id):
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
-    sql = "select total_value from contents_support where portfolio_id=:portfolio_id"
-
+    sql = "select portfolio_day, total_value from contents_support where portfolio_id=:portfolio_id"
     rows = None
     try:
         cursor.execute(sql, {"portfolio_id": portfolio_id})
         rows = cursor.fetchall()
     except Error as error:
         print(error)
-    values = []
-    for row in rows:
-        values.append(row[0])
+    # aux=[]
+    # for row in rows:
+    #     print("row", row)
+    #     aux.append(row[0])
     connection.close()
-    return values
+
+    values = {}
+    min_date=None
+    for row in rows:
+        if min_date==None and row[1]!=None:
+            min_date=row[0]
+        if row[0] not in values.keys() and row[1]!=None:
+            values[row[0]]=row[1]
+
+    # print("from read _portfolio_history")
+    # print(rows)
+    # print("+++++++++++++++++++++++++++++++")
+    # print(rows)
+    return (min_date, values)
 
 def read_portfolio_startdate(portfolio_id):
     """Method for reading the start_date of the portfolio from the database"""

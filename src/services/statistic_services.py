@@ -15,9 +15,9 @@ def calculate_price_volatility(end_day):
             data[row[0]]['prices'] = []
         data[row[0]]["prices"].append(row[1])
     for value in data.values():
-        value['vol'] = round(
+        value['sd'] = round(
             np.std(value['prices'])/np.mean(value['prices'])*100)
-        # print(f"Crypto_id {key}, vol: {value['vol']}%, price days: {len(value['prices'])}")
+        # print(f"Crypto_id {key}, sd: {value['sd']}%, price days: {len(value['prices'])}")
     return data
 
 
@@ -26,10 +26,10 @@ def get_price_statistics(date):
     price_data: dict = read_prices_for_statistics(date)
     volatility_data: dict = calculate_price_volatility(date)
     rows_today = price_data["today"]
-    rows_1d = price_data["1d"]
-    rows_7d = price_data["7d"]
-    rows_30d = price_data["30d"]
-    rows_365d = price_data["365d"]
+    rows_d = price_data["d"]
+    rows_w = price_data["w"]
+    rows_m = price_data["m"]
+    rows_y = price_data["y"]
 
     rates = {}
     if rows_today:
@@ -54,68 +54,72 @@ def get_price_statistics(date):
             except:
                 values["low"] = '--'
             try:
-                values["1d"] = rows_1d[number][2]
+                values["d"] = rows_d[number][2]
             except:
-                values["1d"] = '--'
+                values["d"] = '--'
             try:
-                values["7d"] = rows_7d[number][2]
+                values["w"] = rows_w[number][2]
             except:
-                values["7d"] = '--'
+                values["w"] = '--'
             try:
-                values["30d"] = rows_30d[number][2]
+                values["m"] = rows_m[number][2]
             except:
-                values["30d"] = '--'
+                values["m"] = '--'
             try:
-                values["365d"] = rows_365d[number][2]
+                values["y"] = rows_y[number][2]
             except:
-                values["365d"] = '--'
-            values["vol"] = volatility_data[row[0]]['vol']
+                values["y"] = '--'
+            values["sd"] = volatility_data[row[0]]['sd']
             rates[row[0]] = values
-
     for value in rates.values():
-        if value["1d"] != '--':
-            value["1d"] = round(
-                100*(value["close"]-value["1d"])/value["1d"], 2)
-        if value["7d"] != '--':
-            value["7d"] = round(
-                100*(value["close"]-value["7d"])/value["7d"], 2)
-        if value["30d"] != '--':
-            value["30d"] = round(
-                100*(value["close"]-value["30d"])/value["30d"], 2)
-        if value["365d"] != '--':
-            value["365d"] = round(
-                100*(value["close"]-value["365d"])/value["365d"], 2)
+        if value["d"] != '--':
+            value["d"] = round(
+                100*(value["close"]-value["d"])/value["d"], 2)
+        if value["w"] != '--':
+            value["w"] = round(
+                100*(value["close"]-value["w"])/value["w"], 2)
+        if value["m"] != '--':
+            value["m"] = round(
+                100*(value["close"]-value["m"])/value["m"], 2)
+        if value["y"] != '--':
+            value["y"] = round(
+                100*(value["close"]-value["y"])/value["y"], 2)
         # print (f"{value}")
         value["d/w"] = '--'
         value["w/m"] = '--'
         value["m/y"] = '--'
-        if value["1d"] != '--' and value["7d"] != '--':
+        if value["d"] != '--' and value["w"] != '--':
             try:
-                value["d/w"] = round(value["1d"]/value["7d"], 2)
+                value["d/w"] = round(value["d"]/value["w"], 2)
             except:
                 pass
-        if value["7d"] != '--' and value["30d"] != '--':
+        if value["w"] != '--' and value["m"] != '--':
             try:
-                value["w/m"] = round(value["7d"]/value["30d"], 2)
+                value["w/m"] = round(value["w"]/value["m"], 2)
             except:
                 pass
-        if value["30d"] != '--' and value["365d"] != '--':
+        if value["m"] != '--' and value["y"] != '--':
             try:
-                value["m/y"] = round(value["30d"]/value["365d"], 2)
+                value["m/y"] = round(value["m"]/value["y"], 2)
             except:
                 pass
     return rates
 
-
+#Bugi. Päivää ei voi hakea suoraan portfolio historyn tickkien perusteella. pitää hakea päivän kautta.
 def get_portfolio_statistics(portfolio_id):
     """Method for calculating portfolio statistics"""
-    portfolio_history = read_portfolio_history(portfolio_id)[1:]
+    data=read_portfolio_history(portfolio_id)
+    values:dict=data[1]
     stats = {}
     volatility='--'
-    stats["vol"] = volatility
+    stats["sd"] = volatility
+    portfolio_history=[]
+    # portfolio_history.insert(0,1000000)
+    for value in values.values():
+        portfolio_history.append(value)    
     if len(portfolio_history)>0:
         volatility = np.std(portfolio_history)/np.mean(portfolio_history)*100
-        stats["vol"] = round(volatility)
+        stats["sd"] = round(volatility)
         today = round(portfolio_history[-1])
     else:
         content= read_portfolio_content(portfolio_id)

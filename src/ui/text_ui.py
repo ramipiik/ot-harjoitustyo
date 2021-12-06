@@ -86,69 +86,72 @@ def start():
         if response == "Q" or response == "q":
             exit()
         print(ERROR_MESSAGE)
-    if user:
-        while True:
-            list_portfolios(user)
-            response = input(
-                (
-                    f"{bcolors.OKCYAN}Which portfolio number do you want to open? C to create a new portfolio. Q to quit: {bcolors.ENDC}"
+    while True:
+        if user:
+            while True: 
+                list_portfolios(user)
+                response = input(
+                    (
+                        f"{bcolors.OKCYAN}Which portfolio number do you want to open? C to create a new portfolio. Q to quit: {bcolors.ENDC}"
+                    )
                 )
-            )
-            if response == "C" or response == "c":
-                create_portfolio_UI(user)
-            elif response == "Q" or response == "q":
+                if response == "C" or response == "c":
+                    create_portfolio_UI(user)
+                elif response == "Q" or response == "q":
+                    print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
+                    exit()
+                else:
+                    try:
+                        portfolio_id = int(response)
+                        content_object = get_content(user, portfolio_id)
+                        if content_object:
+                            break
+                    except:
+                        print(ERROR_MESSAGE)
+        if content_object:
+            while True:
+                print(f"{bcolors.OKCYAN}What do you want to do next?{bcolors.ENDC}")
+                choice = input(
+                    f"{bcolors.OKCYAN}Press B to buy, S to sell, N for next period, P back to Portfolio list, Q for quit: {bcolors.ENDC}"
+                )
                 print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
-                exit()
-            else:
-                try:
-                    portfolio_id = int(response)
-                    content_object = get_content(user, portfolio_id)
-                    if content_object:
-                        break
-                except:
-                    print(ERROR_MESSAGE)
-    if content_object:
-        while True:
-            print(f"{bcolors.OKCYAN}What do you want to do next?{bcolors.ENDC}")
-            choice = input(
-                f"{bcolors.OKCYAN}Press B to buy, S to sell, N for next period, Q for quit: {bcolors.ENDC}"
-            )
-            print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
-            if choice == "B" or choice == "b":
-                try:
-                    crypto_id = int(
-                        input(
-                            f"{bcolors.OKCYAN}Number of crypto to buy: {bcolors.ENDC}"
+                if choice == "B" or choice == "b":
+                    try:
+                        crypto_id = int(
+                            input(
+                                f"{bcolors.OKCYAN}Number of crypto to buy: {bcolors.ENDC}"
+                            )
                         )
-                    )
-                    investment = int(
-                        input(
-                            f"{bcolors.OKCYAN}Amount to invest (EUR): {bcolors.ENDC}")
-                    )
-                except:
-                    print(ERROR_MESSAGE)
-                buy(content_object, crypto_id, investment)
-                get_content(user, portfolio_id)
-            elif choice == "S" or choice == "s":
-                try:
-                    crypto_id = int(
-                        input(
-                            f"{bcolors.OKCYAN}Which crypto do you want to sell? {bcolors.ENDC}"
+                        investment = int(
+                            input(
+                                f"{bcolors.OKCYAN}Amount to invest (EUR): {bcolors.ENDC}")
                         )
-                    )
-                    investment = int(
-                        input(
-                            f"{bcolors.OKCYAN}How much do you want to sell in EUR? {bcolors.ENDC}"
+                    except:
+                        print(ERROR_MESSAGE)
+                    buy(content_object, crypto_id, investment)
+                    get_content(user, portfolio_id)
+                elif choice == "S" or choice == "s":
+                    try:
+                        crypto_id = int(
+                            input(
+                                f"{bcolors.OKCYAN}Which crypto do you want to sell? {bcolors.ENDC}"
+                            )
                         )
-                    )
-                except:
+                        investment = int(
+                            input(
+                                f"{bcolors.OKCYAN}How much do you want to sell in EUR? {bcolors.ENDC}"
+                            )
+                        )
+                    except:
+                        print(ERROR_MESSAGE)
+                    sell(content_object, crypto_id, investment)
+                    get_content(user, portfolio_id)
+                elif choice == "N" or choice == "n":
+                    next_period(content_object)
+                    get_content(user, portfolio_id)
+                elif choice == "Q" or choice == "q":
+                    exit()
+                elif choice == "P" or choice == "p":
+                    break
+                else:
                     print(ERROR_MESSAGE)
-                sell(content_object, crypto_id, investment)
-                get_content(user, portfolio_id)
-            elif choice == "N" or choice == "n":
-                next_period(content_object)
-                get_content(user, portfolio_id)
-            elif choice == "Q" or choice == "q":
-                exit()
-            else:
-                print(ERROR_MESSAGE)
