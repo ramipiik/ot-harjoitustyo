@@ -1,0 +1,39 @@
+
+Ti 7.12.
+    Välipalautuksen vaatimukset:
+    KOODI
+    -DONE: Päivitä vaatimusmäärittelyyn mitä ominaisuuksia toteutettu (5 min)
+    -Tee muutama testi lisää. Testaa että referenssistrategiat toimivat. Testikattavuuden tulee olla vähintään 40%. Tällä hetkellä 34%. (1-2 h)
+    -Varmista lopuksi että ohjelman voi ajaa yliopiston koneella (ma-iltana toimi vielä) (15 min)
+    -Tee Github-release ja lisää uusi linkki releaseen readme.md:hen (15 min)
+    -Testaa taas kerran, että sovellus toimii myös releasen kautta. (15 min)
+
+    ARKKITEHTUURI
+    -Tee sekvenssikaavio esim. referenssistrategiasta. Lisää linkki arkkitehtuuri.md:hen. (1-3h)
+    -Päivitä tuntikirjanpito ja pushaa vielä kerran. (15 min)
+
+-------------------------------
+VÄLIPALAUTUS DL 7.12. KLO 23.59
+-----------------------------
+-Lue loppupalautuksen vaatimukset läpi. Toteuta puuttuvat vaatimukset (esim. testikattavuus ja arkkitehtuurikuvaus). Kovin paljon puutteita ei enää ole.
+-Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
+-Aloita sen jälkeen graafinen käyttöliittymä, jotta työ edistyy myös substanssimielessä. GUI-tavoite: Sisäänkirjautuminen ja käyttäjän luominen.
+
+-----------------------
+VÄLIPALAUTUS DL 14.12.
+-----------------------
+-Palautteen huomioiminen
+-GUI:n edistäminen
+-Add development ideas to readme.md:
+  -Randomize starting day so that it's not possible to learn the pattern
+  -Normalize the starting values so that they all start at same price e.g. 1.00
+  -Anonymize crypto names to: A, B, C etc
+  -Add more advanced strategies
+  -Develope GUI further (add graphs)
+
+--------------------
+LOPULLINEN PALAUTUS DL 26.12.
+-----------------------------
+
+
+

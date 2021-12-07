@@ -137,3 +137,17 @@ def read_portfolio_frequency(portfolio_id):
         print(error)
     connection.close()
     return row
+
+def delete_user_portfolios(username):
+    """Method for deleting a portfolio from the database"""
+    connection = sqlite3.connect(DATABASE_PATH)
+    cursor = connection.cursor()
+    try:
+        sql = "DELETE FROM portfolios WHERE user_id=:username"
+        cursor.execute(sql, {"username": username})
+        connection.commit()
+        connection.close()
+    except Error as error:
+        print(error)
+        return False
+    return True
