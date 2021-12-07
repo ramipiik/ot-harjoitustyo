@@ -3,4 +3,4 @@
 ## Pakkauskaavio  
 ![Pakkauskaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/pakkauskaavio/pakkauskaavio.jpg)
 ## Sekvenssikaavio  
-![Sekvenssikaavio](xxx)
+![Sekvenssikaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/sekvenssikaavio/signup.png)
