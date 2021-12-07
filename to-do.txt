@@ -1,17 +1,4 @@
 
-Ti 7.12.
-    Välipalautuksen vaatimukset:
-    KOODI
-    -DONE: Päivitä vaatimusmäärittelyyn mitä ominaisuuksia toteutettu (5 min)
-    -DONE: Tee muutama testi lisää. Testaa että referenssistrategiat toimivat. Testikattavuuden tulee olla vähintään 40%. Tällä hetkellä 34%. (1-2 h)
-    -DONE: Varmista lopuksi että ohjelman voi ajaa yliopiston koneella (ma-iltana toimi vielä) (15 min)
-    -DONE: Tee Github-release ja lisää uusi linkki releaseen readme.md:hen (15 min)
-    -DONE: Testaa taas kerran, että sovellus toimii myös releasen kautta. (15 min)
-
-    ARKKITEHTUURI
-    -Tee sekvenssikaavio esim. referenssistrategiasta. Lisää linkki arkkitehtuuri.md:hen. (1-3h)
-    -DONE: Päivitä tuntikirjanpito ja pushaa vielä kerran. (15 min)
-
 -------------------------------
 VÄLIPALAUTUS DL 7.12. KLO 23.59
 -----------------------------
