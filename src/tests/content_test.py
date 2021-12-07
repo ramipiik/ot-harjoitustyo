@@ -17,9 +17,6 @@ class TestContent(unittest.TestCase):
         
     def test_portfolio_cash(self):
         """method for testing creation of a new portfolio"""
-        # print("Hello world")
-        # print("********************")
-
         self.assertEqual(self.test_portfolio.cash, INITIAL_CAPITAL)
         portfolio_id=read_portfolio_id(self.test_user.username, "test_portfolio")
 

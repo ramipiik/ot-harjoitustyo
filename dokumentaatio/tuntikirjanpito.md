@@ -18,4 +18,6 @@
 | 24.11. | 3    | portfoliostatistiikka |
 | 25.11. | 2.5  | yksikkötestit, bugikorjaus |
 | 26.11. | 1.5  | pakkaus- ja luokkakaaviot |
-| yht    | 61   |
+| 5.12.  | 11   | referenssi portfolioiden luonti. Ensimmäiset referenssistrategiat |
+| 6.12.  | 9    | Loput referenssistrategiat. Regressioiden korjaamista, refaktotointia, testaamista. |
+| yht    | 81   |
