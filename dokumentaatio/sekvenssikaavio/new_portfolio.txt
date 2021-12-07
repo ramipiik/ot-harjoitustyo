@@ -1,0 +1,11 @@
+Create a new portfolio
+
+user->+new_portfolio:create_portfolio(user, portfolio_name, frequency)
+new_portfolio->database:store_portfolio()
+new_portfolio->+database:read_portfolio_id()
+database-->-new_portfolio:portfolio_id
+new_portfolio->+database:store_content_first_time(FIRST_DAY, INITIAL_CAPITAL)
+database-->-new_portfolio: portfolio_content
+new_portfolio->reference_portfolios: Reference_Portfolio(portfolio_id, strategy, frequency,id)
+reference_portfolios->database:store_content_first_time(reference_portfolio, FIRST_DAY, INITIAL_CAPITAL)
+new_portfolio-->-user:portfolio_content
