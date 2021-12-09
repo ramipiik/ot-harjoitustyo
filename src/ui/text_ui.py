@@ -78,6 +78,7 @@ def start():
         print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
         if response == "L" or response == "l":
             user = login_UI()
+            portfolios_UI(user)
             break
         if response == "N" or response == "n":
             user = signup_UI()
@@ -85,6 +86,10 @@ def start():
         if response == "Q" or response == "q":
             exit()
         print(ERROR_MESSAGE)
+
+
+def portfolios_UI(self, user):
+    self._frame.quit()
     while True:
         if user:
             while True:

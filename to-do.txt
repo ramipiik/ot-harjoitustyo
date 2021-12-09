@@ -2,9 +2,10 @@
 -------------------------------
 VÄLIPALAUTUS DL 7.12. KLO 23.59
 -----------------------------
+-Aloita graafinen käyttöliittymä, jotta työ edistyy  substanssimielessä. GUI-tavoite: Sisäänkirjautuminen ja käyttäjän luominen.
 -Lue loppupalautuksen vaatimukset läpi. Toteuta puuttuvat vaatimukset (esim. testikattavuus ja arkkitehtuurikuvaus). Kovin paljon puutteita ei enää ole.
 -Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
--Aloita sen jälkeen graafinen käyttöliittymä, jotta työ edistyy myös substanssimielessä. GUI-tavoite: Sisäänkirjautuminen ja käyttäjän luominen.
+
 
 -----------------------
 VÄLIPALAUTUS DL 14.12.
