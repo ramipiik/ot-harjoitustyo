@@ -5,7 +5,16 @@ from entities.user import User
 
 
 def login(username, password):
-    """Service for logging in a user"""
+    """Service for logging in a user.
+
+        Args:
+            username:str
+            password:str
+
+        Returns:
+            user object if login successful.
+            None if login not succesfull.
+    """    
     response = verify_user(username, password)
     # To do: Move prints to text_ui?
     if response:
@@ -27,7 +36,18 @@ def logout():
 
 
 def signup(username, password):
-    """Service for signing up a new user"""
+    """
+    Service for signing up a new user.
+
+    Args:
+        username: str,
+        password: str
+
+    Returns:
+        user object if signup successful.
+        False if signup not succesfull.
+    """    
+    #"""Service for signing up a new user"""
     response = store_user(username, password)
     # To do: Move prints to text_ui?
     if response:

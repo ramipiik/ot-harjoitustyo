@@ -2,10 +2,23 @@
 -------------------------------
 VÄLIPALAUTUS DL 7.12. KLO 23.59
 -----------------------------
--Aloita graafinen käyttöliittymä, jotta työ edistyy  substanssimielessä. GUI-tavoite: Signup ja signin.
--Vaihda sen jälkeen muihin juttuihin, jotta saan pisteet maksimoitua. Tämän viikon jälkeen ei ole enää kuin kaksi työpäivää jäljellä. 
--Lue loppupalautuksen vaatimukset läpi. Toteuta puuttuvat vaatimukset (esim. testikattavuus ja arkkitehtuurikuvaus). Kovin paljon puutteita ei enää ole.
+-Aloita graafinen käyttöliittymä, jotta työ edistyy  substanssimielessä. GUI-tavoite: Signup ja signin. DONE
+-Vaihda sen jälkeen muihin juttuihin, jotta saan pisteet maksimoitua. Tämän viikon jälkeen ei ole enää kuin kaksi työpäivää jäljellä. DONE
+-Tarkista viikon 6 vaatimukset.
+
 -Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
+-Jos on liian isoja luokkia tai metodeja, pilko ne pienempiin osiin ("Single responsibility principle").
+-Täydennä docstringejä
+-Tee arkkitehtuurikuvaus (1-2 sivua ja kaavioita)
+-Tee alustava käyttöohje (n. 1 sivu)
+-Lisää linkki käyttöohjeeseen readme.md:hen.
+-Tee vertaisarviointi
+-Tee viikon 6 release. 
+-Lisää linkki release6:een readme.md:hen.
+-Päivitä tuntikirjanpito
+
+-Lue loppupalautuksen vaatimukset läpi. Toteuta puuttuvat vaatimukset (esim. testikattavuus ja arkkitehtuurikuvaus). Kovin paljon puutteita ei enää ole.
+
 
 
 -----------------------

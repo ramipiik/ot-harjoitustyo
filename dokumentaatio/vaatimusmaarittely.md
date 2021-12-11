@@ -27,8 +27,9 @@
 
 
 ## Käyttöliittymäluonnos
- * [Käyttöliittymäluonnos](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/K%C3%A4ytt%C3%B6liittym%C3%A4luonnos.pdf)
  * TEHTY: Tekstikäyttöliittymä
+ * ALOITETTU: [Käyttöliittymäluonnos](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/K%C3%A4ytt%C3%B6liittym%C3%A4luonnos.pdf)
+ 
 
 ## Jatkokehitysideoita
 * Visio on mallintaa ja testata oikeasti (mahdollisesti) hyödyllisiä sijoitustrategioita/algoritmeja (Markovin ketju, portfolioteoria, machine learning -algoritmeja, jne ) ja verrata niiden saamia tuottoja keskenään eri sijoituskohteiden ja aikajänteiden välillä ja tehdä tämän pohjalta sijoitusbotti, joka tekee oikeita sijoituspäätöksiä/suosituksia.
