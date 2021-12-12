@@ -1,6 +1,5 @@
 import datetime
 import random
-
 from repositories.content_repository import (
     read_portfolio_content,
     store_content,
@@ -27,19 +26,21 @@ NR_OF_CRYPTOS = len(CRYPTO_IDS)
 
 
 def buy(content_object: Content, crypto_id, investment):
-    """Service for buying"""
+    """Service for buying a crypto"""
     response=content_object.buy(crypto_id, investment)
     if type(response)==tuple and response[0]==False:
         return response
     if response:
         rates = read_prices(content_object.portfolio_day)
         store_content(content_object, rates)
-      
 
 
 def sell(content_object: Content, crypto_id, investment):
-    """Service for selling. Allows short selling."""
-    if content_object.sell(crypto_id, investment):
+    """Service for selling a crypto. Allows short selling."""
+    response=content_object.sell(crypto_id, investment)
+    if type(response)==tuple and response[0]==False:
+        return response
+    if response:
         rates = read_prices(content_object.portfolio_day)
         store_content(content_object, rates)
 
@@ -47,8 +48,6 @@ def sell(content_object: Content, crypto_id, investment):
 def get_reference_content(portfolio_id, date, own_portfolio_value, own_portfolio_id):
     """Service for ordering and printing reference portfolio valuations"""
     references: dict = read_reference_portfolios(portfolio_id)
-    print(f"{bcolors.HEADER}Ranking {date}")
-    print("")
     collection = []
     collection.append((own_portfolio_value, "Your portfolio", own_portfolio_id))
     for strategy, id in references.items():
@@ -58,16 +57,17 @@ def get_reference_content(portfolio_id, date, own_portfolio_value, own_portfolio
     ordered = []
     for item in collection:
         ordered.append((item[1], item[2]))
-    for i, strategy in enumerate(ordered):
-        stats = get_portfolio_statistics(strategy[1])
-        print(
-            f"{i+1}. {strategy[0]}: {stats['today']}€ ({stats['all-time']}%) | d {stats['d']}% | w {stats['w']}% | m {stats['m']}% | y {stats['y']}% | sd {stats['sd']}%"
-        )
-    print(f"--------------{bcolors.ENDC}")
+    return ordered
+
+
+def get_date(portfolio_id):
+    content = read_portfolio_content(portfolio_id)
+    date = content[0][0]
+    return date
 
 
 def get_content(user, portfolio_id):
-    """Service for fetching and printing portfolio content. Returns a content object."""
+    """Service for fetching portfolio content."""
     portfolios = []
     aux = get_portfolios(user)
     for item in aux:
@@ -80,35 +80,11 @@ def get_content(user, portfolio_id):
     cash = content[0][1]
     change_id = content[0][4]
     content_object = Content(portfolio_id, date, cash, change_id)
-    print(f"{bcolors.OKGREEN}--------------------")
-    print("Portfolio date", date)
-    print("")
     stats = get_portfolio_statistics(portfolio_id)
-    if stats["today"]:
-        print(
-            f"Value: {stats['today']}€ ({stats['all-time']}%) | d {stats['d']}% | w {stats['w']}% | m {stats['m']}% | y {stats['y']}% | sd {stats['sd']}%"
-        )
-    print(" -Cash:", cash, "EUR")
     rates = read_prices(date)
-    for row in content:
-        if row[2]:
-            print(f" -{row[2]} ({rates[row[2]]['name']}): {row[5]:.0f} EUR")
-            content_object.cryptos[row[2]] = {}
-            content_object.cryptos[row[2]]["amount"] = row[3]
-            content_object.cryptos[row[2]]["value"] = row[5]
-    print(f"--------------------{bcolors.ENDC}")
-    get_reference_content(portfolio_id, date, stats["today"], portfolio_id)
+    references=get_reference_content(portfolio_id, date, stats["today"], portfolio_id)
     rates = get_rates(date)
-    print(f"{bcolors.WARNING}Rates {date}")
-    print("")
-    aux = []
-    for key, value in rates.items():
-        aux.append(key)
-        print(
-            f"{key} ({value['name']}): {value['close']} | d {value['d']}% | w {value['w']}% | m {value['m']}% | y {value['y']}% | sd {value['sd']}%"
-        )
-    print(f"--------------------{bcolors.ENDC}")
-    return content_object
+    return (date, cash, content, content_object, rates, stats, references)
 
 
 def next_period(content_object: Content):

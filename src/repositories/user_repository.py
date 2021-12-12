@@ -22,11 +22,6 @@ def verify_user(username, password):
     return None
 
 
-def logout():
-    # to be done
-    pass
-
-
 def store_user(username, password):
     """Method for storing a new user to database"""
     connection = sqlite3.connect(DATABASE_PATH)

@@ -1,4 +1,4 @@
-from ui.text_ui import start
+from ui.text_ui import start_UI
 from tkinter import Tk
 from ui.gui import GUI
 

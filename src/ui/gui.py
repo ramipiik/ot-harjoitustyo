@@ -1,6 +1,6 @@
 from tkinter import StringVar, constants, ttk
 from services.user_services import login, signup
-from ui.text_ui import portfolios_UI
+from ui.text_ui import open_portfolio_UI
 
 
 class GUI:
@@ -173,7 +173,7 @@ class LoginView:
             self._error_var1.set("Kirjautuminen onnistui.\nVoit jatkaa sovelluksen käyttöä terminaalissa.\n(GUIn laajentaminen työn alla.)")
             self._error_label1.config(foreground="green")
             self._frame.update()
-            portfolios_UI(self, user)
+            open_portfolio_UI(user)
         else:
             self._error_var1.set("Kirjautuminen ei onnistunut.\nKäyttäjää ei löytynyt tai väärä salasana.")
             self._error_label1.config(foreground="red")
@@ -192,7 +192,7 @@ class LoginView:
             self._error_var2.set("Käyttäjän luonti onnistui.\nVoit jatkaa sovelluksen käyttöä terminaalissa.\n(GUIn laajentaminen työn alla.)")
             self._error_label2.config(foreground="green")
             self._frame.update()
-            portfolios_UI(self, user)
+            open_portfolio_UI(user)
         else:
             self._error_var2.set("Käyttäjänimi on jo käytössä.")
             self._error_label2.config(foreground="red")

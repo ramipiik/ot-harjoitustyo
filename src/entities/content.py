@@ -23,7 +23,7 @@ class Content:
         if crypto_id not in CRYPTO_IDS:
             return ((False, "There is no such crypto"))
         if math.floor(investment) > self.cash:
-            return ((False, "Not enough cash"))
+            return ((False, f"You only have {self.cash} EUR cash."))
         self.cash -= investment
         date = self.portfolio_day
         self.change_id += 1
@@ -38,15 +38,12 @@ class Content:
             self.cryptos[crypto_id] = {}
             self.cryptos[crypto_id]["amount"] = investment / price
             self.cryptos[crypto_id]["value"] = investment
-            # print(self.cryptos)
         return True
 
     def sell(self, crypto_id, investment):
         """Method for buying a crypto. Allows short selling."""
-        # crypto_ids = get_crypto_ids()
         if crypto_id not in CRYPTO_IDS:
-            print(ERROR_MESSAGE)
-            return False
+            return ((False, "There is no such crypto"))
         self.cash += investment
         date = self.portfolio_day
         self.change_id += 1
