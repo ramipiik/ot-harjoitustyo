@@ -15,7 +15,7 @@ from services.price_services import get_rates
 from services.portfolio_services import get_portfolios
 from services.statistic_services import get_portfolio_statistics
 from entities.content import Content
-from ui.styles import ERROR_MESSAGE, bcolors
+from ui.text_ui.styles import ERROR_MESSAGE, bcolors
 
 
 CRYPTO_NAMES_AND_IDS = read_crypto_names_and_ids()
@@ -37,7 +37,7 @@ def buy(content_object: Content, crypto_id, investment):
 
 def sell(content_object: Content, crypto_id, investment):
     """Service for selling a crypto. Allows short selling."""
-    response=content_object.sell(crypto_id, investment)
+    response=content_object._sell(crypto_id, investment)
     if type(response)==tuple and response[0]==False:
         return response
     if response:

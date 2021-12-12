@@ -112,8 +112,11 @@ def calculate_relations(rates):
 
 def get_portfolio_statistics(portfolio_id):
     """Method for calculating portfolio statistics"""
+    # print("method called")
     data = read_portfolio_history(portfolio_id)
     values: dict = data[1]
+    # print("from statistics")
+    # print(values)
     min_date = data[0]
     start_value = values[min_date]
     stats = {}
@@ -130,7 +133,44 @@ def get_portfolio_statistics(portfolio_id):
         content = read_portfolio_content(portfolio_id)
         today = content[0][1]
     stats["today"] = today
-    stats=calculate_portfolio_relations(stats, today, start_value, portfolio_history)
+    # stats=calculate_portfolio_relations(stats, today, start_value, portfolio_history)
+    # print(stats)
+
+    stats["all-time"] = int(round((today - start_value) / start_value * 100, 0))
+    try:
+        stats["d"] = round(
+            100 * (today - portfolio_history[-1 - 1]) / portfolio_history[-1 - 1], 2
+        )
+    except:
+        stats["d"] = "--"
+    try:
+        stats["w"] = round(
+            100 * (today - portfolio_history[-1 - 7]) / portfolio_history[-1 - 7], 1
+        )
+    except:
+        stats["w"] = "--"
+    try:
+        stats["m"] = int(
+            round(
+                100 * (today - portfolio_history[-1 - 30]) / portfolio_history[-1 - 30],
+                0,
+            )
+        )
+    except:
+        stats["m"] = "--"
+    try:
+        stats["y"] = int(
+            round(
+                100
+                * (today - portfolio_history[-1 - 365])
+                / portfolio_history[-1 - 365],
+                0,
+            )
+        )
+    except:
+        stats["y"] = "--"
+
+    # print(stats)
     return stats
 
 def calculate_portfolio_relations(stats, today, start_value, portfolio_history):

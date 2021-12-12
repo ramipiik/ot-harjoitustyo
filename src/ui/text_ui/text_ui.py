@@ -2,7 +2,7 @@ from services.user_services import login, signup
 from services.portfolio_services import create_portfolio, get_portfolios
 from services.content_services import coordinate_reference_actions, get_content, buy, sell, next_period
 from services.statistic_services import get_portfolio_statistics
-from ui.styles import bcolors, ERROR_MESSAGE
+from ui.text_ui.styles import bcolors, ERROR_MESSAGE
 
 
 def start_UI():
@@ -31,7 +31,14 @@ def login_UI():
         print(f"{bcolors.OKCYAN}--------------------{bcolors.ENDC}")
         user = login(username, password)
         if user:
+            # print(f"{bcolors.OKCYAN}{user.username} logged in")
+            # print(f"--------------------{bcolors.ENDC}")
+            login_print(user)
             return user
+        else:
+            print(f"{bcolors.FAIL}--------------------")
+            print(f"User not found or incorrect password")
+            print(f"--------------------{bcolors.ENDC}")
 
 
 def signup_UI():
@@ -41,11 +48,22 @@ def signup_UI():
         password = input(f"{bcolors.OKCYAN}Password: {bcolors.ENDC}")
         response = signup(username, password)
         if response:
-            return response
+            print(f"{bcolors.OKCYAN}--------------------")
+            print(f"{username} created")
+            print(f"--------------------{bcolors.ENDC}")
+            user = login(username, password)
+            if user:
+                login_print(user)
+                return user
         else:
             print(f"{bcolors.FAIL}Please try again.{bcolors.ENDC}")
             print(f"{bcolors.FAIL}--------------------{bcolors.ENDC}")
             {bcolors.ENDC}
+
+
+def login_print(user):
+    print(f"{bcolors.OKCYAN}{user.username} logged in")
+    print(f"--------------------{bcolors.ENDC}")
 
 
 def list_portfolios_UI(user):
@@ -122,7 +140,6 @@ def open_portfolio_UI(user):
                             break
                     except:
                         print(ERROR_MESSAGE)
-
         if content_object:
             action_UI(content_object, user, portfolio_id)
             
@@ -139,8 +156,8 @@ def action_UI(content_object, user, portfolio_id):
         elif choice == "S" or choice == "s":
             sell_ui(content_object, user, portfolio_id)
         elif choice == "N" or choice == "n":
-            next_period(content_object)
             action_log=coordinate_reference_actions(content_object)
+            next_period(content_object)
             for action in action_log:
                 print(action)
             response=get_content(user, portfolio_id)

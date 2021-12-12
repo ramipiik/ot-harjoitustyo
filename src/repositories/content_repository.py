@@ -137,6 +137,7 @@ def read_portfolio_content(portfolio_id):
     except Error as error:
         print(error)
     connection.close()
+    # print(rows)
     return rows
 
 

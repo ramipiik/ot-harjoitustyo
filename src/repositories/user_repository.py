@@ -14,9 +14,10 @@ def verify_user(username, password):
         user = cursor.fetchone()
     except Error as error:
         print(error)
+        return False
     connection.close()
     if not user:
-        return None
+        return False
     if check_password_hash(user[3], password):
         return [user[0], user[1], user[2]]
     return None

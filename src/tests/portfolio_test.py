@@ -1,6 +1,6 @@
 import unittest
 from entities.portfolio import Portfolio
-from services.user_services import signup
+from services.user_services import signup, login
 from services.portfolio_services import create_portfolio, REFERENCE_STRATEGIES, INITIAL_CAPITAL
 from entities.user import User
 from repositories.user_repository import delete_user
@@ -9,7 +9,8 @@ from repositories.portfolio_repository import read_reference_portfolios, delete_
 
 class TestPortfolio(unittest.TestCase):
     def setUp(self):
-        self.test_user: User = signup("testing", "testing")
+        if signup("testing", "testing"):
+            self.test_user: User = login("testing", "testing")
         self.test_portfolio: Portfolio = create_portfolio(self.test_user, "test_portfolio", 1)
         
         

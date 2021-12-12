@@ -2,15 +2,10 @@
 PLAN 11.12-12.12
 
 Koodi:
--Jos on liian isoja luokkia tai metodeja, pilko ne pienempiin osiin ("Single responsibility principle").
-  -Sovelluslogiikan metodin ja funktioiden pituuden tulee ilman erittäin hyvää syytä olla korkeintaan 20 riviä
--Kaikki tulostaminen tulisi tapahtua käyttöliittymässä
--Jos luokan metodin tai attribuutin on tarkoitus olla vain luokan sisäisessä käytössä, on tapana käyttää nimessä _- tai __-etuliitettä
 -Täydennä docstringejä. Luokan sisäisiä (ilmaistu nimessä _- tai __-etuliitteellä) attribuutteja, tai metodeja ei tarvitse dokumentoida
 -Yksikkötestit: Testaa myös virheellisiä syötteitä
--Jaa koodi järkevästi tiedostoihin, esimerkiksi seuraavalla logiikalla: Yksi luokka yhdessä tiedostossa (GUI:ssa korjattavaa)
 
-
+MA:
 
 Dokumentaatio:
 -Tee arkkitehtuurikuvaus (1-2 sivua ja kaavioita). Tästä saa 4 pistettä eli varsin tärkeä. 
@@ -18,8 +13,6 @@ Dokumentaatio:
 -Testausdokumentista saa 2 pistettä. Olikohan tähän ohjeita jossain?
 -Lisää linkki käyttöohjeeseen readme.md:hen.
 
-Jos jää aikaa:
--Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
 
 Lopuksi:
 -Tee viikon 6 release. 
@@ -31,6 +24,8 @@ TEE VÄLIPALAUTUS DL 14.12.
 -----------------------
 PLAN 25.-26.12.
 -Palautteen huomioiminen
+-Valetietokanta testeihin?
+-Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
 -GUI:n edistäminen sen verran kuin aika sallii
 -Add development ideas to readme.md:
   -Randomize starting day so that it's not possible to learn the pattern

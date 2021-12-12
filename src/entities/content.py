@@ -1,9 +1,6 @@
 import math
-from sqlite3.dbapi2 import Error
 from repositories.price_repository import read_prices
-# from services.content_services import CRYPTO_IDS
 from services.crypto_services import get_crypto_ids
-from ui.styles import bcolors, ERROR_MESSAGE
 
 
 CRYPTO_IDS=get_crypto_ids()
@@ -40,7 +37,7 @@ class Content:
             self.cryptos[crypto_id]["value"] = investment
         return True
 
-    def sell(self, crypto_id, investment):
+    def _sell(self, crypto_id, investment):
         """Method for buying a crypto. Allows short selling."""
         if crypto_id not in CRYPTO_IDS:
             return ((False, "There is no such crypto"))
