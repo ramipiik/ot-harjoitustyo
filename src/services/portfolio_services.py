@@ -26,33 +26,32 @@ REFERENCE_STRATEGIES = [
 ]
 
 
-def create_portfolio(user: User, portfolio_name, frequency):
-    """Service for creating a new portfolio"""
-    if frequency == 1:
-        frequency = "daily"
-    if frequency == 2:
-        frequency = "weekly"
-    if frequency == 3:
-        frequency = "monthly"
+def number_to_frequency(frequency_number):
+    if frequency_number == 1:
+        return "daily"
+    if frequency_number == 2:
+        return "weekly"
+    if frequency_number == 3:
+        return "monthly"
 
+
+def create_portfolio(user: User, portfolio_name, frequency_number):
+    """Service for creating a new portfolio"""
+    frequency=number_to_frequency(frequency_number)
     new_portfolio = Portfolio(user.username, portfolio_name, frequency)
     store_portfolio(user.username, new_portfolio)
     new_portfolio.id = read_portfolio_id(user.username, portfolio_name)
     aux = store_content_first_time(new_portfolio, FIRST_DAY, INITIAL_CAPITAL)
     content_object = Content(aux[0], aux[1], aux[2], aux[3])
     user.add_portfolio(new_portfolio.id)
-
     store_reference_portfolios(new_portfolio.id, REFERENCE_STRATEGIES, frequency, None)
     reference_portfolios: dict = read_reference_portfolios(new_portfolio.id)
     for strategy, id in reference_portfolios.items():
         new_portfolio.reference_portfolios[strategy] = ReferencePortfolio(
             new_portfolio.id, strategy, frequency, id
         )
-
     for reference_portfolio in new_portfolio.reference_portfolios.values():
-        # print(x, y.strategy, y.id)
         store_content_first_time(reference_portfolio, FIRST_DAY, INITIAL_CAPITAL)
-
     return content_object
 
 

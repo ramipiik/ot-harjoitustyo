@@ -30,11 +30,15 @@ def get_price_statistics(date):
     rows_w = price_data["w"]
     rows_m = price_data["m"]
     rows_y = price_data["y"]
-
     rates = {}
+    rates = organize_base_rates(rates, rows_today, rows_d, rows_w, rows_m, rows_y, volatility_data)  
+    rates = calculate_relations(rates)
+    return rates
+
+
+def organize_base_rates(rates, rows_today, rows_d, rows_w, rows_m, rows_y, volatility_data):
     if rows_today:
         for number, row in enumerate(rows_today):
-            # print("n", n)
             values = {}
             values["name"] = rows_today[number][1]
             try:
@@ -69,8 +73,13 @@ def get_price_statistics(date):
                 values["y"] = rows_y[number][2]
             except:
                 values["y"] = "--"
+            
             values["sd"] = volatility_data[row[0]]["sd"]
             rates[row[0]] = values
+    return rates
+
+
+def calculate_relations(rates):
     for value in rates.values():
         if value["d"] != "--":
             value["d"] = round(100 * (value["close"] - value["d"]) / value["d"], 2)
@@ -80,7 +89,6 @@ def get_price_statistics(date):
             value["m"] = round(100 * (value["close"] - value["m"]) / value["m"], 2)
         if value["y"] != "--":
             value["y"] = round(100 * (value["close"] - value["y"]) / value["y"], 2)
-        # print (f"{value}")
         value["d/w"] = "--"
         value["w/m"] = "--"
         value["m/y"] = "--"
@@ -122,6 +130,10 @@ def get_portfolio_statistics(portfolio_id):
         content = read_portfolio_content(portfolio_id)
         today = content[0][1]
     stats["today"] = today
+    stats=calculate_portfolio_relations(stats, today, start_value, portfolio_history)
+    return stats
+
+def calculate_portfolio_relations(stats, today, start_value, portfolio_history):
     stats["all-time"] = int(round((today - start_value) / start_value * 100, 0))
     try:
         stats["d"] = round(

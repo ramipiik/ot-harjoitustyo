@@ -1,7 +1,6 @@
-from sqlite3.dbapi2 import Error
 from services.user_services import login, signup
 from services.portfolio_services import create_portfolio, get_portfolios
-from services.content_services import get_content, buy, sell, next_period, get_date
+from services.content_services import coordinate_reference_actions, get_content, buy, sell, next_period
 from services.statistic_services import get_portfolio_statistics
 from ui.styles import bcolors, ERROR_MESSAGE
 
@@ -86,6 +85,7 @@ def create_portfolio_UI(user):
     print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
     create_portfolio(user, portfolio_name, frequency)
 
+
 def logout_UI(user):
     old_username=user.username
     user=None
@@ -93,6 +93,7 @@ def logout_UI(user):
     print(f"{old_username} logged out")
     print(f"------------------{bcolors.ENDC}")
     start_UI()
+
 
 def open_portfolio_UI(user):
     while True:
@@ -139,6 +140,9 @@ def action_UI(content_object, user, portfolio_id):
             sell_ui(content_object, user, portfolio_id)
         elif choice == "N" or choice == "n":
             next_period(content_object)
+            action_log=coordinate_reference_actions(content_object)
+            for action in action_log:
+                print(action)
             response=get_content(user, portfolio_id)
             print_status(response)
         elif choice == "Q" or choice == "q":

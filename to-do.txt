@@ -4,11 +4,12 @@ PLAN 11.12-12.12
 Koodi:
 -Jos on liian isoja luokkia tai metodeja, pilko ne pienempiin osiin ("Single responsibility principle").
   -Sovelluslogiikan metodin ja funktioiden pituuden tulee ilman erittäin hyvää syytä olla korkeintaan 20 riviä
+-Kaikki tulostaminen tulisi tapahtua käyttöliittymässä
 -Jos luokan metodin tai attribuutin on tarkoitus olla vain luokan sisäisessä käytössä, on tapana käyttää nimessä _- tai __-etuliitettä
 -Täydennä docstringejä. Luokan sisäisiä (ilmaistu nimessä _- tai __-etuliitteellä) attribuutteja, tai metodeja ei tarvitse dokumentoida
 -Yksikkötestit: Testaa myös virheellisiä syötteitä
 -Jaa koodi järkevästi tiedostoihin, esimerkiksi seuraavalla logiikalla: Yksi luokka yhdessä tiedostossa (GUI:ssa korjattavaa)
--Kaikki tulostaminen tulisi tapahtua käyttöliittymässä
+
 
 
 Dokumentaatio:

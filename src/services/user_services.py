@@ -16,7 +16,6 @@ def login(username, password):
             None if login not succesfull.
     """    
     response = verify_user(username, password)
-    # To do: Move prints to text_ui?
     if response:
         user = User(response[0], response[1], response[2])
         portfolios = get_portfolios(user)
