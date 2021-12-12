@@ -33,4 +33,4 @@
 
 ## Jatkokehitysideoita
 * Visio on mallintaa ja testata oikeasti (mahdollisesti) hyödyllisiä sijoitustrategioita/algoritmeja (Markovin ketju, portfolioteoria, machine learning -algoritmeja, jne ) ja verrata niiden saamia tuottoja keskenään eri sijoituskohteiden ja aikajänteiden välillä ja tehdä tämän pohjalta sijoitusbotti, joka tekee oikeita sijoituspäätöksiä/suosituksia.
-* Aihe on varsin laaja. Tavoitteenna on tämän kurssin aikana tehdä pohjatyö, jota voin myöhemmin (esim. gradun tai muiden kurssien puitteissa tai omana vapaa-ajan projektina) kehittää ja laajentaa eteenpäin erityisesti älykkäämpien sijoitusalgoritmien ja koneoppimisen osalta. 
+* Aihe on varsin laaja. Tavoitteena on tämän kurssin aikana tehdä pohjatyö, jota voin myöhemmin (esim. gradun tai muiden kurssien puitteissa tai omana vapaa-ajan projektina) kehittää ja laajentaa eteenpäin erityisesti älykkäämpien sijoitusalgoritmien ja koneoppimisen osalta. 

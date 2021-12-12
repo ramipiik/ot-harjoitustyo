@@ -10,4 +10,4 @@ gui.start()
 window.mainloop()
 
 #Starts the text-ui
-start()
+# start()

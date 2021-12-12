@@ -40,6 +40,8 @@ poetry run invoke initiate-db
 ```
 poetry run invoke start
 ```
+_Huom! Kun sovellus käynnistetään yo. komennolla poetryn kautta jostain syystä komentorivin backscape ei toimi kun syötteitä annetaan terminaalin kautta. Jos sovelluksen käynnistää ilman poetrya, niin backscape toimii. En löytänyt tähän mitään ratkaisua - jos on ideoita, niin otan mielelläni vastaan. :)_
+
 ## Muut komennot
 
 ### Testit

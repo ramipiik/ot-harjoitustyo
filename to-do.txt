@@ -1,38 +1,45 @@
 
--------------------------------
-VÄLIPALAUTUS DL 7.12. KLO 23.59
------------------------------
--Aloita graafinen käyttöliittymä, jotta työ edistyy  substanssimielessä. GUI-tavoite: Signup ja signin. DONE
--Vaihda sen jälkeen muihin juttuihin, jotta saan pisteet maksimoitua. Tämän viikon jälkeen ei ole enää kuin kaksi työpäivää jäljellä. DONE
--Tarkista viikon 6 vaatimukset.
+PLAN 11.12-12.12
 
--Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
+Koodi:
 -Jos on liian isoja luokkia tai metodeja, pilko ne pienempiin osiin ("Single responsibility principle").
--Täydennä docstringejä
--Tee arkkitehtuurikuvaus (1-2 sivua ja kaavioita)
--Tee alustava käyttöohje (n. 1 sivu)
+  -Sovelluslogiikan metodin ja funktioiden pituuden tulee ilman erittäin hyvää syytä olla korkeintaan 20 riviä
+-Jos luokan metodin tai attribuutin on tarkoitus olla vain luokan sisäisessä käytössä, on tapana käyttää nimessä _- tai __-etuliitettä
+-Täydennä docstringejä. Luokan sisäisiä (ilmaistu nimessä _- tai __-etuliitteellä) attribuutteja, tai metodeja ei tarvitse dokumentoida
+-Yksikkötestit: Testaa myös virheellisiä syötteitä
+-Jaa koodi järkevästi tiedostoihin, esimerkiksi seuraavalla logiikalla: Yksi luokka yhdessä tiedostossa (GUI:ssa korjattavaa)
+-Kaikki tulostaminen tulisi tapahtua käyttöliittymässä
+
+
+Dokumentaatio:
+-Tee arkkitehtuurikuvaus (1-2 sivua ja kaavioita). Tästä saa 4 pistettä eli varsin tärkeä. 
+-Tee alustava käyttöohje (n. 1 sivu) 1 pisteen arvoinen. 
+-Testausdokumentista saa 2 pistettä. Olikohan tähän ohjeita jossain?
 -Lisää linkki käyttöohjeeseen readme.md:hen.
--Tee vertaisarviointi
+
+Jos jää aikaa:
+-Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
+
+Lopuksi:
 -Tee viikon 6 release. 
 -Lisää linkki release6:een readme.md:hen.
 -Päivitä tuntikirjanpito
 
--Lue loppupalautuksen vaatimukset läpi. Toteuta puuttuvat vaatimukset (esim. testikattavuus ja arkkitehtuurikuvaus). Kovin paljon puutteita ei enää ole.
-
-
-
 -----------------------
-VÄLIPALAUTUS DL 14.12.
+TEE VÄLIPALAUTUS DL 14.12.
 -----------------------
+PLAN 25.-26.12.
 -Palautteen huomioiminen
--GUI:n edistäminen
+-GUI:n edistäminen sen verran kuin aika sallii
 -Add development ideas to readme.md:
   -Randomize starting day so that it's not possible to learn the pattern
   -Normalize the starting values so that they all start at same price e.g. 1.00
   -Anonymize crypto names to: A, B, C etc
   -Add more advanced strategies
   -Develope GUI further (add graphs)
-
+- Päivitä määrittelydokumentti  vastaamaan lopullisen ohjelman toiminnallisuutta
+-Tee loppupalautus-niminen GitHub-release
+-Lisää readme:hen linkki loppupalautukseen
 --------------------
 LOPULLINEN PALAUTUS DL 26.12.
 -----------------------------

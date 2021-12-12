@@ -7,7 +7,7 @@ from repositories.portfolio_repository import (
 from repositories.content_repository import store_content_first_time
 from repositories.portfolio_repository import store_reference_portfolios
 from entities.portfolio import Portfolio
-from entities.reference_portfolio import Reference_Portfolio
+from entities.reference_portfolio import ReferencePortfolio
 from entities.content import Content
 from entities.user import User
 
@@ -45,7 +45,7 @@ def create_portfolio(user: User, portfolio_name, frequency):
     store_reference_portfolios(new_portfolio.id, REFERENCE_STRATEGIES, frequency, None)
     reference_portfolios: dict = read_reference_portfolios(new_portfolio.id)
     for strategy, id in reference_portfolios.items():
-        new_portfolio.reference_portfolios[strategy] = Reference_Portfolio(
+        new_portfolio.reference_portfolios[strategy] = ReferencePortfolio(
             new_portfolio.id, strategy, frequency, id
         )
 

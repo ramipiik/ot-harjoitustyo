@@ -1,8 +1,12 @@
 import math
+from sqlite3.dbapi2 import Error
 from repositories.price_repository import read_prices
+# from services.content_services import CRYPTO_IDS
 from services.crypto_services import get_crypto_ids
 from ui.styles import bcolors, ERROR_MESSAGE
 
+
+CRYPTO_IDS=get_crypto_ids()
 
 class Content:
     """Class for managing portfolio content"""
@@ -16,16 +20,10 @@ class Content:
 
     def buy(self, crypto_id, investment):
         """Method for buying a crypto"""
+        if crypto_id not in CRYPTO_IDS:
+            return ((False, "There is no such crypto"))
         if math.floor(investment) > self.cash:
-            print(f"{bcolors.FAIL}--------------------")
-            print("Not enough cash")
-            print("self.cash", self.cash)
-            print(f"--------------------{bcolors.ENDC}")
-            return False
-        crypto_ids = get_crypto_ids()
-        if crypto_id not in crypto_ids:
-            print(ERROR_MESSAGE)
-            return False
+            return ((False, "Not enough cash"))
         self.cash -= investment
         date = self.portfolio_day
         self.change_id += 1
@@ -45,8 +43,8 @@ class Content:
 
     def sell(self, crypto_id, investment):
         """Method for buying a crypto. Allows short selling."""
-        crypto_ids = get_crypto_ids()
-        if crypto_id not in crypto_ids:
+        # crypto_ids = get_crypto_ids()
+        if crypto_id not in CRYPTO_IDS:
             print(ERROR_MESSAGE)
             return False
         self.cash += investment

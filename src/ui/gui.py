@@ -172,6 +172,7 @@ class LoginView:
         if user:
             self._error_var1.set("Kirjautuminen onnistui.\nVoit jatkaa sovelluksen käyttöä terminaalissa.\n(GUIn laajentaminen työn alla.)")
             self._error_label1.config(foreground="green")
+            self._frame.update()
             portfolios_UI(self, user)
         else:
             self._error_var1.set("Kirjautuminen ei onnistunut.\nKäyttäjää ei löytynyt tai väärä salasana.")
@@ -190,6 +191,7 @@ class LoginView:
         if user:
             self._error_var2.set("Käyttäjän luonti onnistui.\nVoit jatkaa sovelluksen käyttöä terminaalissa.\n(GUIn laajentaminen työn alla.)")
             self._error_label2.config(foreground="green")
+            self._frame.update()
             portfolios_UI(self, user)
         else:
             self._error_var2.set("Käyttäjänimi on jo käytössä.")

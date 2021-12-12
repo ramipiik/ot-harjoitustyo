@@ -1,3 +1,4 @@
+from sqlite3.dbapi2 import Error
 from services.user_services import login, signup
 from services.portfolio_services import create_portfolio, get_portfolios
 from services.content_services import get_content, buy, sell, next_period
@@ -131,10 +132,15 @@ def portfolios_UI(self, user):
                                 f"{bcolors.OKCYAN}Amount to invest (EUR): {bcolors.ENDC}"
                             )
                         )
+                    
+                        response=buy(content_object, crypto_id, investment)
+                        if type(response)==tuple and response[0]==False:
+                            print(f"{bcolors.FAIL}--------------------")
+                            print(response[1])
+                            print(f"--------------------{bcolors.ENDC}")
+                        get_content(user, portfolio_id)
                     except:
                         print(ERROR_MESSAGE)
-                    buy(content_object, crypto_id, investment)
-                    get_content(user, portfolio_id)
                 elif choice == "S" or choice == "s":
                     try:
                         crypto_id = int(
@@ -147,10 +153,10 @@ def portfolios_UI(self, user):
                                 f"{bcolors.OKCYAN}How much do you want to sell in EUR? {bcolors.ENDC}"
                             )
                         )
+                        sell(content_object, crypto_id, investment)
+                        get_content(user, portfolio_id)
                     except:
                         print(ERROR_MESSAGE)
-                    sell(content_object, crypto_id, investment)
-                    get_content(user, portfolio_id)
                 elif choice == "N" or choice == "n":
                     next_period(content_object)
                     get_content(user, portfolio_id)

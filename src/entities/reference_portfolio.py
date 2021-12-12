@@ -1,4 +1,4 @@
-class Reference_Portfolio:
+class ReferencePortfolio:
     """Class for managing reference_portfolios"""
 
     def __init__(self, portfolio_id, strategy, frequency, id, periods=None):

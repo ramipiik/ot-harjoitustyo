@@ -19,7 +19,6 @@ from entities.content import Content
 from ui.styles import ERROR_MESSAGE, bcolors
 
 
-
 CRYPTO_NAMES_AND_IDS = read_crypto_names_and_ids()
 CRYPTO_IDS = []
 for key in CRYPTO_NAMES_AND_IDS:
@@ -29,13 +28,17 @@ NR_OF_CRYPTOS = len(CRYPTO_IDS)
 
 def buy(content_object: Content, crypto_id, investment):
     """Service for buying"""
-    content_object.buy(crypto_id, investment)
-    rates = read_prices(content_object.portfolio_day)
-    store_content(content_object, rates)
+    response=content_object.buy(crypto_id, investment)
+    if type(response)==tuple and response[0]==False:
+        return response
+    if response:
+        rates = read_prices(content_object.portfolio_day)
+        store_content(content_object, rates)
+      
 
 
 def sell(content_object: Content, crypto_id, investment):
-    """Service for selling"""
+    """Service for selling. Allows short selling."""
     if content_object.sell(crypto_id, investment):
         rates = read_prices(content_object.portfolio_day)
         store_content(content_object, rates)
