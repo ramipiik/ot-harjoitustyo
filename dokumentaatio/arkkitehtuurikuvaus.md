@@ -8,11 +8,10 @@ Sovellus on toteutettu kolmikerrosmallin mukaan, jossa tiedon tallennukseen, pal
 * UI: Tekstikäyttöliittymä ja graafinen käyttöliittymä
 * Entities: Olio-ohjelmoinnin luokat
 
-Testit ovat omassa erillisessä kansiossaan tests.
-
+Testit ovat omassa erillisessä kansiossaan tests.  
+  
 ![Pakkauskaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/pakkauskaavio/pakkauskaavio.jpg)
-
-
+  
 ## Käyttöliittymä
 
 ### Tekstikäyttöliittymä
