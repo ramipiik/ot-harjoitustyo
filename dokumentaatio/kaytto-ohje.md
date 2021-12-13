@@ -57,4 +57,4 @@ Krypton ostaminen ja myyminen tapahtuvat syöttämällä halutun valuutan numero
 ![Osto](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/Osto.png)  
   
 ## Muuta
-Kryptovaluutat ja hinnat ovat todellisia. Sijoituskausi alkaa 1.6.2020 tilanteesta. Hintadataa on tällä hetkellä tallennettu 9.11.2021 asti.
+Kryptovaluutat ja hinnat ovat todellisia. Sijoituskausi alkaa 1.6.2020 tilanteesta. Hintadataa on tallennettu 9.11.2021 asti.

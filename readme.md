@@ -9,6 +9,7 @@ Sovelluksen avulla voi harjoitella kryptovaluuttoihin sijoittamista.
 - [Vaatimusmäärittely](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
 - [Tuntikirjanpito](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/tuntikirjanpito.md)
 - [Arkkitehtuurikuvaus](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/arkkitehtuurikuvaus.md)
+- [Käyttöohje](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/kaytto-ohje.md)
 
 ## Sovelluksen käynnistäminen
 1. Kopioi repositorio komennolla:
