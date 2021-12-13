@@ -3,16 +3,14 @@
 ## Rakenne
 Sovellus on toteutettu kolmikerrosmallin mukaan, jossa tiedon tallennukseen, palvelulogiikkaan sekä käyttöliittymään liittyvät toiminnallisuudet ovat omilla kerroksillaan ao. kaavion mukaisesti.
 
-
-![Pakkauskaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/pakkauskaavio/pakkauskaavio.jpg)
-
-
 * Repositories: Tiedon tallennukseen liittyvä koodi
 * Services: Sovelluslogiikka. 
 * UI: Tekstikäyttöliittymä ja graafinen käyttöliittymä
 * Entities: Olio-ohjelmoinnin luokat
 
 Testit ovat omassa erillisessä kansiossaan tests.
+
+![Pakkauskaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/pakkauskaavio/pakkauskaavio.jpg)
 
 
 ## Käyttöliittymä
