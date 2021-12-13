@@ -14,10 +14,6 @@ Sovellus on toteutettu kolmikerrosmallin mukaan, jossa tiedon tallennukseen, pal
 
 Testit ovat omassa erillisessä kansiossaan tests.
 
-Luokat User, Portfolio, ReferencePortfolio, Content käsittelevät käyttäjään, sijoitussalkkuun, referenssisalkkuun ja salkun sisältöön liittyvää tietoa ao. luokkakaavion mukaisesti.
-
-![Luokkakaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/luokkakaavio/luokkakaavio.jpg)  
-
 
 ## Käyttöliittymä
 
@@ -45,7 +41,7 @@ Tulostuksissa käytettävät värikoodit löytyvät tiedostosta styles.py.
 
 
 ## Sovelluslogiikka
-Sovelluksen ydintietomallin muodostavat luokat User, Portfolio ja Content. Näihin liittyvät attribuutit ja metodit on kuvattu ao. kuvassa:
+Sovelluksen ydintietomallin muodostavat luokat User, Portfolio, ReferencePortfolio ja Content. Näihin liittyvät attribuutit ja metodit on kuvattu ao. kuvassa:
 
 ![Luokkakaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/luokkakaavio/luokkakaavio.jpg)  
 
