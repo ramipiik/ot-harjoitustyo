@@ -137,9 +137,9 @@ rami kertoo käyttöliittymän kautta, että hän haluaa ostaa salkkuun kryptoa 
    * joka laskee kullekin referenssistrategialle strategian mukisen toimenpiteen. 
    * Referenssistrategiodien tekemät transaktiot tallennetaan taulukkoon action_log, joka palautetaan takaisin käyttöliittymälle.
 1. Seuraavaksi käyttöliittymä kutsuu palvelukerroksen next period palvelua parametrilla(ramin_salkun_sisältö).
-  * Next period -palvelu kutsuu next day -funktiota 1/7/30 kertaa riippuen salkun päätöksentekofrekvenssistä (päivä, viikko, kuukausi).
-  * Next day tallentaa salkun sisällön ja arvon jokaiselle päivälle kutsumalla repositorio-kerroksen funktiota store_content parametreillä (ramin_salkun_sisältö, kryptokurssit).
-  * Salkun arvon voisi myös laskea lennosta aina tarvittaessa, mutta koin itse varmempana, että se tallennetaan erikseen tietokantaan jokaisen päivän kohdalla. Toimintavarmuuden lisäksi siinä on etuna, että statistiikan (esim. edellisen vuoden keskihajonta) laskeminen sujuu nopeasti, koska lähtöarvot voi hakea suoraan tietokannasta.
+   * Next period -palvelu kutsuu next day -funktiota 1/7/30 kertaa riippuen salkun päätöksentekofrekvenssistä (päivä, viikko, kuukausi).
+   * Next day tallentaa salkun sisällön ja arvon jokaiselle päivälle kutsumalla repositorio-kerroksen funktiota store_content parametreillä (ramin_salkun_sisältö, kryptokurssit).
+   * Salkun arvon voisi myös laskea lennosta aina tarvittaessa, mutta koin itse varmempana, että se tallennetaan erikseen tietokantaan jokaisen päivän kohdalla. Toimintavarmuuden lisäksi siinä on etuna, että statistiikan (esim. edellisen vuoden keskihajonta) laskeminen sujuu nopeasti, koska lähtöarvot voi hakea suoraan tietokannasta.
 1. Käyttöliittymät hakee salkun sisällön ja arvon kutsumalla palvelukerroksen funktiota get_content ja tulostaa sisällön kutsumalla käyttöliittymäkerroksen funktiota print_status.
 
 
