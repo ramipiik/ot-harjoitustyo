@@ -20,10 +20,10 @@
 | 26.11. | 1.5  | pakkaus- ja luokkakaaviot |
 | 5.12.  | 11   | referenssiportfolioiden luonti. Ensimmäiset referenssistrategiat |
 | 6.12.  | 9    | Loput referenssistrategiat. Regressioiden korjaamista, refaktotointia, testaamista. |
-| 7.12.  | xx   | Sekvenssikaavio. Testien tekemistä.|
+| 7.12.  | 2    | Testien tekemistä.|
 | 9.12.  | 3.5  | TKInteriin tutustumista. |
 | 10.12. | 5.5  | Graafisen käyttöliittymän aloitus |
 | 11.12. | 1    | Bugien korjausta, koodin siistimistä |
 | 12.12  | 10   | Refaktorointia: Printtaukset käyttöliittymään. Funktioiden pienemmiksi paloiksi. Testien päivitys.
 | 13.12. | 6    | Dokumentointia
-| yht    | 107  |
+| yht    | 109  |
