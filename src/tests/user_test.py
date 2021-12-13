@@ -9,6 +9,12 @@ class TestUser(unittest.TestCase):
         """Method for testing a new user creation"""
         if signup("testing", "testing"):
             self.test_user: User = login("testing", "testing")
-        # test_user: User = signup("testing", "testing")
         delete_user("testing")
         self.assertTrue(type(self.test_user) == User)
+
+    def test_login_with_wrong_password(self):
+        """Method for testing a new user creation"""
+        if signup("testing", "testing"):
+            self.test_user: User = login("testing", "wrong-password")
+        delete_user("testing")
+        self.assertTrue(type(self.test_user) != User)

@@ -5,7 +5,17 @@ from config import DATABASE_PATH
 
 
 def store_content_first_time(portfolio, first_day, initial_capital):
-    """Method for storing portfolio content to database the first time"""
+    """
+    Method for storing portfolio content to database the first time
+
+    Args:
+        portfolio (portfolio): portfolio to store
+        first_day (string): starting date of portfolio
+        initial_capital (number): starting cash
+
+    Returns:
+        list: Initial content of the portfolio
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     try:
@@ -35,8 +45,17 @@ def store_content_first_time(portfolio, first_day, initial_capital):
     return initial_content
 
 
-def store_content(contents: Content, rates):
-    """Method for storing portfolio content to database after the first time"""
+def store_content(contents: Content, rates: list):
+    """
+    Method for storing portfolio content to database after the first time
+
+    Args:
+        contents (Content): Portfolio content  to store
+        rates (list): Current crypto rates
+
+    Returns:
+        True if successful
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     total_value = contents.cash
@@ -115,12 +134,20 @@ def store_content(contents: Content, rates):
             return False
         connection.commit()
         connection.close()
-
     return True
 
 
 def read_portfolio_content(portfolio_id):
-    """Method for reading portfolio content of the latest period from the database"""
+    """
+    Method for reading portfolio content of the latest period from the database
+
+    Args:
+        portfolio_id (int): Portfolio id
+
+    Returns:
+        list: content read from the database
+    """ """"""
+
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     # SQL query finds first the latest entry and after that fetches all rows related to that entry.
@@ -137,12 +164,19 @@ def read_portfolio_content(portfolio_id):
     except Error as error:
         print(error)
     connection.close()
-    # print(rows)
     return rows
 
 
 def read_portfolio_history(portfolio_id):
-    """Method for reading historical valuations of the portfolio from the database"""
+    """
+    Method for reading historical valuations of the portfolio from the database
+
+    Args:
+        portfolio_id (int): Portfolio id
+
+    Returns:
+        tuple: (first date, list of portfolio valuations)
+    """ """"""
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
@@ -165,7 +199,16 @@ def read_portfolio_history(portfolio_id):
 
 
 def read_portfolio_startdate(portfolio_id):
-    """Method for reading the start_date of the portfolio from the database"""
+    """
+    Method for reading the start_date of the portfolio from the database
+
+    Args:
+        portfolio_id (int): Portfolio id
+
+    Returns:
+        str: first date of the portfolio
+    """
+
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "select min(portfolio_day) from contents_support where portfolio_id=:portfolio_id"

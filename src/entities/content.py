@@ -3,7 +3,8 @@ from repositories.price_repository import read_prices
 from services.crypto_services import get_crypto_ids
 
 
-CRYPTO_IDS=get_crypto_ids()
+CRYPTO_IDS = get_crypto_ids()
+
 
 class Content:
     """Class for managing portfolio content"""
@@ -16,11 +17,21 @@ class Content:
         self.cryptos = {}
 
     def buy(self, crypto_id, investment):
-        """Method for buying a crypto"""
+        """
+        Method for buying a crypto
+
+        Args:
+            crypto_id: Id of the crypto to buy,
+            investment: Amount to invest
+
+        Returns:
+            True: if succesfull,
+            tuple: if not successful returns (False, error message:str)
+        """
         if crypto_id not in CRYPTO_IDS:
-            return ((False, "There is no such crypto"))
+            return (False, "There is no such crypto")
         if math.floor(investment) > self.cash:
-            return ((False, f"You only have {self.cash} EUR cash."))
+            return (False, f"You only have {self.cash} EUR cash.")
         self.cash -= investment
         date = self.portfolio_day
         self.change_id += 1
@@ -37,10 +48,20 @@ class Content:
             self.cryptos[crypto_id]["value"] = investment
         return True
 
-    def _sell(self, crypto_id, investment):
-        """Method for buying a crypto. Allows short selling."""
+    def sell(self, crypto_id, investment):
+        """
+        Method for selling a crypto. Allows short selling
+
+        Args:
+            crypto_id: Id of the crypto to sell,
+            investment: Amount to invest
+
+        Returns:
+            True: if succesfull,
+            tuple: if not successful returns (False, error message:str)
+        """
         if crypto_id not in CRYPTO_IDS:
-            return ((False, "There is no such crypto"))
+            return (False, "There is no such crypto")
         self.cash += investment
         date = self.portfolio_day
         self.change_id += 1

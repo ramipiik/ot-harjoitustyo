@@ -4,7 +4,17 @@ from config import DATABASE_PATH
 
 
 def store_portfolio(user_id, portfolio):
-    """Method for storing a new portfolio to database"""
+    """
+    Method for storing a new portfolio to database
+
+    Args:
+        user_id (str),
+        portfolio (Portfolio)
+
+    Returns:
+        True if succesful. False if not successful.
+    """ """"""
+
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     try:
@@ -28,7 +38,19 @@ def store_portfolio(user_id, portfolio):
 
 
 def store_reference_portfolios(portfolio_id, strategies, frequency, periods):
-    """Method for storing a new reference portfolio to database"""
+    """
+    Method for storing a new reference portfolio to database
+
+    Args:
+        portfolio_id (int): Portfolio id
+        strategies (list): List of reference strategies
+        frequency (str): Decision making frequency. Daily, weekly or monthly
+        periods (int): Not used at the moment
+
+    Returns:
+        True if succesful,
+        False if not successful
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     for strategy in strategies:
@@ -77,7 +99,16 @@ def store_reference_portfolios(portfolio_id, strategies, frequency, periods):
 
 
 def read_portfolio_id(user_id, portfolio_name):
-    """Method for reading portfolio id from database"""
+    """
+    Method for reading portfolio id from database
+
+    Args:
+        user_id (str): username
+        portfolio_name (str): portfolio name
+
+    Returns:
+        int: portfolio id
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "SELECT id FROM portfolios WHERE user_id=:user_id AND name=:portfolio_name"
@@ -92,7 +123,15 @@ def read_portfolio_id(user_id, portfolio_name):
 
 
 def read_reference_portfolios(portfolio_id):
-    """Method for reading reference portfolio of a given user portfolio from database"""
+    """
+    Method for reading reference portfolio of a given user portfolio from database
+
+    Args:
+        portfolio_id (int): portfolio id
+
+    Returns:
+        dict: Dictionary where reference portfolio names are stored keys and ids as values
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "SELECT id, name FROM portfolios WHERE id in (SELECT reference_portfolio_id FROM portfolio_support WHERE portfolio_id=:portfolio_id)"
@@ -110,7 +149,15 @@ def read_reference_portfolios(portfolio_id):
 
 
 def read_portfolios(user_id):
-    """Method for reading user's portfolios from database"""
+    """
+    Method for reading user's portfolios from database
+
+    Args:
+        user_id (str): username
+
+    Returns:
+        list: List of lists containing portfolio id and portfolio name ordered by id
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "SELECT id, name FROM portfolios WHERE user_id=:user_id ORDER BY id"
@@ -125,7 +172,15 @@ def read_portfolios(user_id):
 
 
 def read_portfolio_frequency(portfolio_id):
-    """Method for reading investment frequency of a portfolio from the database"""
+    """
+    Method for reading investment frequency of a portfolio from the database
+
+    Args:
+        portfolio_id (int): portfolio id
+
+    Returns:
+        list: portfolio frequency
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "SELECT frequency FROM portfolios WHERE id=:portfolio_id"
@@ -138,8 +193,17 @@ def read_portfolio_frequency(portfolio_id):
     connection.close()
     return row
 
+
 def delete_user_portfolios(username):
-    """Method for deleting a portfolio from the database"""
+    """
+    Method for deleting a portfolio from the database
+
+    Args:
+        username (str): username
+
+    Returns:
+        True if successful. Otherwise False.
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     try:

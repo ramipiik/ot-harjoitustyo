@@ -40,7 +40,12 @@ def store_cryptos():
 
 
 def read_crypto_ids():
-    """Method for reading crypto id's from database"""
+    """
+    Method for reading crypto id's from database
+
+    Returns:
+        list: crypto id's
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "SELECT id FROM cryptos"
@@ -58,7 +63,12 @@ def read_crypto_ids():
 
 
 def read_crypto_names_and_ids():
-    """Method for reading crypto id's from database"""
+    """
+    Method for reading crypto id's from database
+
+    Returns:
+        dict: Dictionary where crypto_ids are stored as keys and crypto names as values
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "SELECT id, name FROM cryptos"

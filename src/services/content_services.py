@@ -3,7 +3,7 @@ import random
 from repositories.content_repository import (
     read_portfolio_content,
     store_content,
-    read_portfolio_startdate
+    read_portfolio_startdate,
 )
 from repositories.portfolio_repository import (
     read_portfolio_frequency,
@@ -24,11 +24,10 @@ for key in CRYPTO_NAMES_AND_IDS:
     CRYPTO_IDS.append(key)
 NR_OF_CRYPTOS = len(CRYPTO_IDS)
 
-
 def buy(content_object: Content, crypto_id, investment):
     """Service for buying a crypto"""
-    response=content_object.buy(crypto_id, investment)
-    if type(response)==tuple and response[0]==False:
+    response = content_object.buy(crypto_id, investment)
+    if tuple.__instancecheck__(response) and response[0] is False:
         return response
     if response:
         rates = read_prices(content_object.portfolio_day)
@@ -37,22 +36,22 @@ def buy(content_object: Content, crypto_id, investment):
 
 def sell(content_object: Content, crypto_id, investment):
     """Service for selling a crypto. Allows short selling."""
-    response=content_object._sell(crypto_id, investment)
-    if type(response)==tuple and response[0]==False:
+    response = content_object.sell(crypto_id, investment)
+    if tuple.__instancecheck__(response) and response[0] is False:
         return response
     if response:
         rates = read_prices(content_object.portfolio_day)
         store_content(content_object, rates)
 
 
-def get_reference_content(portfolio_id, date, own_portfolio_value, own_portfolio_id):
+def get_reference_content(own_portfolio_value, portfolio_id):
     """Service for ordering and printing reference portfolio valuations"""
     references: dict = read_reference_portfolios(portfolio_id)
     collection = []
-    collection.append((own_portfolio_value, "Your portfolio", own_portfolio_id))
-    for strategy, id in references.items():
-        stats = get_portfolio_statistics(id)
-        collection.append((stats["today"], strategy, id))
+    collection.append((own_portfolio_value, "Your portfolio", portfolio_id))
+    for strategy, reference_id in references.items():
+        stats = get_portfolio_statistics(reference_id)
+        collection.append((stats["today"], strategy, reference_id))
     collection.sort(reverse=True)
     ordered = []
     for item in collection:
@@ -82,7 +81,7 @@ def get_content(user, portfolio_id):
     content_object = Content(portfolio_id, date, cash, change_id)
     stats = get_portfolio_statistics(portfolio_id)
     rates = read_prices(date)
-    references=get_reference_content(portfolio_id, date, stats["today"], portfolio_id)
+    references = get_reference_content(stats["today"], portfolio_id)
     rates = get_rates(date)
     return (date, cash, content, content_object, rates, stats, references)
 
@@ -112,6 +111,7 @@ def next_day(content_object, date_object):
                 ref_content_object.cryptos[crypto_id]["amount"] = crypto_amount
         store_content(ref_content_object, rates)
 
+
 def frequency_to_number(frequency):
     """Helper function. Converts number to frequency text."""
     if frequency == "daily":
@@ -121,12 +121,13 @@ def frequency_to_number(frequency):
     if frequency == "monthly":
         return 30
 
+
 def next_period(content_object: Content):
     """Service for starting the next period"""
     max_day = read_max_day()[0]
     date = content_object.portfolio_day
     frequency = read_portfolio_frequency(content_object.portfolio_id)[0]
-    days=frequency_to_number(frequency)
+    days = frequency_to_number(frequency)
     date_object = datetime.datetime(
         int(date[0:4]), int(date[5:7]), int(date[8:10])
     ).date()
@@ -138,7 +139,7 @@ def next_period(content_object: Content):
         if date_object > max_day_object:
             print(f"{bcolors.FAIL}No more price data available.")
             date_object -= datetime.timedelta(days)
-            break   
+            break
         next_day(content_object, date_object)
 
 
@@ -157,15 +158,19 @@ def coordinate_reference_actions(content_object: Content):
     days_passed = current_date_object - start_date_object
     days_passed = days_passed.days
     frequency = read_portfolio_frequency(content_object.portfolio_id)[0]
-    days=frequency_to_number(frequency)
-    action_log=[]
+    days = frequency_to_number(frequency)
+    action_log = []
     action_log.append("Refence strategies:")
-    for key, ref_portfolio_id in refs.items():
-        action_log=implement_reference_strategy(key, ref_portfolio_id, content_object, days_passed, days, action_log)
+    for strategy, ref_portfolio_id in refs.items():
+        action_log = implement_reference_strategy(
+            strategy, ref_portfolio_id, content_object, days_passed, days, action_log
+        )
     return action_log
 
 
-def implement_reference_strategy(key, ref_portfolio_id, content_object, days_passed, days, action_log):
+def implement_reference_strategy(
+    strategy, ref_portfolio_id, content_object, days_passed, days, action_log
+):
     content = read_portfolio_content(ref_portfolio_id)
     cash = content[0][1]
     change_id = content[0][4]
@@ -181,18 +186,22 @@ def implement_reference_strategy(key, ref_portfolio_id, content_object, days_pas
                 ref_content_object.cryptos[crypto_id] = {}
             ref_content_object.cryptos[crypto_id]["amount"] = crypto_amount
     rates = get_rates(ref_content_object.portfolio_day)
-    if key == "Do nothing":
-        action_log=do_nothing(action_log)
-    elif key == "All-in":
-        action_log=all_in(ref_content_object, action_log)
-    elif key == "Even":
-        action_log=even(ref_content_object, days_passed, days, action_log)
-    elif key == "Random":
-        action_log=select_random(ref_content_object, days_passed, days, action_log)
-    elif key == "Follow":
-        action_log=follow_winner(ref_content_object, days_passed, days, action_log, rates)
-    elif key == "Contrarian":
-        action_log=contrarian(ref_content_object, days_passed, days, action_log, rates)
+    if strategy == "Do nothing":
+        action_log = do_nothing(action_log)
+    elif strategy == "All-in":
+        action_log = all_in(ref_content_object, action_log)
+    elif strategy == "Even":
+        action_log = even(ref_content_object, days_passed, days, action_log)
+    elif strategy == "Random":
+        action_log = select_random(ref_content_object, days_passed, days, action_log)
+    elif strategy == "Follow":
+        action_log = follow_winner(
+            ref_content_object, days_passed, days, action_log, rates
+        )
+    elif strategy == "Contrarian":
+        action_log = contrarian(
+            ref_content_object, days_passed, days, action_log, rates
+        )
     return action_log
 
 
@@ -209,7 +218,9 @@ def all_in(ref_content_object: Content, action_log):
         investment_amount = cash / NR_OF_CRYPTOS
         for crypto_id in CRYPTO_IDS:
             buy(ref_content_object, crypto_id, investment_amount)
-            action_log.append(f'-"All-in" invested {investment_amount:.0f} EUR in {CRYPTO_NAMES_AND_IDS[crypto_id]}.')
+            action_log.append(
+                f'-"All-in" invested {investment_amount:.0f} EUR in {CRYPTO_NAMES_AND_IDS[crypto_id]}.'
+            )
     else:
         action_log.append('-"All-in" didn\'t do anything.')
     return action_log
@@ -225,7 +236,9 @@ def even(ref_content_object: Content, days_passed, frequency, action_log):
         investment_amount = total_investment / NR_OF_CRYPTOS
         for crypto_id in CRYPTO_IDS:
             buy(ref_content_object, crypto_id, investment_amount)
-            action_log.append(f'-"Even" invested {investment_amount:.0f} EUR in {CRYPTO_NAMES_AND_IDS[crypto_id]}.')
+            action_log.append(
+                f'-"Even" invested {investment_amount:.0f} EUR in {CRYPTO_NAMES_AND_IDS[crypto_id]}.'
+            )
     else:
         action_log.append('-"Even" didn\'t do anything.')
     return action_log
@@ -249,7 +262,9 @@ def select_random(ref_content_object: Content, days_passed, frequency, action_lo
                 break
         for crypto_id in selected_cryptos:
             buy(ref_content_object, crypto_id, investment_amount)
-            action_log.append(f'-"Random" invested {investment_amount:.0f} EUR in {CRYPTO_NAMES_AND_IDS[crypto_id]}.')
+            action_log.append(
+                f'-"Random" invested {investment_amount:.0f} EUR in {CRYPTO_NAMES_AND_IDS[crypto_id]}.'
+            )
     else:
         action_log.append('-"Random" didn\'t do anything.')
     return action_log
@@ -257,15 +272,17 @@ def select_random(ref_content_object: Content, days_passed, frequency, action_lo
 
 def frequency_to_focus(frequency):
     if frequency == 1:
-            return "d"
-    elif frequency == 7:
+        return "d"
+    if frequency == 7:
         return "w"
-    elif frequency == 30:
+    if frequency == 30:
         return "m"
 
 
-def follow_winner(ref_content_object: Content, days_passed, frequency, action_log, rates):
-    """Invest in the crypto which has increased most during the last time period. Invest everything during 12 months."""
+def follow_winner(
+    ref_content_object: Content, days_passed, frequency, action_log, rates
+):
+    """Invest in the crypto which has increased most. Invests everything during 12 months."""
     months = 12
     days_left = months * 30 - days_passed
     cash = ref_content_object.cash
@@ -274,23 +291,25 @@ def follow_winner(ref_content_object: Content, days_passed, frequency, action_lo
         focus = frequency_to_focus(frequency)
         highest_crypto = ""
         highest_change = None
-        for key, value in rates.items():
+        for crypto, value in rates.items():
             if highest_change is None:
                 highest_change = value[focus]
-                highest_crypto = key
+                highest_crypto = crypto
             elif value[focus] > highest_change:
                 highest_change = value[focus]
-                highest_crypto = key
+                highest_crypto = crypto
         crypto_name = rates[highest_crypto]["name"]
         buy(ref_content_object, highest_crypto, investment_amount)
-        action_log.append((f'-"Follow best" invested {investment_amount:.0f} EUR in {crypto_name}.'))
+        action_log.append(
+            (f'-"Follow best" invested {investment_amount:.0f} EUR in {crypto_name}.')
+        )
     else:
         action_log.append('-"Follow best" didn\'t do anything.')
     return action_log
 
 
 def contrarian(ref_content_object: Content, days_passed, frequency, action_log, rates):
-    """Invest in the crypto which has dropped  most during the last time period. Invest everything during 12 months."""
+    """Invest in the crypto which has dropped most. Invests everything during 12 months."""
     months = 12
     days_left = months * 30 - days_passed
     cash = ref_content_object.cash
@@ -299,16 +318,18 @@ def contrarian(ref_content_object: Content, days_passed, frequency, action_log, 
         focus = frequency_to_focus(frequency)
         highest_crypto = ""
         highest_change = None
-        for key, value in rates.items():
+        for crypto, value in rates.items():
             if highest_change is None:
                 highest_change = value[focus]
-                highest_crypto = key
+                highest_crypto = crypto
             elif value[focus] < highest_change:
                 highest_change = value[focus]
-                highest_crypto = key
+                highest_crypto = crypto
         crypto_name = rates[highest_crypto]["name"]
         buy(ref_content_object, highest_crypto, investment_amount)
-        action_log.append(f'-"Contrarian" invested {investment_amount:.0f} EUR in {crypto_name}.')
+        action_log.append(
+            f'-"Contrarian" invested {investment_amount:.0f} EUR in {crypto_name}.'
+        )
     else:
         action_log.append('-"Contrarian" didn\'t do anything.')
     return action_log

@@ -31,12 +31,16 @@ def get_price_statistics(date):
     rows_m = price_data["m"]
     rows_y = price_data["y"]
     rates = {}
-    rates = organize_base_rates(rates, rows_today, rows_d, rows_w, rows_m, rows_y, volatility_data)  
+    rates = organize_base_rates(
+        rates, rows_today, rows_d, rows_w, rows_m, rows_y, volatility_data
+    )
     rates = calculate_relations(rates)
     return rates
 
 
-def organize_base_rates(rates, rows_today, rows_d, rows_w, rows_m, rows_y, volatility_data):
+def organize_base_rates(
+    rates, rows_today, rows_d, rows_w, rows_m, rows_y, volatility_data
+):
     if rows_today:
         for number, row in enumerate(rows_today):
             values = {}
@@ -73,7 +77,7 @@ def organize_base_rates(rates, rows_today, rows_d, rows_w, rows_m, rows_y, volat
                 values["y"] = rows_y[number][2]
             except:
                 values["y"] = "--"
-            
+
             values["sd"] = volatility_data[row[0]]["sd"]
             rates[row[0]] = values
     return rates
@@ -172,6 +176,7 @@ def get_portfolio_statistics(portfolio_id):
 
     # print(stats)
     return stats
+
 
 def calculate_portfolio_relations(stats, today, start_value, portfolio_history):
     stats["all-time"] = int(round((today - start_value) / start_value * 100, 0))

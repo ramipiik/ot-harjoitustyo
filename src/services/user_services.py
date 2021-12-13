@@ -6,14 +6,14 @@ from entities.user import User
 def login(username, password):
     """Service for logging in a user.
 
-        Args:
-            username:str
-            password:str
+    Args:
+        username:str
+        password:str
 
-        Returns:
-            user object if login successful.
-            None if login not succesfull.
-    """    
+    Returns:
+        user object if login successful.
+        None if login not succesfull.
+    """
     response = verify_user(username, password)
     if response:
         user = User(response[0], response[1], response[2])
@@ -34,7 +34,7 @@ def signup(username, password):
     Returns:
         user object if signup successful.
         False if signup not succesfull.
-    """    
+    """
     response = store_user(username, password)
     if response:
         return True

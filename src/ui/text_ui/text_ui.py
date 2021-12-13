@@ -1,6 +1,12 @@
 from services.user_services import login, signup
 from services.portfolio_services import create_portfolio, get_portfolios
-from services.content_services import coordinate_reference_actions, get_content, buy, sell, next_period
+from services.content_services import (
+    coordinate_reference_actions,
+    get_content,
+    buy,
+    sell,
+    next_period,
+)
 from services.statistic_services import get_portfolio_statistics
 from ui.text_ui.styles import bcolors, ERROR_MESSAGE
 
@@ -105,8 +111,8 @@ def create_portfolio_UI(user):
 
 
 def logout_UI(user):
-    old_username=user.username
-    user=None
+    old_username = user.username
+    user = None
     print(f"{bcolors.OKCYAN}------------------")
     print(f"{old_username} logged out")
     print(f"------------------{bcolors.ENDC}")
@@ -134,7 +140,7 @@ def open_portfolio_UI(user):
                     try:
                         portfolio_id = int(response)
                         response = get_content(user, portfolio_id)
-                        content_object=response[3]
+                        content_object = response[3]
                         if content_object:
                             print_status(response)
                             break
@@ -142,7 +148,7 @@ def open_portfolio_UI(user):
                         print(ERROR_MESSAGE)
         if content_object:
             action_UI(content_object, user, portfolio_id)
-            
+
 
 def action_UI(content_object, user, portfolio_id):
     while True:
@@ -152,15 +158,15 @@ def action_UI(content_object, user, portfolio_id):
         )
         print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
         if choice == "B" or choice == "b":
-            buy_ui(content_object, user, portfolio_id)
+            buy_UI(content_object, user, portfolio_id)
         elif choice == "S" or choice == "s":
-            sell_ui(content_object, user, portfolio_id)
+            sell_UI(content_object, user, portfolio_id)
         elif choice == "N" or choice == "n":
-            action_log=coordinate_reference_actions(content_object)
+            action_log = coordinate_reference_actions(content_object)
             next_period(content_object)
             for action in action_log:
                 print(action)
-            response=get_content(user, portfolio_id)
+            response = get_content(user, portfolio_id)
             print_status(response)
         elif choice == "Q" or choice == "q":
             exit()
@@ -172,47 +178,41 @@ def action_UI(content_object, user, portfolio_id):
             print(ERROR_MESSAGE)
 
 
-def sell_ui(content_object, user, portfolio_id):
+def sell_UI(content_object, user, portfolio_id):
     try:
         crypto_id = int(
-            input(
-                f"{bcolors.OKCYAN}Which crypto do you want to sell? {bcolors.ENDC}"
-            )
+            input(f"{bcolors.OKCYAN}Which crypto do you want to sell? {bcolors.ENDC}")
         )
         investment = int(
             input(
                 f"{bcolors.OKCYAN}How much do you want to sell in EUR? {bcolors.ENDC}"
             )
         )
-        response=sell(content_object, crypto_id, investment)
-        if type(response)==tuple and response[0]==False:
+        response = sell(content_object, crypto_id, investment)
+        if type(response) == tuple and response[0] == False:
             print(f"{bcolors.FAIL}--------------------")
             print(response[1])
             print(f"--------------------{bcolors.ENDC}")
-        response=get_content(user, portfolio_id)
+        response = get_content(user, portfolio_id)
         print_status(response)
     except:
         print(ERROR_MESSAGE)
 
 
-def buy_ui(content_object, user, portfolio_id):
+def buy_UI(content_object, user, portfolio_id):
     try:
         crypto_id = int(
-            input(
-                f"{bcolors.OKCYAN}Number of crypto to buy: {bcolors.ENDC}"
-            )
+            input(f"{bcolors.OKCYAN}Number of crypto to buy: {bcolors.ENDC}")
         )
         investment = int(
-            input(
-                f"{bcolors.OKCYAN}Amount to invest (EUR): {bcolors.ENDC}"
-            )
-        )   
-        response=buy(content_object, crypto_id, investment)
-        if type(response)==tuple and response[0]==False:
+            input(f"{bcolors.OKCYAN}Amount to invest (EUR): {bcolors.ENDC}")
+        )
+        response = buy(content_object, crypto_id, investment)
+        if type(response) == tuple and response[0] == False:
             print(f"{bcolors.FAIL}--------------------")
             print(response[1])
             print(f"--------------------{bcolors.ENDC}")
-        response=get_content(user, portfolio_id)
+        response = get_content(user, portfolio_id)
         print_status(response)
     except:
         print(ERROR_MESSAGE)
@@ -269,13 +269,13 @@ def print_ranking(references, date):
 
 
 def print_status(response):
-    date=response[0]
-    cash=response[1]
-    content=response[2]
+    date = response[0]
+    cash = response[1]
+    content = response[2]
     content_object = response[3]
-    rates=response[4]
-    stats=response[5]
-    references=response[6]
+    rates = response[4]
+    stats = response[5]
+    references = response[6]
     if content_object:
         print_date(date)
         print_stats(stats)
@@ -283,5 +283,3 @@ def print_status(response):
         print_content(content, content_object, rates)
         print_ranking(references, date)
         print_rates(rates, date)
-
-

@@ -37,7 +37,7 @@ def number_to_frequency(frequency_number):
 
 def create_portfolio(user: User, portfolio_name, frequency_number):
     """Service for creating a new portfolio"""
-    frequency=number_to_frequency(frequency_number)
+    frequency = number_to_frequency(frequency_number)
     new_portfolio = Portfolio(user.username, portfolio_name, frequency)
     store_portfolio(user.username, new_portfolio)
     new_portfolio.id = read_portfolio_id(user.username, portfolio_name)
