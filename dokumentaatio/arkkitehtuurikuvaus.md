@@ -76,7 +76,7 @@ Palvelukerroksen user_services.py-tiedoston olennaisimmat funktiot ovat:
 
 
 ## Tietojen pysyväistallennus
-Käytössä on SQLite-tietokanta: ![Tietomalli](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src/schema.sql).
+Käytössä on SQLite-tietokanta: [Tietomalli](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src/schema.sql).
 
 Pakkaus repositories sisältää allaolevat toiminnallisuudet tiedon tallettamiseksi ja lukemiseksi tietokantaan.
 

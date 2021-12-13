@@ -2,11 +2,8 @@
 MA 13.12.
 
 Dokumentaatio:
--Tee alustava arkkitehtuurikuvaus (1-2 sivua ja kaavioita). Tästä saa 4 pistettä eli varsin tärkeä. 
 -Tee alustava käyttöohje (n. 1 sivu) 1 pisteen arvoinen. 
 -Lisää linkki käyttöohjeeseen readme.md:hen.
--Jos ehtii: Testausdokumentin aloitus
-
 
 Lopuksi:
 -Tee viikon 6 release. 
