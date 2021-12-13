@@ -4,6 +4,7 @@ Sovelluksen avulla voi harjoitella kryptovaluuttoihin sijoittamista.
 ## Releases
 - [Viikko 4](https://github.com/ramipiik/ot-harjoitustyo/releases/tag/viikko4)
 - [Viikko 5](https://github.com/ramipiik/ot-harjoitustyo/releases/tag/viikko5)
+- [Viikko 6](https://github.com/ramipiik/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Dokumentaatio
 - [Vaatimusmäärittely](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/vaatimusmaarittely.md)
