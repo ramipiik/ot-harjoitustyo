@@ -1,8 +1,11 @@
 # Arkkitehtuurikuvaus
 
 ## Rakenne
-Sovellus on toteutettu kolmikerrosmallin mukaan, jossa tiedon tallennukseen, palvelulogiikkaan sekä käyttöliittymään liittyvät toiminnallisuudet ovat omilla kerroksillaan ao. kaavion mukaisesti.  
+Sovellus on toteutettu kolmikerrosmallin mukaan, jossa tiedon tallennukseen, palvelulogiikkaan sekä käyttöliittymään liittyvät toiminnallisuudet ovat omilla kerroksillaan ao. kaavion mukaisesti.
+
+
 ![Pakkauskaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/pakkauskaavio/pakkauskaavio.jpg)
+
 
 * Repositories: Tiedon tallennukseen liittyvä koodi
 * Services: Sovelluslogiikka. 
@@ -12,6 +15,7 @@ Sovellus on toteutettu kolmikerrosmallin mukaan, jossa tiedon tallennukseen, pal
 Testit ovat omassa erillisessä kansiossaan tests.
 
 Luokat User, Portfolio, ReferencePortfolio, Content käsittelevät käyttäjään, sijoitussalkkuun, referenssisalkkuun ja salkun sisältöön liittyvää tietoa ao. luokkakaavion mukaisesti.
+
 ![Luokkakaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/luokkakaavio/luokkakaavio.jpg)  
 
 
@@ -42,6 +46,7 @@ Tulostuksissa käytettävät värikoodit löytyvät tiedostosta styles.py.
 
 ## Sovelluslogiikka
 Sovelluksen ydintietomallin muodostavat luokat User, Portfolio ja Content. Näihin liittyvät attribuutit ja metodit on kuvattu ao. kuvassa:
+
 ![Luokkakaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/luokkakaavio/luokkakaavio.jpg)  
 
 Palvelukerroksen content_services.py sisältää mm. seuraavat salkun hallintaan liittyvät palvelut (alla listattu olennaisimmat):
@@ -77,7 +82,7 @@ Palvelukerroksen user_services.py-tiedoston olennaisimmat funktiot ovat:
 
 
 ## Tietojen pysyväistallennus
-Käytössä on SQLite-tietokanta (![Tietomalli](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src/schema.sql)).
+Käytössä on SQLite-tietokanta: ![Tietomalli](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src/schema.sql).
 
 Pakkaus repositories sisältää allaolevat toiminnallisuudet tiedon tallettamiseksi ja lukemiseksi tietokantaan.
 
@@ -114,32 +119,30 @@ Sovelluksen päätoiminnallisuus on kryptoihin sijoittaminen ja salkun arvon keh
 
 
 ### Krypton ostaminen esimerkin avulla kuvattuna
-1 Käyttäjällä rami on avattuna ramin_salkku.
-1 rami kertoo käyttöliittymän kautta, että hän haluaa ostaa salkkuun kryptoa numero 1 sadalla eurolla.
-1 Käyttöliittymä kutsuu palvelukerroksen buy-palvelua paremetreillä: (ramin_salkun_sisältö, krypto_1, 100€)
-1 Palvelukerroksen buy-palvelu kutsuu ramin_salkku Content-olion buy-metodia parametreillä (krypto_1, 100€)
-1 Jos salkussa on tarpeeksi rahaa ja ko. krypto on olemassa, Content-olio palauttaa True.
-1 Palvelukerroksen buy-palvelu tallentaa päivitetyn Content-olion sisällön tietokantaan kutsumalla repository-kerroksen palvelua store_content parametrilla (ramin_salkun_sisältö)
-1 Mikäli transaktio ei onnistu, palautuu käyttöliittymään tuple (False, virheilmoitus).
-1 Jos transaktio onnistui, käyttöliittymä hakee salkun sisällön kutsumalla funktiota get_content ja tulostaa sen kutsumalla funktiota print_status(ramin_salkun_sisältö).
+Käyttäjällä rami on avattuna ramin_salkku.
+rami kertoo käyttöliittymän kautta, että hän haluaa ostaa salkkuun kryptoa numero 1 sadalla eurolla.
+1. Käyttöliittymä kutsuu palvelukerroksen buy-palvelua paremetreillä: (ramin_salkun_sisältö, krypto_1, 100€)
+1. Palvelukerroksen buy-palvelu kutsuu ramin_salkku Content-olion buy-metodia parametreillä (krypto_1, 100€)
+1. Jos salkussa on tarpeeksi rahaa ja ko. krypto on olemassa, Content-olio palauttaa True.
+1. Palvelukerroksen buy-palvelu tallentaa päivitetyn Content-olion sisällön tietokantaan kutsumalla repository-kerroksen palvelua store_content parametrilla (ramin_salkun_sisältö)
+1. Mikäli transaktio ei onnistu, palautuu käyttöliittymään tuple (False, virheilmoitus).
+1. Jos transaktio onnistui, käyttöliittymä hakee salkun sisällön kutsumalla funktiota get_content ja tulostaa sen kutsumalla funktiota print_status(ramin_salkun_sisältö).
 
 
 ### Seuraavaan jaksoon siirtyminen esimerkin avulla yksinkertaistettuna kuvattuna
-1 Käyttäjällä rami on avattuna ramin_salkku.
-1 rami kertoo käyttöliittymän kautta, että hän haluaa siirtyä seuraavaan päivään.
-1 Käyttöliittymä kutsuu palvelukerroksen coordinate_reference_actions palvelua parametrillä (ramin_salkun_sisältö)
-  * coordinate_reference_actions kutsuu jokaiselle referenssistrategialle palvelua implement_reference_strategy,
-  * joka laskee kullekin referenssistrategialle strategian mukisen toimenpiteen. 
-  * Referenssistrategiodien tekemät transaktiot tallennetaan taulukkoon action_log, joka palautetaan takaisin käyttöliittymälle.
-1 Seuraavaksi käyttöliittymä kutsuu palvelukerroksen next period palvelua parametrilla(ramin_salkun_sisältö).
+1. Käyttäjällä rami on avattuna ramin_salkku.
+1. rami kertoo käyttöliittymän kautta, että hän haluaa siirtyä seuraavaan päivään.
+1. Käyttöliittymä kutsuu palvelukerroksen coordinate_reference_actions palvelua parametrillä (ramin_salkun_sisältö)
+   * coordinate_reference_actions kutsuu jokaiselle referenssistrategialle palvelua implement_reference_strategy,
+   * joka laskee kullekin referenssistrategialle strategian mukisen toimenpiteen. 
+   * Referenssistrategiodien tekemät transaktiot tallennetaan taulukkoon action_log, joka palautetaan takaisin käyttöliittymälle.
+1. Seuraavaksi käyttöliittymä kutsuu palvelukerroksen next period palvelua parametrilla(ramin_salkun_sisältö).
   * Next period -palvelu kutsuu next day -funktiota 1/7/30 kertaa riippuen salkun päätöksentekofrekvenssistä (päivä, viikko, kuukausi).
   * Next day tallentaa salkun sisällön ja arvon jokaiselle päivälle kutsumalla repositorio-kerroksen funktiota store_content parametreillä (ramin_salkun_sisältö, kryptokurssit).
   * Salkun arvon voisi myös laskea lennosta aina tarvittaessa, mutta koin itse varmempana, että se tallennetaan erikseen tietokantaan jokaisen päivän kohdalla. Toimintavarmuuden lisäksi siinä on etuna, että statistiikan (esim. edellisen vuoden keskihajonta) laskeminen sujuu nopeasti, koska lähtöarvot voi hakea suoraan tietokannasta.
-1 Käyttöliittymät hakee salkun sisällön ja arvon kutsumalla palvelukerroksen funktiota get_content ja tulostaa sisällön kutsumalla käyttöliittymäkerroksen funktiota print_status.
+1. Käyttöliittymät hakee salkun sisällön ja arvon kutsumalla palvelukerroksen funktiota get_content ja tulostaa sisällön kutsumalla käyttöliittymäkerroksen funktiota print_status.
 
 
 ## Ohjelman rakenteeseen jääneet heikkoudet
 * Valitettavasti vaikuttaa siltä, että en ehdi tehdä graafista käyttöliittymää valmiiksi kurssin puitteissa.
-* Itselleni oli välillä vaikea hahmottaa milloin tietoa kannattaa käsitellä olioiden kautta ja milloin ei. Näin erityisesti sen jälkeen kun aloin tallentamaan tietoa relaatiotietokantaan, koska tietokannan rakenne ei ole sama kuin olioiden rakenne.
-* Päädyin toteutukseen, jossa olioita ovat käyttäjä, salkun, salkun sisältö ja referenssisalkku. Kaikille käyttäjille yhteiset globaalit muuttujat kuten kryptojen hinnat eivät ole sidottuja olioihin. Tämä tuntuu periaatteessa järkevältä, mutta käytännössä tuntuu silti, että tieto liikkuu ohjelman sisällä hieman sekavasti välillä olion atribuuttina, välillä funktion parametrina ja välillä tietokannasta luettuna. 
-* Onko tähän object <-> relational database -ongelmaan jotain hyvää lähestymistapaa?
+* Itselleni oli välillä vaikea hahmottaa milloin tietoa kannattaa käsitellä olioiden kautta ja milloin ei. Näin erityisesti sen jälkeen kun aloin tallentamaan tietoa relaatiotietokantaan, koska tietokannan rakenne ei ole sama kuin olioiden rakenne. Päädyin toteutukseen, jossa olioita ovat käyttäjä, salkun, salkun sisältö ja referenssisalkku. Kaikille käyttäjille yhteiset globaalit muuttujat kuten kryptojen hinnat eivät ole sidottuja olioihin. Tämä tuntuu periaatteessa järkevältä, mutta käytännössä tuntuu silti, että tieto liikkuu ohjelman sisällä hieman sekavasti välillä olion atribuuttina, välillä funktion parametrina ja välillä tietokannasta luettuna. Onkohan tähän object <-> relational database -ongelmaan jotain hyvää ajattelutapaa?
