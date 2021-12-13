@@ -40,9 +40,9 @@ Tulostuksissa käytettävät värikoodit löytyvät tiedostosta styles.py.
 
 ## Sovelluslogiikka
 Sovelluksen ydintietomallin muodostavat luokat User, Portfolio, ReferencePortfolio ja Content. Näihin liittyvät attribuutit ja metodit on kuvattu ao. kuvassa:
-
+   
 ![Luokkakaavio](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/luokkakaavio/luokkakaavio.jpg)  
-
+   
 Palvelukerroksen content_services.py sisältää mm. seuraavat salkun hallintaan liittyvät palvelut (alla listattu olennaisimmat):
 * buy: Krypton ostaminen
 * sell: Krypton myyminen 
