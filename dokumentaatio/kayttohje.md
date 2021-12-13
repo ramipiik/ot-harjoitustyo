@@ -1,5 +1,5 @@
 # Käyttöohje
-Löydät viimeisimmän releases [täältä](https://github.com/ramipiik/ot-harjoitustyo/releases). Lataa tiedostot klikkaamalla Assets-otsikon alla olevaa linkkiä "Source code (zip)"
+Löydät viimeisimmän releasen [täältä](https://github.com/ramipiik/ot-harjoitustyo/releases). Lataa tiedostot klikkaamalla Assets-otsikon alla olevaa linkkiä "_Source code (zip)_"
 
 ## Ohjelman käynnistäminen
 1. Asenna Poetry ao. komennolla tai katso tarkemmat ohjeet [täältä](https://python-poetry.org/docs/#installation): 
@@ -22,17 +22,19 @@ poetry run invoke initiate-db
 poetry run invoke start
 ```
 ## Kirjautuminen
-Sovellus käynnistyy ![kirjautumisnäkymään](https://github.com/ramipiik/ot-harjoitustyo/dokumentaatio/kuvat/Kirjautumisnäkymä.png).
-Voit luoda uuden käyttäjän tai kirjautua sisään olemassaolevalla käyttäjällä.
-Tämän jälkeen käyttö jatkuu tekstikäyttöliittymässä.
+Sovellus käynnistyy kirjautumisnäkymään. Voit luoda uuden käyttäjän tai kirjautua sisään olemassaolevalla käyttäjällä. Tämän jälkeen käyttö jatkuu tekstikäyttöliittymässä.  
+
+![kirjautumisnäkymä](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/Kirjautumisn%C3%A4kym%C3%A4.png).  
 
 ## Peruskäyttö
-Avaa haluamasi salkku syöttämällä salkun numero. Tai luo uusi salkku valitsemalla 'C'. Uuden salkun alkupääoma on miljoona euroa. 
-![Valitse salkku](https://github.com/ramipiik/ot-harjoitustyo/dokumentaatio/kuvat/Valitse salkku.png)
-
-Uuden salkun luonti tapahtuu antamalla salkulle nimi sekä kertomalla kuinka usein haluat tehdä sijoituspäätöksiä tässä salkussa: päivittäin, viikottain vai kuukausittain
-![Uusi salkku](https://github.com/ramipiik/ot-harjoitustyo/dokumentaatio/kuvat/Uusi salkku.png)
-
+Avaa haluamasi salkku syöttämällä salkun numero. Tai luo uusi salkku valitsemalla 'C'. Uuden salkun alkupääoma on miljoona euroa.  
+  
+![Valitse salkku](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/Valitse%20salkku.png)
+  
+Uuden salkun luonti tapahtuu antamalla salkulle nimi sekä määrittällä haluatko tehdä sijoituspäätöksiä päivittäin, viikottain vai kuukausittain.  
+  
+![Uusi salkku](https://github.com/ramipiik/ot-harjoitustyo/dokumentaatio/kuvat/Uusi salkku.png)  
+  
 Saat näkyviin salkkunäkymän, joka näyttää
 * salkun sisällön
 * Referenssistrategiat ja oman salkkusi listattuna paremmuusjärjestykseen salkun arvojen perusteella
