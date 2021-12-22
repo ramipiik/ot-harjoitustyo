@@ -30,9 +30,10 @@ Moduuli [user_test.py](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src
 
 Käyttöliittymäkerrosta varten ei ole testejä.
 
-Testikattavuus on 79%. Käyttöliittymäkerros sekä tiedostot [main.py](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src/main.py) ja [config.py](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src/config.py) on jätetty pois testeistä.
-![https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/Test-coverage.png]  
+Testikattavuus on 79%. Käyttöliittymäkerros sekä tiedostot [main.py](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src/main.py) ja [config.py](https://github.com/ramipiik/ot-harjoitustyo/blob/main/src/config.py) on jätetty pois testeistä.  
 
+![Test coverage](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/Test-coverage.png)  
+  
 Testaamatta jääneet koodirivit liittyvät lähinnä poikkeustilanteiden käsittelyyn. Ydinprosessit sekä yleisimmät vääristä syötteistä johtuvat virheet on käsitelty testeissä.
 
 ## Järjestelmätestaus
@@ -41,5 +42,5 @@ Varsinaisia automaattisia järjestelmätason testejä ei ole. Manuaalisia testej
 ## Sovellukseen jääneet laatuohjelmat
 SQlite ei tällä hetkellä toimi yliopiston virtuaalityöasemalla vanhasta versiosta johtuen. En ehtinyt selvittää miten tämän olisi saanut ratkaistua.  
 
-Kun sovellus käynnistetään yo. komennolla poetryn kautta jostain syystä komentorivin backscape ei toimi kun syötteitä annetaan terminaalin kautta. Jos sovelluksen käynnistää ilman poetrya, niin backscape toimii. En löytänyt tähän mitään ratkaisua - jos on ideoita, niin otan mielelläni vastaan.
+Kun sovellus käynnistetään poetryn kautta jostain syystä komentorivin backscape ei toimi kun syötteitä annetaan terminaalin kautta. Jos sovelluksen käynnistää ilman poetrya, niin backscape toimii. En löytänyt tähän mitään ratkaisua - jos on ideoita, niin otan mielelläni vastaan.
 
