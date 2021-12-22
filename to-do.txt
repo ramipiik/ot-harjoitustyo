@@ -1,19 +1,6 @@
 
-MA 13.12.
-
--Lisää linkki käyttöohjeeseen readme.md:hen.
-
-Lopuksi:
--Tee viikon 6 release. 
--Lisää linkki release6:een readme.md:hen.
--Päivitä tuntikirjanpito
-
------------------------
-TEE VÄLIPALAUTUS DL 14.12.
------------------------
-PLAN 25.-26.12.
 -Priority: Testausdokumentti. Tästä saa 2 pistettä. Olikohan tähän ohjeita jossain? Katso mallia referenssiprojektista. Muista lisätä linkki readmehin.
--Priority: Päivitä määrittelydokumentti  vastaamaan lopullisen ohjelman toiminnallisuutta
+-Priority: Päivitä määrittelydokumentti vastaamaan lopullisen ohjelman toiminnallisuutta
 -Priority: Tee loppupalautus-niminen GitHub-release
 -Priority: Lisää readme:hen linkki loppupalautukseen
 -Priority: Add development ideas to readme.md:
@@ -23,15 +10,19 @@ PLAN 25.-26.12.
   -Add more advanced strategies
   -Develope GUI further (add graphs)
 
--Jos ehtii: Palautteen huomioiminen
--Jos ehtii: Valetietokanta testejä varten.
--Jos ehtii: Täydennä docstringejä pidemmän kaavan mukaiseksi. Entities ja repositories -kansiot on tehty. Services, tests ja UI tekemättä.
--Jos ehtii: GUI:n edistäminen.
--Jos ehtii: Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
+-VARMISTA VIELÄ LOPPUPALAUTUKSEN VAATIMUKSET, JOTTA MITÄÄN EI OLE UNOHTUNUT.
 
+-Jos ehtii: Täydennä docstringejä pidemmän kaavan mukaiseksi. Entities ja repositories -kansiot on tehty. Services, tests ja UI tekemättä.
+-Jos ehtii: Valetietokanta testejä varten.
+-Jos ehtii: Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
+-Jos ehtii: Muun palautteen huomioiminen
+
+-Jätä myöhemmäksi: GUI:n edistäminen.
 --------------------
 LOPULLINEN PALAUTUS DL 26.12.
 -----------------------------
+
+ 
 
 
 

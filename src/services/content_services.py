@@ -24,6 +24,7 @@ for key in CRYPTO_NAMES_AND_IDS:
     CRYPTO_IDS.append(key)
 NR_OF_CRYPTOS = len(CRYPTO_IDS)
 
+
 def buy(content_object: Content, crypto_id, investment):
     """Service for buying a crypto"""
     response = content_object.buy(crypto_id, investment)
