@@ -17,12 +17,17 @@ poetry install
 poetry run invoke initiate-db
 ```
 
-4. Käynnistä sovellus ajamalla allaoleva komento:
+4. Käynnistä sovellus tekstikäyttöliittymässä ajamalla komento:
 ```
 poetry run invoke start
 ```
+
+5. Tai käynnistä sovellus graafisessa käyttöliittymässä ajamalla komento:
+```
+poetry run invoke start-gui
+
 ## Kirjautuminen
-Sovellus käynnistyy kirjautumisnäkymään. Voit luoda uuden käyttäjän tai kirjautua sisään olemassaolevalla käyttäjällä. Tämän jälkeen käyttö jatkuu tekstikäyttöliittymässä.  
+Sovellus käynnistyy kirjautumisnäkymään. Voit luoda uuden käyttäjän tai kirjautua sisään olemassaolevalla käyttäjällä. Jos valitsit graafisen käyttöliittymän, käyttö jatkuu tekstikäyttöliittymässä.  
 
 ![kirjautumisnäkymä](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/kuvat/Kirjautumisn%C3%A4kym%C3%A4.png).  
 

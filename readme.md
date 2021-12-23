@@ -39,9 +39,14 @@ poetry install
 poetry run invoke initiate-db
 ```
 
-6. Käynnistä sovellus ajamalla allaoleva komento:
+6. Käynnistä sovellus tekstikäyttöliittymässä ajamalla komento:
 ```
 poetry run invoke start
+```
+
+7. Tai käynnistä sovellus graafisessa käyttöliittymässä ajamalla komento:
+```
+poetry run invoke start-gui
 ```
 
 ## Muut komennot

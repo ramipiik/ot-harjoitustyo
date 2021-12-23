@@ -1,14 +1,6 @@
 from tkinter import Tk
 
-# from ui.text_ui.text_ui import start_UI
-from ui.gui.gui import GUI
+from ui.text_ui.text_ui import start_UI
 
-window = Tk()
-window.title("Sijoitussimulaattori")
-
-gui = GUI(window)
-gui.start()
-window.mainloop()
-
-# Starts the text-ui
-# start_UI()
+#Starts the text-ui
+start_UI()

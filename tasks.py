@@ -6,6 +6,10 @@ def start(ctx):
     ctx.run("python3 src/main.py")
 
 @task
+def start_gui(ctx):
+    ctx.run("python3 src/main_gui.py")
+
+@task
 def test(ctx):
     ctx.run("pytest src")
 
