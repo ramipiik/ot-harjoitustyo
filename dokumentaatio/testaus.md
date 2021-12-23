@@ -39,8 +39,8 @@ Testaamatta jääneet koodirivit liittyvät lähinnä poikkeustilanteiden käsit
 ## Järjestelmätestaus
 Varsinaisia automaattisia järjestelmätason testejä ei ole. Manuaalisia testejä suoritettu lukematon määrä. Kaikki testit on suoritettu Linux-ympäristössä.
 
-## Sovellukseen jääneet laatuohjelmat
+## Sovellukseen jääneet laatuongelmat
 SQlite ei tällä hetkellä toimi yliopiston virtuaalityöasemalla vanhasta versiosta johtuen. En ehtinyt selvittää miten tämän olisi saanut ratkaistua.  
 
-Kun sovellus käynnistetään poetryn kautta jostain syystä komentorivin backscape ei toimi kun syötteitä annetaan terminaalin kautta. Jos sovelluksen käynnistää ilman poetrya, niin backscape toimii. En löytänyt tähän mitään ratkaisua - jos on ideoita, niin otan mielelläni vastaan.
+Kun sovellus käynnistetään poetryn kautta jostain syystä komentorivin backscape ei toimi kun syötteitä annetaan terminaalin kautta. Jos sovelluksen käynnistää ilman poetrya, niin backscape toimii.
 

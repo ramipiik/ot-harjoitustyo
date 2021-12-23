@@ -1,26 +1,16 @@
 
--Priority: Testausdokumentti. Tästä saa 2 pistettä. Olikohan tähän ohjeita jossain? Katso mallia referenssiprojektista. Muista lisätä linkki readmehin.
--Priority: Päivitä määrittelydokumentti vastaamaan lopullisen ohjelman toiminnallisuutta
 -Priority: Tee loppupalautus-niminen GitHub-release
 -Priority: Lisää readme:hen linkki loppupalautukseen
--Priority: Add development ideas to readme.md:
-  -Randomize starting day so that it's not possible to learn the pattern
-  -Normalize the starting values so that they all start at same price e.g. 1.00
-  -Anonymize crypto names to: A, B, C etc
-  -Add more advanced strategies
-  -Develope GUI further (add graphs)
+
 
 -VARMISTA VIELÄ LOPPUPALAUTUKSEN VAATIMUKSET, JOTTA MITÄÄN EI OLE UNOHTUNUT.
 
 -Jos ehtii: Täydennä docstringejä pidemmän kaavan mukaiseksi. Entities ja repositories -kansiot on tehty. Services, tests ja UI tekemättä.
 -Jos ehtii: Valetietokanta testejä varten.
--Jos ehtii: Katso ohjaajan aiempi kommentti virtuaalityöasemassa ajamiseen ja yritä saada toimimaan.
--Jos ehtii: Muun palautteen huomioiminen
 
--Jätä myöhemmäksi: GUI:n edistäminen.
---------------------
-LOPULLINEN PALAUTUS DL 26.12.
------------------------------
+--------------------------------------------
+LOPULLINEN PALAUTUS DL SU 26.12. KLO 23.59
+-----------------------------------------
 
  
 

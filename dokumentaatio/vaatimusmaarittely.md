@@ -28,9 +28,14 @@
 
 ## Käyttöliittymäluonnos
  * TEHTY: Tekstikäyttöliittymä
- * ALOITETTU: [Käyttöliittymäluonnos](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/K%C3%A4ytt%C3%B6liittym%C3%A4luonnos.pdf)
+ * ALOITETTU: [Graafinen käyttöliittymä](https://github.com/ramipiik/ot-harjoitustyo/blob/main/dokumentaatio/K%C3%A4ytt%C3%B6liittym%C3%A4luonnos.pdf)
  
 
 ## Jatkokehitysideoita
 * Visio on mallintaa ja testata oikeasti (mahdollisesti) hyödyllisiä sijoitustrategioita/algoritmeja (Markovin ketju, portfolioteoria, machine learning -algoritmeja, jne ) ja verrata niiden saamia tuottoja keskenään eri sijoituskohteiden ja aikajänteiden välillä ja tehdä tämän pohjalta sijoitusbotti, joka tekee oikeita sijoituspäätöksiä/suosituksia.
 * Aihe on varsin laaja. Tavoitteena on tämän kurssin aikana tehdä pohjatyö, jota voin myöhemmin (esim. gradun tai muiden kurssien puitteissa tai omana vapaa-ajan projektina) kehittää ja laajentaa eteenpäin erityisesti älykkäämpien sijoitusalgoritmien ja koneoppimisen osalta. 
+* Tee seuraavat toimenpiteet, jotta ei ole mahdollista opetella hintakehitystä ulkoa:
+  * Valitse salkulle satunnainen aloituspäivä ("day0" tai "epoch"). 
+  * Normalisoi kryptojen arvot siten, että kaikki alkavat samasta arvosta (esim. 100)
+  * Anonomysoi ja arvo eri nimet kullekin kryptolle (A, B, C jne)
+* Kehitä graafista käyttöliittymää eteenpäin.
