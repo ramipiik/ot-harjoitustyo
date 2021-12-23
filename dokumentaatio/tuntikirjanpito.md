@@ -27,5 +27,5 @@
 | 12.12  | 10    | Refaktorointia: Printtaukset käyttöliittymään. Funktioiden pienemmiksi paloiksi. Testien päivitys.
 | 13.12. | 6     | Dokumentointia
 | 22.12. | 1.5   | Testausdokumentti
-| 23.12  | 1     | Dokumentointi. Viikon 6 release. 
+| 23.12  | 1     | Dokumentointi. Loppupalautus-release. 
 | yht    | 111.5 |
