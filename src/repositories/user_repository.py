@@ -5,7 +5,19 @@ from config import DATABASE_PATH
 
 
 def verify_user(username, password):
-    """Method for verifying username and password"""
+    """
+    Method for verifying username and password
+
+    Args:
+        username (string)
+        password (string)
+
+    If successful returns:
+        list: [id, username, is_admin]  
+    
+    If not successful returns:
+        False
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     sql = "SELECT id, username, is_admin, password FROM users WHERE username=:username"
@@ -24,7 +36,16 @@ def verify_user(username, password):
 
 
 def store_user(username, password):
-    """Method for storing a new user to database"""
+    """Method for storing a new user to database
+
+    Args:
+        username (string)
+        password (string)
+
+    Returns:
+        True if successful\     
+        False if not succesful
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     hash_value = generate_password_hash(password)
@@ -41,7 +62,16 @@ def store_user(username, password):
 
 
 def delete_user(username):
-    """Method for deleting a user from the database"""
+    """
+    Method for deleting a user from the database
+
+    Args:
+        username string
+
+    Returns:
+        True if successful\     
+        False if not succesful
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
     try:

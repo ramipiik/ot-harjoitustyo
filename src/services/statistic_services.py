@@ -8,7 +8,15 @@ from repositories.content_repository import (
 
 
 def calculate_price_volatility(end_day):
-    """Method for calculating volatility of the price"""
+    """
+    Method for calculating volatility of the price
+
+    Args:
+        end_day (string): Last day of the period
+
+    Returns:
+        list: prices volatility
+    """    
     rows = read_volatility_data(end_day)
     data = {}
     for row in rows:
@@ -22,7 +30,15 @@ def calculate_price_volatility(end_day):
 
 
 def get_price_statistics(date):
-    """Method for calculating price statistics"""
+    """
+    Method for calculating price statistics
+
+    Args:
+        date (string): date from which to read prices
+
+    Returns:
+        list: price statistics
+    """    
     price_data: dict = read_prices_for_statistics(date)
     volatility_data: dict = calculate_price_volatility(date)
     rows_today = price_data["today"]
@@ -41,6 +57,7 @@ def get_price_statistics(date):
 def organize_base_rates(
     rates, rows_today, rows_d, rows_w, rows_m, rows_y, volatility_data
 ):
+    """Internal helper function for organizing base rates."""    
     if rows_today:
         for number, row in enumerate(rows_today):
             values = {}
@@ -84,6 +101,15 @@ def organize_base_rates(
 
 
 def calculate_relations(rates):
+    """
+    Calculates the daily, weekly, monthly and yearly changes
+
+    Args:
+        rates (list): crypto rates
+
+    Returns:
+        list: rates with statistics
+    """    
     for value in rates.values():
         if value["d"] != "--":
             value["d"] = round(100 * (value["close"] - value["d"]) / value["d"], 2)
@@ -115,12 +141,17 @@ def calculate_relations(rates):
 
 
 def get_portfolio_statistics(portfolio_id):
-    """Method for calculating portfolio statistics"""
-    # print("method called")
+    """
+    Method for calculating portfolio statistics
+
+    Args:
+        portfolio_id (int)
+
+    Returns:
+        list: statistics of the given portfolio
+    """    
     data = read_portfolio_history(portfolio_id)
     values: dict = data[1]
-    # print("from statistics")
-    # print(values)
     min_date = data[0]
     start_value = values[min_date]
     stats = {}
@@ -137,9 +168,6 @@ def get_portfolio_statistics(portfolio_id):
         content = read_portfolio_content(portfolio_id)
         today = content[0][1]
     stats["today"] = today
-    # stats=calculate_portfolio_relations(stats, today, start_value, portfolio_history)
-    # print(stats)
-
     stats["all-time"] = int(round((today - start_value) / start_value * 100, 0))
     try:
         stats["d"] = round(
@@ -173,12 +201,22 @@ def get_portfolio_statistics(portfolio_id):
         )
     except:
         stats["y"] = "--"
-
-    # print(stats)
     return stats
 
 
 def calculate_portfolio_relations(stats, today, start_value, portfolio_history):
+    """
+    Method for calculating value development of the portfolio
+
+    Args:
+        stats (list): statistics of portfolio
+        today (Date): current date
+        start_value (int): initial capital
+        portfolio_history (list): value history of the portfolio
+
+    Returns:
+        list: daily, weekly, monthly and yearly value development
+    """    
     stats["all-time"] = int(round((today - start_value) / start_value * 100, 0))
     try:
         stats["d"] = round(

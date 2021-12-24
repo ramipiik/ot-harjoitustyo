@@ -7,7 +7,15 @@ from repositories.crypto_repository import CRYPTO_NAMES
 
 
 def read_prices(date):
-    """Method for reading prices from data base"""
+    """
+    Method for reading prices from data base
+
+    Args:
+        date (string): date from which to read prices
+
+    Returns:
+        dict: crypto rates on a given date including close, open, high, low
+    """
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
@@ -46,7 +54,16 @@ def read_prices(date):
 
 
 def read_prices_for_statistics(date):
-    """Method for reading prices including statistics from data base"""
+    """
+    Method for reading price statistics from data base
+
+    Args:
+        date (string): date from which to read prices
+
+    Returns:
+        dict: statistics
+    """    """"""
+
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
 
@@ -122,7 +139,7 @@ def read_prices_for_statistics(date):
     return data
 
 
-def store_prices():
+def store_prices():   
     """Method for reading prices from CSV file and storing them to data base"""
     connection = sqlite3.connect(DATABASE_PATH)
     cursor = connection.cursor()
@@ -157,7 +174,15 @@ def store_prices():
 
 
 def read_volatility_data(end_day):
-    """Method for reading price data for the last year"""
+    """Method for reading price data for the last year
+
+    Args:
+        end_day (string): Last day of the period
+
+    Returns:
+        list: crypto_id, price
+    """
+    
     date_object = datetime.datetime(
         int(end_day[0:4]), int(end_day[5:7]), int(end_day[8:10])
     ).date()

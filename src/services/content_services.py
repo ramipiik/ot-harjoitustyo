@@ -26,7 +26,17 @@ NR_OF_CRYPTOS = len(CRYPTO_IDS)
 
 
 def buy(content_object: Content, crypto_id, investment):
-    """Service for buying a crypto"""
+    """
+    Service for buying a crypto
+
+    Args:
+        content_object (Content): Content object where the investment is made
+        crypto_id (string): Crypto to invest in
+        investment (int): Amount to invest
+
+    If not successul returns:
+        tuple: (False, Error message:str)
+    """
     response = content_object.buy(crypto_id, investment)
     if tuple.__instancecheck__(response) and response[0] is False:
         return response
@@ -36,7 +46,17 @@ def buy(content_object: Content, crypto_id, investment):
 
 
 def sell(content_object: Content, crypto_id, investment):
-    """Service for selling a crypto. Allows short selling."""
+    """
+    Service for selling a crypto
+
+    Args:
+        content_object (Content): Content object where the sales is made
+        crypto_id (string): Crypto to invest in
+        investment (int): Amount to invest
+
+    If not successul returns:
+        tuple: (False, Error message:str)
+    """
     response = content_object.sell(crypto_id, investment)
     if tuple.__instancecheck__(response) and response[0] is False:
         return response
@@ -46,7 +66,16 @@ def sell(content_object: Content, crypto_id, investment):
 
 
 def get_reference_content(own_portfolio_value, portfolio_id):
-    """Service for ordering and printing reference portfolio valuations"""
+    """
+    Service for ordering and printing reference portfolio valuations
+
+    Args:
+        own_portfolio_value (numeric): Current value of the portfolio
+        portfolio_id (int) 
+
+    Returns:
+        list: Valuation of reference strategies
+    """
     references: dict = read_reference_portfolios(portfolio_id)
     collection = []
     collection.append((own_portfolio_value, "Your portfolio", portfolio_id))
@@ -61,13 +90,31 @@ def get_reference_content(own_portfolio_value, portfolio_id):
 
 
 def get_date(portfolio_id):
+    """
+    Fetches the current date of the portfolio
+
+    Args:
+        portfolio_id (int)
+
+    Returns:
+        string: current date of the porfolio
+    """    
     content = read_portfolio_content(portfolio_id)
     date = content[0][0]
     return date
 
 
 def get_content(user, portfolio_id):
-    """Service for fetching portfolio content."""
+    """
+    Service for fetching portfolio content.
+
+    Args:
+        user (User)
+        portfolio_id (int): portfolio id
+
+    Returns:
+        tuple: (date, cash, content, content_object, rates, stats, references)
+    """    
     portfolios = []
     aux = get_portfolios(user)
     for item in aux:
@@ -88,6 +135,13 @@ def get_content(user, portfolio_id):
 
 
 def next_day(content_object, date_object):
+    """
+    Moves portfolio content one day forward
+
+    Args:
+        content_object (Content): Content object to be moved
+        date_object (Date): New date
+    """    
     content_object.portfolio_day = str(date_object)
     content_object.change_id += 1
     rates = read_prices(str(date_object))
@@ -114,7 +168,15 @@ def next_day(content_object, date_object):
 
 
 def frequency_to_number(frequency):
-    """Helper function. Converts number to frequency text."""
+    """
+    Helper function. Converts number to frequency text.
+
+    Args:
+        frequency (str): daily, weekly or monthly
+
+    Returns:
+        int: 1, 7 or 30
+    """    
     if frequency == "daily":
         return 1
     if frequency == "weekly":
@@ -124,7 +186,12 @@ def frequency_to_number(frequency):
 
 
 def next_period(content_object: Content):
-    """Service for starting the next period"""
+    """
+    Service for starting the next period
+
+    Args:
+        content_object (Content)
+    """    
     max_day = read_max_day()[0]
     date = content_object.portfolio_day
     frequency = read_portfolio_frequency(content_object.portfolio_id)[0]
@@ -145,7 +212,15 @@ def next_period(content_object: Content):
 
 
 def coordinate_reference_actions(content_object: Content):
-    """Coordinates actions for the reference portfolios"""
+    """
+    Coordinates actions for the reference portfolios
+
+    Args:
+        content_object (Content)
+
+    Returns:
+        list: actions taken by each reference portfolio
+    """    
     portfolio_id = content_object.portfolio_id
     refs: dict = read_reference_portfolios(portfolio_id)
     start_date = read_portfolio_startdate(portfolio_id)
@@ -170,8 +245,22 @@ def coordinate_reference_actions(content_object: Content):
 
 
 def implement_reference_strategy(
-    strategy, ref_portfolio_id, content_object, days_passed, days, action_log
+    strategy, ref_portfolio_id, content_object, days_passed, frequency, action_log
 ):
+    """
+    Implements the reference strategy
+
+    Args:
+        strategy (str): Name of the reference strategy
+        ref_portfolio_id (int): Id of the reference portfolio
+        content_object (Content): Initial Content object
+        days_passed (int): Nr. of days passed since the start of the portfolio
+        frequency (int): Nr. of days to move forward
+        action_log (list): List where actions of the reference strategies are collected
+
+    Returns:
+        [type]: [description]
+    """    
     content = read_portfolio_content(ref_portfolio_id)
     cash = content[0][1]
     change_id = content[0][4]
@@ -192,28 +281,45 @@ def implement_reference_strategy(
     elif strategy == "All-in":
         action_log = all_in(ref_content_object, action_log)
     elif strategy == "Even":
-        action_log = even(ref_content_object, days_passed, days, action_log)
+        action_log = even(ref_content_object, days_passed, frequency, action_log)
     elif strategy == "Random":
-        action_log = select_random(ref_content_object, days_passed, days, action_log)
+        action_log = select_random(ref_content_object, days_passed, frequency, action_log)
     elif strategy == "Follow":
         action_log = follow_winner(
-            ref_content_object, days_passed, days, action_log, rates
+            ref_content_object, days_passed, frequency, action_log, rates
         )
     elif strategy == "Contrarian":
         action_log = contrarian(
-            ref_content_object, days_passed, days, action_log, rates
+            ref_content_object, days_passed, frequency, action_log, rates
         )
     return action_log
 
 
 def do_nothing(action_log):
-    """Keep whole portfolio in cash"""
+    """
+    Keep whole portfolio in cash
+
+    Args:
+        action_log (list): List where actions of the reference strategies are collected
+
+    Returns:
+        (list): List where actions of the reference strategies are collected
+    """    
     action_log.append('-"Do nothing" didn\'t do anything.')
     return action_log
 
 
 def all_in(ref_content_object: Content, action_log):
-    """Immediately invest everything between all the cryptos."""
+    """
+    Immediately invest everything between all the cryptos
+
+    Args:
+        ref_content_object (Content): Content object of the reference strategy
+        action_log (list): List where actions of the reference strategies are collected
+
+    Returns:
+        (list): List where actions of the reference strategies are collected
+    """    
     cash = ref_content_object.cash
     if cash > 1:
         investment_amount = cash / NR_OF_CRYPTOS
@@ -228,7 +334,18 @@ def all_in(ref_content_object: Content, action_log):
 
 
 def even(ref_content_object: Content, days_passed, frequency, action_log):
-    """Splits the investment evenly between all the cryptos during a 12 month time period"""
+    """
+    Splits the investment evenly between all the cryptos during a 12 month time period
+
+    Args:
+        ref_content_object (Content): Content object of the reference strategy
+        days_passed (int): Nr. of days passed since the start of the portfolio
+        frequency (int): Nr. of days to move forward
+        action_log (list): List where actions of the reference strategies are collected
+
+    Returns:
+        (list): List where actions of the reference strategies are collected
+    """    
     months = 12
     days_left = months * 30 - days_passed
     cash = ref_content_object.cash
@@ -246,7 +363,18 @@ def even(ref_content_object: Content, days_passed, frequency, action_log):
 
 
 def select_random(ref_content_object: Content, days_passed, frequency, action_log):
-    """Select three random cryptos each time period. Invests everything during 12 months."""
+    """
+    Select three random cryptos each time period. Invests everything during 12 months.
+
+    Args:
+        ref_content_object (Content): Content object of the reference strategy
+        days_passed (int): Nr. of days passed since the start of the portfolio
+        frequency (int): Nr. of days to move forward
+        action_log (list): List where actions of the reference strategies are collected
+
+    Returns:
+        (list): List where actions of the reference strategies are collected
+    """    
     months = 12
     select = 3
     days_left = months * 30 - days_passed
@@ -272,6 +400,15 @@ def select_random(ref_content_object: Content, days_passed, frequency, action_lo
 
 
 def frequency_to_focus(frequency):
+    """
+    Helper function. Converts frequency number to letter d(aily), w(weekly) or m(onthly)
+
+    Args:
+        frequency (int): 1, 7 or 30
+
+    Returns:
+        string: 'd', 'w' or 'm'
+    """    
     if frequency == 1:
         return "d"
     if frequency == 7:
@@ -283,7 +420,20 @@ def frequency_to_focus(frequency):
 def follow_winner(
     ref_content_object: Content, days_passed, frequency, action_log, rates
 ):
-    """Invest in the crypto which has increased most. Invests everything during 12 months."""
+    """
+    Invest in the crypto which has increased most. Invests everything during 12 months.
+
+    Args:
+        ref_content_object (Content): Content object of the reference strategy
+        days_passed (int): Nr. of days passed since the start of the portfolio
+        frequency (int): Nr. of days to move forward
+        action_log (list): List where actions of the reference strategies are collected
+        rates (dict): Crypto rates
+
+    Returns:
+        (list): List where actions of the reference strategies are collected
+    """    
+    
     months = 12
     days_left = months * 30 - days_passed
     cash = ref_content_object.cash
@@ -310,7 +460,19 @@ def follow_winner(
 
 
 def contrarian(ref_content_object: Content, days_passed, frequency, action_log, rates):
-    """Invest in the crypto which has dropped most. Invests everything during 12 months."""
+    """
+    Invest in the crypto which has dropped most. Invests everything during 12 months.
+
+    Args:
+        ref_content_object (Content): Content object of the reference strategy
+        days_passed (int): Nr. of days passed since the start of the portfolio
+        frequency (int): Nr. of days to move forward
+        action_log (list): List where actions of the reference strategies are collected
+        rates (dict): Crypto rates
+
+    Returns:
+        (list): List where actions of the reference strategies are collected
+    """    
     months = 12
     days_left = months * 30 - days_passed
     cash = ref_content_object.cash

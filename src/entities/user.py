@@ -21,6 +21,6 @@ class User:
         Returns user's portfolios
 
         Returns:
-            List of portfolios
+            list: List of portfolios
         """
         return self.portfolios

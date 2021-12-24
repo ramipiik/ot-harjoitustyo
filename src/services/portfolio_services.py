@@ -27,6 +27,15 @@ REFERENCE_STRATEGIES = [
 
 
 def number_to_frequency(frequency_number):
+    """
+    Helper function for converting frequency number to string
+
+    Args:
+        frequency_number (int): 1, 7 or 30
+
+    Returns:
+        string: 'daily', 'weekly' or 'monthly'
+    """    
     if frequency_number == 1:
         return "daily"
     if frequency_number == 2:
@@ -36,7 +45,17 @@ def number_to_frequency(frequency_number):
 
 
 def create_portfolio(user: User, portfolio_name, frequency_number):
-    """Service for creating a new portfolio"""
+    """
+    Service for creating a new portfolio
+
+    Args:
+        user (User): User for whom the portfolio is created
+        portfolio_name (str): Name of the new portfolio
+        frequency_number (int): Decision making frequency
+
+    Returns:
+        Content: Content of the new portfolio
+    """    
     frequency = number_to_frequency(frequency_number)
     new_portfolio = Portfolio(user.username, portfolio_name, frequency)
     store_portfolio(user.username, new_portfolio)
@@ -56,6 +75,14 @@ def create_portfolio(user: User, portfolio_name, frequency_number):
 
 
 def get_portfolios(user):
-    """Service for fetching user's portfolios"""
+    """
+    Service for fetching user's portfolios
+
+    Args:
+        user (User): User whole portfolios are fetched
+
+    Returns:
+        list: List of lists containing portfolio id and portfolio name ordered by id
+    """    
     portfolios = read_portfolios(user.username)
     return portfolios

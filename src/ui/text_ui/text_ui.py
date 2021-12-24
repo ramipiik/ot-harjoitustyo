@@ -68,12 +68,23 @@ def signup_UI():
 
 
 def login_print(user):
+    """
+    Prints login confirmation
+
+    Args:
+        user (User): logged-in user
+    """    
     print(f"{bcolors.OKCYAN}{user.username} logged in")
     print(f"--------------------{bcolors.ENDC}")
 
 
 def list_portfolios_UI(user):
-    """Text UI for listing the portfolios"""
+    """
+    Text UI for printing a list the portfolios
+
+    Args:
+        user (User): user whose portfolios are printed
+    """    
     print(f"{bcolors.OKBLUE}Your portfolios:")
     portfolios = get_portfolios(user)
     for portfolio in portfolios:
@@ -82,7 +93,12 @@ def list_portfolios_UI(user):
 
 
 def create_portfolio_UI(user):
-    """Text UI for creating a new portfolio"""
+    """
+    Text UI for creating a new portfolio
+
+    Args:
+        user (User): User for whome the portfolio is created
+    """    
     portfolio_name = input(f"{bcolors.OKCYAN}Name of the new portfolio: {bcolors.ENDC}")
     while True:
         print(f"{bcolors.OKCYAN}------------------{bcolors.ENDC}")
@@ -111,6 +127,12 @@ def create_portfolio_UI(user):
 
 
 def logout_UI(user):
+    """
+    Logouts the user and prints logout confirmation
+
+    Args:
+        user (User): User to be logged out
+    """    
     old_username = user.username
     user = None
     print(f"{bcolors.OKCYAN}------------------")
@@ -120,6 +142,12 @@ def logout_UI(user):
 
 
 def open_portfolio_UI(user):
+    """
+    Text UI for opening a portfolio
+
+    Args:
+        user (User): User who wants to open a portfolio
+    """    
     while True:
         if user:
             while True:
@@ -151,6 +179,14 @@ def open_portfolio_UI(user):
 
 
 def action_UI(content_object, user, portfolio_id):
+    """
+    Text UI for handling actions for the opened portfolio
+
+    Args:
+        content_object (Content): Content of the opened portfolio
+        user (User): Logged in user
+        portfolio_id (int): Portfolio id
+    """    
     while True:
         print(f"{bcolors.OKCYAN}What do you want to do next?{bcolors.ENDC}")
         choice = input(
@@ -179,6 +215,14 @@ def action_UI(content_object, user, portfolio_id):
 
 
 def sell_UI(content_object, user, portfolio_id):
+    """
+    Text UI for handling crypto sales
+
+    Args:
+        content_object (Content): Content of the opened portfolio
+        user (User): Logged in user
+        portfolio_id (int): Portfolio id
+    """    
     try:
         crypto_id = int(
             input(f"{bcolors.OKCYAN}Which crypto do you want to sell? {bcolors.ENDC}")
@@ -200,6 +244,14 @@ def sell_UI(content_object, user, portfolio_id):
 
 
 def buy_UI(content_object, user, portfolio_id):
+    """
+    Text UI for handling crypto investment
+
+    Args:
+        content_object (Content): Content of the opened portfolio
+        user (User): Logged in user
+        portfolio_id (int): Portfolio id
+    """
     try:
         crypto_id = int(
             input(f"{bcolors.OKCYAN}Number of crypto to buy: {bcolors.ENDC}")
@@ -219,12 +271,24 @@ def buy_UI(content_object, user, portfolio_id):
 
 
 def print_date(date):
+    """
+    Prints the portfolio date
+
+    Args:
+        date (str): Date to be printed
+    """
     print(f"{bcolors.OKGREEN}--------------------")
     print("Portfolio", date)
     print("")
 
 
 def print_stats(stats):
+    """
+    Prints portfolio statistics
+
+    Args:
+        stats (list): Portfolio statistics
+    """
     if stats["today"]:
         print(
             f"Value: {stats['today']}€ ({stats['all-time']}%) | d {stats['d']}% | w {stats['w']}% | m {stats['m']}% | y {stats['y']}% | sd {stats['sd']}%"
@@ -232,10 +296,24 @@ def print_stats(stats):
 
 
 def print_cash(cash):
+    """
+    Prints the amount of cash
+
+    Args:
+        cash (numeric): Amount of cash
+    """    
     print(" -Cash:", cash, "EUR")
 
 
 def print_content(content, content_object, rates):
+    """
+    Prints the content of the portfolio
+
+    Args:
+        content (tuple): (date, cash, content, content_object, rates, stats, references)
+        content_object (Content): Content of the portfolio
+        rates (list): Crypto rates
+    """    
     for row in content:
         if row[2]:
             print(f" -{row[2]} ({rates[row[2]]['name']}): {row[5]:.0f} EUR")
@@ -246,6 +324,13 @@ def print_content(content, content_object, rates):
 
 
 def print_rates(rates, date):
+    """
+    Prints the crypto rates
+
+    Args:
+        rates (list): Crypto rates
+        date (str): Date of the rates
+    """    
     print(f"{bcolors.WARNING}Rates {date}")
     print("")
     aux = []
@@ -258,6 +343,13 @@ def print_rates(rates, date):
 
 
 def print_ranking(references, date):
+    """
+    Prints the reference portfolios in ranked order
+
+    Args:
+        references (dict): Dictionaly of references portfolio valuations
+        date (str): Date of the ranking
+    """    
     print(f"{bcolors.HEADER}Ranking {date}")
     print("")
     for i, strategy in enumerate(references):
@@ -269,6 +361,12 @@ def print_ranking(references, date):
 
 
 def print_status(response):
+    """
+    Prints the portfolio status
+
+    Args:
+        response (list): Portfolio informatio (date, cash, content, content_object, rates, stats, references)
+    """    
     date = response[0]
     cash = response[1]
     content = response[2]

@@ -31,12 +31,10 @@ class TestContent(unittest.TestCase):
 
     def test_buying_and_selling(self):
         """method for testing buying and selling"""
-
         investment = 100000
         buy(self.test_portfolio, 1, investment)
         content_object: Content = get_content(self.test_user, self.portfolio_id)[3]
         self.assertEqual(content_object.cash, INITIAL_CAPITAL - investment)
-
         divestment = 50000
         sell(self.test_portfolio, 1, divestment)
         content_object: Content = get_content(self.test_user, self.portfolio_id)[3]
