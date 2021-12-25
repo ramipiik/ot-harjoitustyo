@@ -28,4 +28,6 @@
 | 13.12. | 6     | Dokumentointia
 | 22.12. | 1.5   | Testausdokumentti
 | 23.12  | 1     | Dokumentointi. Loppupalautus-release. 
-| yht    | 111.5 |
+| 24.12. | 2     | Docstringit pitkään muotoon.
+| 25.12. | 3     | Erillinen tietokanta testejä varten
+| yht    | 116.5 |
