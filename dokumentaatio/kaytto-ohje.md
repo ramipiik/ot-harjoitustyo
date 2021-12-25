@@ -25,7 +25,7 @@ poetry run invoke start
 5. Tai käynnistä sovellus graafisessa käyttöliittymässä ajamalla komento:
 ```
 poetry run invoke start-gui
-
+```
 ## Kirjautuminen
 Sovellus käynnistyy kirjautumisnäkymään. Voit luoda uuden käyttäjän tai kirjautua sisään olemassaolevalla käyttäjällä. Jos valitsit graafisen käyttöliittymän, käyttö jatkuu tekstikäyttöliittymässä.  
 
