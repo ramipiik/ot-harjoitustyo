@@ -71,7 +71,7 @@ def get_reference_content(own_portfolio_value, portfolio_id):
 
     Args:
         own_portfolio_value (numeric): Current value of the portfolio
-        portfolio_id (int) 
+        portfolio_id (int): Portfolio id
 
     Returns:
         list: Valuation of reference strategies
@@ -98,7 +98,7 @@ def get_date(portfolio_id):
 
     Returns:
         string: current date of the porfolio
-    """    
+    """
     content = read_portfolio_content(portfolio_id)
     date = content[0][0]
     return date
@@ -114,7 +114,7 @@ def get_content(user, portfolio_id):
 
     Returns:
         tuple: (date, cash, content, content_object, rates, stats, references)
-    """    
+    """
     portfolios = []
     aux = get_portfolios(user)
     for item in aux:
@@ -141,7 +141,7 @@ def next_day(content_object, date_object):
     Args:
         content_object (Content): Content object to be moved
         date_object (Date): New date
-    """    
+    """
     content_object.portfolio_day = str(date_object)
     content_object.change_id += 1
     rates = read_prices(str(date_object))
@@ -176,7 +176,7 @@ def frequency_to_number(frequency):
 
     Returns:
         int: 1, 7 or 30
-    """    
+    """
     if frequency == "daily":
         return 1
     if frequency == "weekly":
@@ -191,7 +191,7 @@ def next_period(content_object: Content):
 
     Args:
         content_object (Content)
-    """    
+    """
     max_day = read_max_day()[0]
     date = content_object.portfolio_day
     frequency = read_portfolio_frequency(content_object.portfolio_id)[0]
@@ -220,7 +220,7 @@ def coordinate_reference_actions(content_object: Content):
 
     Returns:
         list: actions taken by each reference portfolio
-    """    
+    """
     portfolio_id = content_object.portfolio_id
     refs: dict = read_reference_portfolios(portfolio_id)
     start_date = read_portfolio_startdate(portfolio_id)
@@ -260,7 +260,7 @@ def implement_reference_strategy(
 
     Returns:
         [type]: [description]
-    """    
+    """
     content = read_portfolio_content(ref_portfolio_id)
     cash = content[0][1]
     change_id = content[0][4]
@@ -281,9 +281,11 @@ def implement_reference_strategy(
     elif strategy == "All-in":
         action_log = all_in(ref_content_object, action_log)
     elif strategy == "Even":
-        action_log = even(ref_content_object, days_passed, frequency, action_log)
+        action_log = even(ref_content_object, days_passed,
+                          frequency, action_log)
     elif strategy == "Random":
-        action_log = select_random(ref_content_object, days_passed, frequency, action_log)
+        action_log = select_random(
+            ref_content_object, days_passed, frequency, action_log)
     elif strategy == "Follow":
         action_log = follow_winner(
             ref_content_object, days_passed, frequency, action_log, rates
@@ -304,7 +306,7 @@ def do_nothing(action_log):
 
     Returns:
         (list): List where actions of the reference strategies are collected
-    """    
+    """
     action_log.append('-"Do nothing" didn\'t do anything.')
     return action_log
 
@@ -319,7 +321,7 @@ def all_in(ref_content_object: Content, action_log):
 
     Returns:
         (list): List where actions of the reference strategies are collected
-    """    
+    """
     cash = ref_content_object.cash
     if cash > 1:
         investment_amount = cash / NR_OF_CRYPTOS
@@ -345,7 +347,7 @@ def even(ref_content_object: Content, days_passed, frequency, action_log):
 
     Returns:
         (list): List where actions of the reference strategies are collected
-    """    
+    """
     months = 12
     days_left = months * 30 - days_passed
     cash = ref_content_object.cash
@@ -374,7 +376,7 @@ def select_random(ref_content_object: Content, days_passed, frequency, action_lo
 
     Returns:
         (list): List where actions of the reference strategies are collected
-    """    
+    """
     months = 12
     select = 3
     days_left = months * 30 - days_passed
@@ -408,7 +410,7 @@ def frequency_to_focus(frequency):
 
     Returns:
         string: 'd', 'w' or 'm'
-    """    
+    """
     if frequency == 1:
         return "d"
     if frequency == 7:
@@ -432,8 +434,8 @@ def follow_winner(
 
     Returns:
         (list): List where actions of the reference strategies are collected
-    """    
-    
+    """
+
     months = 12
     days_left = months * 30 - days_passed
     cash = ref_content_object.cash
@@ -472,7 +474,7 @@ def contrarian(ref_content_object: Content, days_passed, frequency, action_log, 
 
     Returns:
         (list): List where actions of the reference strategies are collected
-    """    
+    """
     months = 12
     days_left = months * 30 - days_passed
     cash = ref_content_object.cash

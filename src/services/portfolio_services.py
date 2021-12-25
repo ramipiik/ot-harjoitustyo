@@ -35,7 +35,7 @@ def number_to_frequency(frequency_number):
 
     Returns:
         string: 'daily', 'weekly' or 'monthly'
-    """    
+    """
     if frequency_number == 1:
         return "daily"
     if frequency_number == 2:
@@ -55,7 +55,7 @@ def create_portfolio(user: User, portfolio_name, frequency_number):
 
     Returns:
         Content: Content of the new portfolio
-    """    
+    """
     frequency = number_to_frequency(frequency_number)
     new_portfolio = Portfolio(user.username, portfolio_name, frequency)
     store_portfolio(user.username, new_portfolio)
@@ -63,14 +63,16 @@ def create_portfolio(user: User, portfolio_name, frequency_number):
     aux = store_content_first_time(new_portfolio, FIRST_DAY, INITIAL_CAPITAL)
     content_object = Content(aux[0], aux[1], aux[2], aux[3])
     user.add_portfolio(new_portfolio.id)
-    store_reference_portfolios(new_portfolio.id, REFERENCE_STRATEGIES, frequency, None)
+    store_reference_portfolios(
+        new_portfolio.id, REFERENCE_STRATEGIES, frequency, None)
     reference_portfolios: dict = read_reference_portfolios(new_portfolio.id)
     for strategy, id in reference_portfolios.items():
         new_portfolio.reference_portfolios[strategy] = ReferencePortfolio(
             new_portfolio.id, strategy, frequency, id
         )
     for reference_portfolio in new_portfolio.reference_portfolios.values():
-        store_content_first_time(reference_portfolio, FIRST_DAY, INITIAL_CAPITAL)
+        store_content_first_time(
+            reference_portfolio, FIRST_DAY, INITIAL_CAPITAL)
     return content_object
 
 
@@ -83,6 +85,6 @@ def get_portfolios(user):
 
     Returns:
         list: List of lists containing portfolio id and portfolio name ordered by id
-    """    
+    """
     portfolios = read_portfolios(user.username)
     return portfolios

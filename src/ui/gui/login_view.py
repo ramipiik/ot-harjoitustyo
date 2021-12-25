@@ -61,7 +61,8 @@ class LoginView:
         )
 
         username1_label = ttk.Label(master=self._frame, text="Käyttäjänimi")
-        username1_label.grid(row=1, column=0, padx=5, pady=5, sticky=(constants.W))
+        username1_label.grid(row=1, column=0, padx=5,
+                             pady=5, sticky=(constants.W))
 
         self.username_entry1 = ttk.Entry(master=self._frame)
         self.username_entry1.grid(
@@ -69,7 +70,8 @@ class LoginView:
         )
 
         password_label1 = ttk.Label(master=self._frame, text="Salasana")
-        password_label1.grid(row=2, column=0, padx=5, pady=5, sticky=(constants.W))
+        password_label1.grid(row=2, column=0, padx=5,
+                             pady=5, sticky=(constants.W))
 
         self.password_entry1 = ttk.Entry(master=self._frame, show="*")
         self.password_entry1.grid(
@@ -115,7 +117,8 @@ class LoginView:
             row=2, column=3, sticky=(constants.W, constants.E), padx=5, pady=5
         )
 
-        password_label3 = ttk.Label(master=self._frame, text="Salasana uudestaan")
+        password_label3 = ttk.Label(
+            master=self._frame, text="Salasana uudestaan")
         password_label3.grid(
             row=3, column=2, padx=(50, 5), pady=5, sticky=(constants.W)
         )

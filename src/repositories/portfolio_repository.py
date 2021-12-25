@@ -113,7 +113,8 @@ def read_portfolio_id(user_id, portfolio_name):
     sql = "SELECT id FROM portfolios WHERE user_id=:user_id AND name=:portfolio_name"
     row = None
     try:
-        cursor.execute(sql, {"user_id": user_id, "portfolio_name": portfolio_name})
+        cursor.execute(
+            sql, {"user_id": user_id, "portfolio_name": portfolio_name})
         row = cursor.fetchone()
     except Error as error:
         print(error)

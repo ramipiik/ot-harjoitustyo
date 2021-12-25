@@ -9,5 +9,3 @@ except FileNotFoundError:
     pass
 
 DATABASE_PATH = os.getenv("DATABASE_PATH")
-
-

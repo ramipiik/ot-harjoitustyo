@@ -10,7 +10,7 @@ def get_rates(date):
 
     Returns:
         list: price statistics
-    """    
+    """
     if date:
         rates = get_price_statistics(date)
     return rates

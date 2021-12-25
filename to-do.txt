@@ -1,4 +1,4 @@
--Jos ehtii: Valetietokanta testejä varten.
+
 -Päivitä loppupalautus-release, jos muutin jotain!
 --------------------------------------------
 LOPULLINEN PALAUTUS DL SU 26.12. KLO 23.59

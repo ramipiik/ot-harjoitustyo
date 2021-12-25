@@ -1,16 +1,16 @@
+from repositories.crypto_repository import read_crypto_ids, CRYPTO_NAMES
+from repositories.portfolio_repository import delete_user_portfolios, read_portfolio_id
+from repositories.user_repository import delete_user
+from entities.user import User
+from services.statistic_services import get_price_statistics
+from services.content_services import buy, next_period, get_content
+from services.portfolio_services import create_portfolio, FIRST_DAY
+from services.user_services import signup, login
+from entities.portfolio import Portfolio
+from entities.content import Content
 import unittest
 from initiate_db import initialize_database
 initialize_database()
-from entities.content import Content
-from entities.portfolio import Portfolio
-from services.user_services import signup, login
-from services.portfolio_services import create_portfolio, FIRST_DAY
-from services.content_services import buy, next_period, get_content
-from services.statistic_services import get_price_statistics
-from entities.user import User
-from repositories.user_repository import delete_user
-from repositories.portfolio_repository import delete_user_portfolios, read_portfolio_id
-from repositories.crypto_repository import read_crypto_ids, CRYPTO_NAMES
 
 
 class TestStatistics(unittest.TestCase):
@@ -21,7 +21,8 @@ class TestStatistics(unittest.TestCase):
         self.test_portfolio: Portfolio = create_portfolio(
             self.test_user, "test_portfolio", 3
         )
-        self.portfolio_id = read_portfolio_id(self.test_user.username, "test_portfolio")
+        self.portfolio_id = read_portfolio_id(
+            self.test_user.username, "test_portfolio")
 
     def test_price_statistics(self):
         """method for testing price statistics"""
@@ -32,11 +33,13 @@ class TestStatistics(unittest.TestCase):
         self.assertTrue(rates[1]["close"] > 0)
 
     def test_portfolio_statistics(self):
-        content_object: Content = get_content(self.test_user, self.portfolio_id)[3]
+        content_object: Content = get_content(
+            self.test_user, self.portfolio_id)[3]
         self.assertEqual(content_object.portfolio_day, FIRST_DAY)
         investment = 50000
         buy(self.test_portfolio, 1, investment)
-        content_object: Content = get_content(self.test_user, self.portfolio_id)[3]
+        content_object: Content = get_content(
+            self.test_user, self.portfolio_id)[3]
         next_period(content_object)
         stats = get_content(self.test_user, self.portfolio_id)[5]
         self.assertTrue(stats["sd"] > 0)

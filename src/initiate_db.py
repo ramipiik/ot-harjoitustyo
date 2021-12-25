@@ -2,7 +2,14 @@ from repositories.crypto_repository import store_cryptos
 from repositories.price_repository import store_prices
 from database_connection import get_connection
 
+
 def drop_tables(connection):
+    """
+    Drops data base tables
+
+    Args:
+        connection: Data base connection
+    """    
     cursor = connection.cursor()
 
     cursor.execute('''
@@ -30,8 +37,14 @@ def drop_tables(connection):
 
 
 def create_tables(connection):
+    """
+    Creates new data base tables according to schema.sql
+
+    Args:
+        connection: Data base connection
+    """    
     cursor = connection.cursor()
-    
+
     cursor.execute('''
         CREATE TABLE cryptos (
         id INTEGER PRIMARY KEY,
@@ -104,11 +117,13 @@ def create_tables(connection):
 
 
 def initialize_database():
-    connection=get_connection()  
+    """Initializes the data base"""    
+    connection = get_connection()
     drop_tables(connection)
     create_tables(connection)
     store_cryptos()
     store_prices()
+
 
 if __name__ == "__main__":
     initialize_database()

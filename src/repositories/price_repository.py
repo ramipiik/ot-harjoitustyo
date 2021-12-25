@@ -138,7 +138,7 @@ def read_prices_for_statistics(date):
     return data
 
 
-def store_prices():   
+def store_prices():
     """Method for reading prices from CSV file and storing them to data base"""
     connection = get_connection()
     cursor = connection.cursor()
@@ -181,7 +181,7 @@ def read_volatility_data(end_day):
     Returns:
         list: crypto_id, price
     """
-    
+
     date_object = datetime.datetime(
         int(end_day[0:4]), int(end_day[5:7]), int(end_day[8:10])
     ).date()

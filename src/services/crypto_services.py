@@ -7,6 +7,6 @@ def get_crypto_ids():
 
     Returns:
         list: all crypto ids
-    """    
+    """
     crypto_ids = read_crypto_ids()
     return crypto_ids

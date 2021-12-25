@@ -12,8 +12,8 @@ def verify_user(username, password):
         password (string)
 
     If successful returns:
-        list: [id, username, is_admin]  
-    
+        list: [id, username, is_admin]
+
     If not successful returns:
         False
     """
@@ -42,8 +42,7 @@ def store_user(username, password):
         password (string)
 
     Returns:
-        True if successful\     
-        False if not succesful
+        True if successful. False if not succesful
     """
     connection = get_connection()
     cursor = connection.cursor()
@@ -68,8 +67,7 @@ def delete_user(username):
         username string
 
     Returns:
-        True if successful\     
-        False if not succesful
+        True if successful. False if not succesful
     """
     connection = get_connection()
     cursor = connection.cursor()
