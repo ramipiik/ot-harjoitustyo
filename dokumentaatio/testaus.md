@@ -42,5 +42,6 @@ Varsinaisia automaattisia järjestelmätason testejä ei ole. Manuaalisia testej
 ## Sovellukseen jääneet laatuongelmat
 SQlite ei tällä hetkellä toimi yliopiston virtuaalityöasemalla vanhasta versiosta johtuen. En ehtinyt selvittää miten tämän olisi saanut ratkaistua.  
 
-Kun sovellus käynnistetään poetryn kautta jostain syystä komentorivin backscape ei toimi kun syötteitä annetaan terminaalin kautta. Jos sovelluksen käynnistää ilman poetrya, niin backscape toimii.
-
+Kun sovellus käynnistetään poetryn kautta jostain syystä komentorivin backscape ei toimi kun syötteitä annetaan terminaalin kautta. Jos sovelluksen käynnistää ilman poetrya, niin backscape toimii.  
+  
+Samoin tekstikäyttöliittymän rivinvaihdot eivät aina osu kohdalleen poetryn kautta. Tämä on lähinnä visuaalinen haitta. En keksinyt miten sen saisi korjattua. 
