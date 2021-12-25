@@ -44,4 +44,4 @@ SQlite ei tällä hetkellä toimi yliopiston virtuaalityöasemalla vanhasta vers
 
 Kun sovellus käynnistetään poetryn kautta jostain syystä komentorivin backscape ei toimi kun syötteitä annetaan terminaalin kautta. Jos sovelluksen käynnistää ilman poetrya, niin backscape toimii.  
   
-Samoin tekstikäyttöliittymän rivinvaihdot eivät aina osu kohdalleen poetryn kautta. Tämä on lähinnä visuaalinen haitta. En keksinyt miten sen saisi korjattua. 
+Tekstikäyttöliittymän rivinvaihdot eivät aina osu kohdalleen poetryn kautta. Ilman poetrya kaikki näyttää normaalilta. Tämä on lähinnä visuaalinen haitta. En keksinyt miten sen saisi korjattua. 
