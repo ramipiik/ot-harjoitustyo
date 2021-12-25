@@ -9,7 +9,7 @@ def drop_tables(connection):
 
     Args:
         connection: Data base connection
-    """    
+    """
     cursor = connection.cursor()
 
     cursor.execute('''
@@ -42,7 +42,7 @@ def create_tables(connection):
 
     Args:
         connection: Data base connection
-    """    
+    """
     cursor = connection.cursor()
 
     cursor.execute('''
@@ -117,7 +117,7 @@ def create_tables(connection):
 
 
 def initialize_database():
-    """Initializes the data base"""    
+    """Initializes the data base"""
     connection = get_connection()
     drop_tables(connection)
     create_tables(connection)
