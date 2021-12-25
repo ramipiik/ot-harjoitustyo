@@ -1,7 +1,6 @@
-import sqlite3
 from sqlite3.dbapi2 import Error
 from werkzeug.security import check_password_hash, generate_password_hash
-from config import DATABASE_PATH
+from database_connection import get_connection
 
 
 def verify_user(username, password):
@@ -18,7 +17,7 @@ def verify_user(username, password):
     If not successful returns:
         False
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     sql = "SELECT id, username, is_admin, password FROM users WHERE username=:username"
     try:
@@ -46,7 +45,7 @@ def store_user(username, password):
         True if successful\     
         False if not succesful
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     hash_value = generate_password_hash(password)
     try:
@@ -72,7 +71,7 @@ def delete_user(username):
         True if successful\     
         False if not succesful
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     try:
         sql = "DELETE FROM users WHERE username=:username"

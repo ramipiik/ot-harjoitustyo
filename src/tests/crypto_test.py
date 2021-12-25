@@ -1,10 +1,16 @@
 from sqlite3.dbapi2 import IntegrityError
 import unittest
+from initiate_db import initialize_database
+initialize_database()
 from services.crypto_services import get_crypto_ids
 from repositories.crypto_repository import store_cryptos
 from repositories.price_repository import store_prices
 
+
 class TestCrypto(unittest.TestCase):
+    def setUp(self):
+        initialize_database()
+
     def test_get_all_cryptos(self):
         """Checks that all 19 crypto currencies are found from the database"""
         cryptos = get_crypto_ids()

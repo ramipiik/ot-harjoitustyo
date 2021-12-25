@@ -1,4 +1,6 @@
 import unittest
+from initiate_db import initialize_database
+initialize_database()
 from entities.content import Content
 from entities.portfolio import Portfolio
 from services.user_services import login, signup
@@ -14,10 +16,11 @@ from entities.user import User
 from repositories.user_repository import delete_user
 from repositories.portfolio_repository import delete_user_portfolios, read_portfolio_id
 from repositories.content_repository import read_portfolio_content
-
+from initiate_db import initialize_database
 
 class TestContent(unittest.TestCase):
     def setUp(self):
+        initialize_database()
         if signup("testing", "testing"):
             self.test_user: User = login("testing", "testing")
         self.test_portfolio: Portfolio = create_portfolio(

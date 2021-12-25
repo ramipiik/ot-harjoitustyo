@@ -1,4 +1,6 @@
 import unittest
+from initiate_db import initialize_database
+initialize_database()
 from entities.content import Content
 from entities.portfolio import Portfolio
 from services.user_services import signup, login
@@ -13,6 +15,7 @@ from repositories.crypto_repository import read_crypto_ids, CRYPTO_NAMES
 
 class TestStatistics(unittest.TestCase):
     def setUp(self):
+        initialize_database()
         if signup("testing", "testing"):
             self.test_user: User = login("testing", "testing")
         self.test_portfolio: Portfolio = create_portfolio(

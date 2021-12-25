@@ -1,9 +1,8 @@
-import sqlite3
 import csv
 import datetime
 from sqlite3.dbapi2 import IntegrityError, Error
-from config import DATABASE_PATH
 from repositories.crypto_repository import CRYPTO_NAMES
+from database_connection import get_connection
 
 
 def read_prices(date):
@@ -16,7 +15,7 @@ def read_prices(date):
     Returns:
         dict: crypto rates on a given date including close, open, high, low
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     sql = f"SELECT c.id, c.name, p.close, p.open, p.high, p.low \
@@ -64,7 +63,7 @@ def read_prices_for_statistics(date):
         dict: statistics
     """    """"""
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     date_object = datetime.datetime(
@@ -141,7 +140,7 @@ def read_prices_for_statistics(date):
 
 def store_prices():   
     """Method for reading prices from CSV file and storing them to data base"""
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     for filename in CRYPTO_NAMES:
         sql = f"SELECT id FROM cryptos WHERE name='{filename}'"
@@ -189,7 +188,7 @@ def read_volatility_data(end_day):
 
     start_day_object = date_object - datetime.timedelta(365)
     start_day = str(start_day_object)
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     sql = f"SELECT crypto_id, close from prices where date between :start and :end"
     rows = None
@@ -203,7 +202,7 @@ def read_volatility_data(end_day):
 
 def read_max_day():
     """Method for reading the latest day with prices from data base"""
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
 
     sql = f"SELECT max(date) from prices"

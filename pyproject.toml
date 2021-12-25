@@ -9,6 +9,7 @@ python = ">=3.8,<3.11"
 Werkzeug = "^2.0.2"
 invoke = "^1.6.0"
 numpy = "^1.21.4"
+python-dotenv = "^0.19.2"
 
 [tool.poetry.dev-dependencies]
 black = "^21.11b1"
@@ -16,6 +17,7 @@ pytest = "^6.2.5"
 coverage = "^6.1.2"
 autopep8 = "^1.6.0"
 pylint = "^2.11.1"
+pytest-dotenv = "^0.5.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

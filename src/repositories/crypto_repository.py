@@ -1,6 +1,5 @@
-import sqlite3
 from sqlite3.dbapi2 import IntegrityError, Error
-from config import DATABASE_PATH
+from database_connection import get_connection
 
 CRYPTO_NAMES = [
     "ADA",
@@ -27,7 +26,7 @@ CRYPTO_NAMES = [
 
 def store_cryptos():
     """Method for storing crypto labels to database"""
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     for crypto in CRYPTO_NAMES:
         sql = f"INSERT INTO cryptos (name) VALUES('{crypto}')"
@@ -46,7 +45,7 @@ def read_crypto_ids():
     Returns:
         list: crypto id's
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     sql = "SELECT id FROM cryptos"
     rows = None
@@ -69,7 +68,7 @@ def read_crypto_names_and_ids():
     Returns:
         dict: Dictionary where crypto_ids are stored as keys and crypto names as values
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     sql = "SELECT id, name FROM cryptos"
     rows = None

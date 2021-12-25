@@ -1,7 +1,7 @@
-import sqlite3
 from sqlite3.dbapi2 import Error
 from entities.content import Content
-from config import DATABASE_PATH
+from database_connection import get_connection
+
 
 
 def store_content_first_time(portfolio, first_day, initial_capital):
@@ -16,7 +16,7 @@ def store_content_first_time(portfolio, first_day, initial_capital):
     Returns:
         list: Initial content of the portfolio
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection=get_connection()
     cursor = connection.cursor()
     try:
         sql = "INSERT INTO contents (portfolio_id, created, change_id) \
@@ -56,7 +56,7 @@ def store_content(contents: Content, rates: list):
     Returns:
         True if successful
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection=get_connection()
     cursor = connection.cursor()
     total_value = contents.cash
     if len(contents.cryptos.keys()) > 0:
@@ -148,7 +148,7 @@ def read_portfolio_content(portfolio_id):
         list: content read from the database
     """ """"""
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection=get_connection()
     cursor = connection.cursor()
     # SQL query finds first the latest entry and after that fetches all rows related to that entry.
     sql = "SELECT cs.portfolio_day, cs.cash, c.crypto_id, c.amount, c.change_id, c.value, cs.total_value \
@@ -177,7 +177,7 @@ def read_portfolio_history(portfolio_id):
     Returns:
         tuple: (first date, list of portfolio valuations)
     """ """"""
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection=get_connection()
     cursor = connection.cursor()
 
     sql = "select portfolio_day, total_value from contents_support where portfolio_id=:portfolio_id"
@@ -208,8 +208,7 @@ def read_portfolio_startdate(portfolio_id):
     Returns:
         str: first date of the portfolio
     """
-
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection=get_connection()
     cursor = connection.cursor()
     sql = "select min(portfolio_day) from contents_support where portfolio_id=:portfolio_id"
     row = None

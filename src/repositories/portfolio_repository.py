@@ -1,6 +1,5 @@
-import sqlite3
 from sqlite3.dbapi2 import Error
-from config import DATABASE_PATH
+from database_connection import get_connection
 
 
 def store_portfolio(user_id, portfolio):
@@ -15,7 +14,7 @@ def store_portfolio(user_id, portfolio):
         True if succesful. False if not successful.
     """ """"""
 
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     try:
         sql = "INSERT INTO portfolios (name, user_id, frequency, periods) \
@@ -51,7 +50,7 @@ def store_reference_portfolios(portfolio_id, strategies, frequency, periods):
         True if succesful,
         False if not successful
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     for strategy in strategies:
         user_id = "ref-" + str(portfolio_id)
@@ -109,7 +108,7 @@ def read_portfolio_id(user_id, portfolio_name):
     Returns:
         int: portfolio id
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     sql = "SELECT id FROM portfolios WHERE user_id=:user_id AND name=:portfolio_name"
     row = None
@@ -132,7 +131,7 @@ def read_reference_portfolios(portfolio_id):
     Returns:
         dict: Dictionary where reference portfolio names are stored keys and ids as values
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     sql = "SELECT id, name FROM portfolios WHERE id in (SELECT reference_portfolio_id FROM portfolio_support WHERE portfolio_id=:portfolio_id)"
     rows = None
@@ -158,7 +157,7 @@ def read_portfolios(user_id):
     Returns:
         list: List of lists containing portfolio id and portfolio name ordered by id
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     sql = "SELECT id, name FROM portfolios WHERE user_id=:user_id ORDER BY id"
     rows = None
@@ -181,7 +180,7 @@ def read_portfolio_frequency(portfolio_id):
     Returns:
         list: portfolio frequency
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     sql = "SELECT frequency FROM portfolios WHERE id=:portfolio_id"
     row = None
@@ -204,7 +203,7 @@ def delete_user_portfolios(username):
     Returns:
         True if successful. Otherwise False.
     """
-    connection = sqlite3.connect(DATABASE_PATH)
+    connection = get_connection()
     cursor = connection.cursor()
     try:
         sql = "DELETE FROM portfolios WHERE user_id=:username"
